@@ -27,9 +27,7 @@ The source repository is maintained by the SC and additional Committers who are 
 
 Individuals making significant and valuable contributions are made Committers and given commit-access to the project. These individuals are identified by the SC and their addition as Committers is discussed during the regular SC meeting.
 
-```
-If you make a significant contribution and are not considered for commit-access, add a request to the next SC meeting as described in [SC_MEETINGS](SC_MEETINGS.md) or contact an SC member directly and it will be brought up in the next SC meeting.
-```
+**If you make a significant contribution and are not considered for commit-access, add a request to the next SC meeting as described in [SC_MEETINGS](SC_MEETINGS.md) or contact an SC member directly and it will be brought up in the next SC meeting.**
 
 Modifications of the contents of the repository are made on a collaborative basis. Anybody with a source repository account may propose a modification via pull request and it will be considered by the project Committers; the requirements for such pull requests are documented in the [CONTRIBUTOR](CONTRIBUTOR.md) guide. All pull requests must be reviewed and accepted by a Committer with sufficient expertise who is able to take full responsibility for the change. In the case of pull requests proposed by an existing Committer, an additional Committer is required for sign-off. Consensus should be sought if additional Committers participate and there is disagreement around a particular modification. See _Consensus Seeking Process_ below for further detail on the consensus model used for governance.
 
