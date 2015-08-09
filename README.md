@@ -66,7 +66,7 @@ This section explains how to build from source if you wish to perform a build wi
 
 ## Build Options
 
-<Describe Build Options>
+<Describe Build Options (e.g. debug option)>
 
 ## Resources for Newcomers
 
