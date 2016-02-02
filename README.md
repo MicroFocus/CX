@@ -11,6 +11,7 @@ This component accepts contributions and performs releases under an [Inner Sourc
 ## Component Resources
 
 *   The main branch of the source for this component is available in this git repository (see [the CONTRIBUTOR guide](CONTRIBUTOR.md) if you'd like to contribute to its development)
+*   **Wiki** is available at [http://wiki.esecurity.net:8090/display/IS/\<project name\>](http://wiki.esecurity.net:8090/display/IS/\<project name\>)
 *   **Releases** are available at TBD.
 *   **Nightly** builds are available at <Link to Build server>.
 *   **API documentation** is available within <location of documentation>.
