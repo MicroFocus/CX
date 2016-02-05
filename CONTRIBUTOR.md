@@ -8,7 +8,7 @@ Discussion of non-technical topics including subjects like intellectual property
 
 ## Code Contributions
 
-This project is improved and maintained using an [Internal Open Source](http://wiki.esecurity.net:8090/display/ENG/Internal+Open+Source) model and welcomes new contributors. Individuals making significant and valuable contributions are made _Committers_ and given commit-access to the project. See the [GOVERNANCE](GOVERNANCE.md) document for more information about how this works.
+This project is improved and maintained using an [Inner Source](http://wiki.esecurity.net:8090/display/IS/Inner+Source+Home) model and welcomes new contributors. Individuals making significant and valuable contributions are made _Committers_ and given commit-access to the project. See the [GOVERNANCE](GOVERNANCE.md) document for more information about how this works.
 
 It is suggested that, before you begin work on a code contribution, you open an issue or enhancement at [<Project Defect Tracking URL>](<Project Defect Tracking URL>) or start a discussion on the forum described in the Project Discussions section of the [README](README.md), especially if you plan to work on something big. Nothing is more frustrating than seeing your hard work go to waste because your vision does not align with the project core team.
 

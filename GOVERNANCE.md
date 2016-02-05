@@ -15,7 +15,7 @@ The SC has final authority over this project including:
 *   Release scheduling (subject to requests from Product Managers of products that consume this component)
 *   Conduct guidelines
 *   Maintaining the list of additional Committers
-*   Maintaining the listing of this project in the [company-wide project listing](http://wiki.esecurity.net:8090/display/ENG/Internal+Open+Source#InternalOpenSource-ProjectCatalog).
+*   Maintaining the listing of this project in the [company-wide project listing](http://wiki.esecurity.net:8090/display/IS/Inner+Source+Home#InnerSourceHome-ProjectCatalog).
 
 Initial membership invitations to the SC may be given to individuals who are active contributors to this project, and who have significant experience with the management of the project. Membership is expected to evolve over time according to the needs of the project.
 
