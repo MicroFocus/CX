@@ -74,3 +74,15 @@ The SC follows a [Consensus Seeking](http://en.wikipedia.org/wiki/Consensus-seek
 When an agenda item has appeared to reach a consensus the moderator will ask "Does anyone object?" as a final call for dissent from the consensus.
 
 If an agenda item cannot reach a consensus a SC member can call for either a closing vote or a vote to table the issue to the next meeting. The call for a vote must be seconded by a majority of the SC or else the discussion will continue. Simple majority wins.
+
+## Public Release 
+
+These are the minimum requirements for releasing this project to customers (or including it in a product that is released to customers).
+*   Create a release branch
+*   (standalone releases) Include attribution file from ITLS that describes commercial and open source components
+*   Receive export approval
+*   Receive RTM approval (through ITLS http://alliance.microfocus.com/RegistrationList.aspx) 
+*   Tag source code for released version
+*   Copyright?
+*   Escrow?
+*   Patent filing?
