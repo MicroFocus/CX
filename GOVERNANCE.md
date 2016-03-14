@@ -77,12 +77,12 @@ If an agenda item cannot reach a consensus a SC member can call for either a clo
 
 ## Public Release 
 
-These are the minimum requirements for releasing this project to customers (or including it in a product that is released to customers).
+These are the minimum requirements for releasing this project. A release may mean making the project available for internal consumption by other teams (such as IQConnect) or making it generally available to customers (a "standalone release").
 *   Create a release branch
-*   (standalone releases) Include attribution file from ITLS that describes commercial and open source components
-*   Receive export approval
 *   Receive RTM approval (through ITLS http://alliance.microfocus.com/RegistrationList.aspx) 
+*   Receive export approval
+*   (standalone releases) Include attribution file from ITLS that describes commercial and open source components
 *   Tag source code for released version
-*   Copyright?
-*   Escrow?
-*   Patent filing?
+*   (standalone release) Copyright
+*   (standalone release?) Escrow
+*   Patent filing (Contact michael.angelo@microfocus.com to determine whether this applies.)
