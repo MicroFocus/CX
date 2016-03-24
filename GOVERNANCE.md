@@ -12,6 +12,7 @@ The SC has final authority over this project including:
 *   Project governance and process (including this policy)
 *   Contribution policy
 *   Repository hosting
+*   Release policy
 *   Release scheduling (subject to requests from Product Managers of products that consume this component)
 *   Conduct guidelines
 *   Maintaining the list of additional Committers
@@ -75,14 +76,22 @@ When an agenda item has appeared to reach a consensus the moderator will ask "Do
 
 If an agenda item cannot reach a consensus a SC member can call for either a closing vote or a vote to table the issue to the next meeting. The call for a vote must be seconded by a majority of the SC or else the discussion will continue. Simple majority wins.
 
-## Public Release 
+## Release Policy 
 
-These are the minimum requirements for releasing this project. A release may mean making the project available for internal consumption by other teams (such as IQConnect) or making it generally available to customers (a "standalone release").
-*   Create a release branch
-*   Receive RTM approval (through ITLS http://alliance.microfocus.com/RegistrationList.aspx) 
-*   Receive export approval
-*   (standalone releases) Include attribution file from ITLS that describes commercial and open source components
+A release is a revision of the project verified by the SC as compliant with release policy and uniquely identified by a version number.  Consumers of the project are highly encouraged to use only release artifacts of this project in their own releases because of the assurances provided by compliance with release policy and because of the predictability provided by the version number uniquely identifying a specific revision of the project.  In comparision, snapshot version artifacts may be updated at any time to point to a different revision.
+
+The act of releasing may result in making a version of the project available for internal consumption by other teams (such as IQConnect) or making it generally available to customers (a "standalone release").
+
+Requests for the creation of a release should be directed to the SC.  The SC will inform the requestor what is required in order to perform the release.  The requestor, as well as anyone else interested in accelerating the release, are responsible for performing the tasks necessary to meet the release requirements.  The SC will verify the requirements have been met before publishing the release.
+
+These are the minimum requirements for releasing this project. There may be additional requirements defined by the SC dependending on the contents of the release.
+
+*   Create a release branch whose name indicates the release version number
 *   Tag source code for released version
+*   Regression Test - the required tests will be defined by the SC
+*   Receive RTM approval (through ITLS http://alliance.microfocus.com/RegistrationList.aspx) 
+*   Receive export approval (from?)
+*   (standalone releases) Include attribution file from ITLS that describes commercial and open source components
 *   (standalone release) Copyright
 *   (standalone release?) Escrow
 *   Patent filing (Contact michael.angelo@microfocus.com to determine whether this applies.)
