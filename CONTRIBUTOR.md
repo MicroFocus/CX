@@ -140,6 +140,7 @@ By making a contribution to this project, I certify that:
 *   (a) The contribution was created in whole or in part by me and I have the right to submit it under the license indicated in the file; or
 *   (b) The contribution was provided directly to me by some other person who certified (a) and I have not modified it.
 *   (c) If the contribution includes any open source or commercial code, those components have been registered and approved in ITLS (http://alliance.microfocus.com/RegistrationList.aspx) and have been associated with the new release. (Verify using a Release Check here: http://alliance.microfocus.com/VendorProductReport.aspx.)
+*   (d) Potentially patentable ideas have been discussed with michael.angelo@microfocus.com and been added to [insert doc reference].
 
 ## Code of Conduct
 
