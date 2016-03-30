@@ -94,4 +94,4 @@ These are the minimum requirements for releasing this project. There may be addi
 *   (standalone releases) Include attribution file from ITLS that describes commercial and open source components
 *   (standalone release) Copyright
 *   (standalone release) Escrow
-*   Patent filing (Contact michael.angelo@microfocus.com to determine whether this applies.)
+*   (standalone release) Evaluate patent documentation in /legal folder and add patent numbers or patent pending notices to the product as recommended by Legal.
