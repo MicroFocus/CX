@@ -19,11 +19,13 @@ Author Email: <Email address for the author>
 
 <Brief description of the product change and what's innovative about it. The key here is to provide enough information to cue the memory of the author even a year or two later.>
 
-Intellectual Property Advisor(s): <Michael.Angelo@microfocus.com or whomever helped make the determination of whether to pursue a patent>
+Was this idea reviewed in accordance with the patent and invention disclosure processes described on the [Innerweb](https://intra.microfocus.net/company/invention-disclosure-record/)? <yes/no>
 
 Will the company pursue a patent? <yes/no>
-Is a patent granted? <yes/no/under review>
-*   If a patent was granted, what patent information must be added to the product? <to be determined by the Legal team>
+*   If a patent is in progress, have the necessary patent pending notices been checked into the code base? You may need to check with [IPCommittee@microfocus.com](IPCommittee@microfocus.com) to determine whether notices are needed.  <yes/no/none needed>
+
+Has a patent been granted? <yes/no/under review>
+*   If a patent was granted, have the necessary patent notices been checked into the code base? You may need to check with [IPCommittee@microfocus.com](IPCommittee@microfocus.com) to determine what notices are needed. <yes/no/none needed>
 
 
 
