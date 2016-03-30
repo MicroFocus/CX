@@ -89,7 +89,7 @@ These are the minimum requirements for releasing this project. There may be addi
 *   Create a release branch whose name indicates the release version number
 *   Tag source code for released version
 *   Regression Test - the required tests will be defined by the SC
-*   Receive RTM approval for dependent software (through ITLS http://alliance.microfocus.com/RegistrationList.aspx) 
+*   Receive RTM approval for dependent software through [ITLS](http://alliance.microfocus.com/RegistrationList.aspx).
 *   Receive export approval from International Trade Services (currently tyler.flake@microfocus.com)
 *   Evaluate patent documentation in the [legal/PotentialPatents.md](legal/PotentialPatents.md) file. Add patent notices to the product as recommended by Legal.
 *   (standalone releases) Include attribution file from ITLS that describes commercial and open source components
