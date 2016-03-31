@@ -1,15 +1,15 @@
-# <Product Name> Potentially Patentable Ideas
+# <Project Name> Potentially Patentable Ideas
 
-This document tracks any potentially patentable innovations added to this product. All innovations that are considered for patentability should be tracked here, even if the ultimate decision is that we will not pursue a patent.
+This document tracks all potentially patentable innovations added to this project. All innovations that are considered for patentability should be tracked here, even if the ultimate decision is that we will not pursue a patent.
 
 Here is the basic process:
 
 1.   Copy/paste the template below to the end of this file and and fill in the template for any ideas that are potentially patentable. (Append the new information; do not delete any previous information.)
-1.   Follow company processes described on the [Invention Disclosure Record](https://intra.microfocus.net/company/invention-disclosure-record/) page on the Innerweb to determine whether to file for a patent.
-1.   Update this doc as the idea moves through the patent process.
-1.   Add patent notifications to the product as recommended by Legal.
+2.   Follow company processes described on the [Invention Disclosure Record](https://intra.microfocus.net/company/invention-disclosure-record/) page on the Innerweb to determine whether to file for a patent.
+3.   Update this doc as the idea moves through the patent process.
+4.   Add patent notifications to the project as recommended by Legal.
 
-This information will be used during the release process to verify that the correct patent notices are in the product.
+This information will be used during the release process to verify that the correct patent notices are in the project.
 
 
 - - -
@@ -21,7 +21,7 @@ Author Name: <Name of person who checked in the code>
 
 Author Email: <Email address for the author>
 
-<Brief description of the product change and what's innovative about it. The intent is to provide enough information to cue the memory of the author even a year or two later.>
+<Brief description of the change and what's innovative about it. The intent is to provide enough information to cue the memory of the author even a year or two later.>
 
 Was this idea reviewed in accordance with the patent and invention disclosure processes described on the [Invention Disclosure Record](https://intra.microfocus.net/company/invention-disclosure-record/) page on the Innerweb? <yes/no>
 
