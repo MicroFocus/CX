@@ -20,7 +20,7 @@ Author Email: <Email address for the author>
 
 <Brief description of the product change and what's innovative about it. The intent is to provide enough information to cue the memory of the author even a year or two later.>
 
-Was this idea reviewed in accordance with the patent and invention disclosure processes described on the [Innerweb](https://intra.microfocus.net/company/invention-disclosure-record/)? <yes/no>
+Was this idea reviewed in accordance with the patent and invention disclosure processes described on the [Invention Disclosure Record](https://intra.microfocus.net/company/invention-disclosure-record/) page on the Innerweb? <yes/no>
 
 Will the company pursue a patent? <yes/no>
 *   If a patent is in progress, have the necessary patent pending notices been checked into the code base? You may need to check with [IPCommittee@microfocus.com](IPCommittee@microfocus.com) to determine whether notices are needed.  <yes/no/none needed>
