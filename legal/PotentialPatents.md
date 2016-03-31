@@ -5,8 +5,8 @@ This document tracks any potentially patentable innovations added to this produc
 Here is the basic process:
 
 1.   Copy/paste the template below to the end of this file and and fill in the template for any ideas that are potentially patentable. (Append the new information; do not delete any previous information.)
-1.   Follow company processes to determine whether to file for a patent.
-1.   Update the doc as the idea moves through the patent process.
+1.   Follow company processes described on the [Invention Disclosure Record](https://intra.microfocus.net/company/invention-disclosure-record/) page on the Innerweb to determine whether to file for a patent.
+1.   Update this doc as the idea moves through the patent process.
 1.   Add patent notifications to the product as recommended by Legal.
 
 This information will be used during the release process to verify that the correct patent notices are in the product.
