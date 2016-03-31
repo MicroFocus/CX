@@ -4,11 +4,12 @@ This document tracks any potentially patentable innovations added to this produc
 
 Here is the basic process:
 
-1.   Copy/paste the template below to the end of this file and and fill in the template.
-1.   Discuss the potentially patentable idea with michael.angelo@microfocus.com (or another employee familiar with intellectual property issues).
-1.   Update the doc to indicate whether the company decision is to pursue a patent or not.
+1.   Copy/paste the template below to the end of this file and and fill in the template for any ideas that are potentially patentable. (Append the new information; do not delete any previous information.)
+1.   Follow company processes to determine whether to file for a patent.
+1.   Update the doc as the idea moves through the patent process.
+1.   Add patent notifications to the product as recommended by Legal.
 
-This information will be used during the release process to determine whether patent numbers or "patent pending" notices should be added to the product.
+This information will be used during the release process to verify that the correct patent notices are in the product.
 
 
 ### <Brief title for potentially patentable idea>
@@ -17,7 +18,7 @@ Author Name: <Name of person who checked in the code>
 
 Author Email: <Email address for the author>
 
-<Brief description of the product change and what's innovative about it. The key here is to provide enough information to cue the memory of the author even a year or two later.>
+<Brief description of the product change and what's innovative about it. The intent is to provide enough information to cue the memory of the author even a year or two later.>
 
 Was this idea reviewed in accordance with the patent and invention disclosure processes described on the [Innerweb](https://intra.microfocus.net/company/invention-disclosure-record/)? <yes/no>
 
