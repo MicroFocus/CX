@@ -12,6 +12,9 @@ Here is the basic process:
 This information will be used during the release process to verify that the correct patent notices are in the product.
 
 
+- - -
+
+
 ### <Brief title for potentially patentable idea>
 
 Author Name: <Name of person who checked in the code>
@@ -28,5 +31,7 @@ Will the company pursue a patent? <yes/no>
 Has a patent been granted? <yes/no/under review>
 *   If a patent was granted, have the necessary patent notices been checked into the code base? You may need to check with [IPCommittee@microfocus.com](IPCommittee@microfocus.com) to determine what notices are needed. <yes/no/none needed>
 
+
+- - -
 
 
