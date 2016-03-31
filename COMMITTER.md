@@ -25,11 +25,11 @@ To be accepted, a pull request must include:
    1.  The code modification(s) 
    2.  A link to the backlog item or issue(s) that are resolved with the new code
    3.  One or more test cases; the tests should _fail_ before the change, and _pass_ after the change
-   4.  Any updates to the component documentation or other artifacts as necessary to describe the change or the new functionality.
+   4.  Any updates to the component documentation or other artifacts as necessary to describe the change or the new functionality. 
    5.  Any updates to cryptography or communication protocols must be described in the [Export Control Review (ECR)](legal/ECR.odt) document located in the _legal_ directory of this repository.
-   6.  Any third party component changes (additions, deletions, or updates) must be registered and approved via [Micro Focus ITLS](http://alliance.microfocus.com/ProductList.aspx).
+   6.  Any dependency changes (additions, deletions, updates, or significant changes in usage) must be registered and approved via [Micro Focus ITLS](http://alliance.microfocus.com/ProductList.aspx).
       * Only direct dependencies require registration - transitive dependencies do not, since they are implied. 
-      * If the version of the next release is not determined yet, register the change in ITLS under the most likely release version. 
+      * If the version of the next release is not determined yet, register the change in ITLS under the earliest likely release version. 
 
 If these conditions are not met, the Committer may send the pull request back to the Contributor for them to complete the pull request.
 
