@@ -86,13 +86,12 @@ Requests for the creation of a release should be directed to the SC.  The SC wil
 
 These are the minimum requirements for releasing this project. There may be additional requirements defined by the SC depending on the contents of the release.
 
-*   Create a release branch whose name indicates the release version number
+*   Create a release branch whose name indicates the release version number, such as release/1.0.0.0
 *   Tag source code for released version
 *   Regression Test - the required tests will be defined by the SC
 *   Receive RTM approval for dependent software through [ITLS](http://alliance.microfocus.com/RegistrationList.aspx).
 *   Receive export approval from International Trade Services (currently tyler.flake@microfocus.com)
 *   Evaluate patent documentation in the [legal/PotentialPatents.md](legal/PotentialPatents.md) file. Add patent notices to the product as recommended by Legal.
 *   (standalone releases) Include attribution file from ITLS that describes commercial and open source components
-*   (standalone release) Copyright
-*   (standalone release) Escrow
+*   Escrow - Only required for a new major version release or when the build environment changes.
 
