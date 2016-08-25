@@ -82,7 +82,9 @@ A release is a revision of the project verified by the SC as compliant with rele
 
 The act of releasing may result in making a version of the project available for internal consumption by other teams (such as IQConnect) or making it generally available to customers (a "standalone release").
 
-Requests for the creation of a release should be directed to the SC.  The SC will inform the requestor what is required in order to perform the release.  The requestor, as well as anyone else interested in accelerating the release, are responsible for performing the tasks necessary to meet the release requirements.  The SC will verify the requirements have been met before publishing the release.  Once the requierments have been met, the SC will publish the release to the artifact distribution locations specified in the Component Resources section of the [README.md](README.md) file.
+Requests for the creation of a release should be directed to the SC.  The SC will inform the requestor what is required in order to perform the release.  The requestor, as well as anyone else interested in accelerating the release, are responsible for performing the tasks necessary to meet the release requirements.  The SC will verify the requirements have been met before publishing the release.  Once the requirements have been met, the SC will publish the release to the artifact distribution locations specified in the Component Resources section of the [README.md](README.md) file.
+
+The SC may create a wiki page to assist with collaborating with the contributors and community on the project management of the release.  The [Inner Source wiki space](http://jira.provo.novell.com:8090/display/IS/Inner+Source+Home) has an "Inner Source Release Template" defined that can be selected after clicking on the Create button to create a new wiki page.  This template has most of the common project management items already created.
 
 These are the minimum requirements for releasing this project. There may be additional requirements defined by the SC depending on the contents of the release.
 
