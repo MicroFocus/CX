@@ -26,7 +26,7 @@ To be accepted, a pull request must include:
    2.  A link to the backlog item or issue(s) that are resolved with the new code
    3.  One or more test cases; the tests should _fail_ before the change, and _pass_ after the change
    4.  Any updates to the component documentation or other artifacts as necessary to describe the change or the new functionality. 
-   5.  Any updates to cryptography or communication protocols must be described in the [Export Control Review (ECR)](legal/ECR.odt) document located in the _legal_ directory of this repository.
+   5.  Any updates to cryptography or communication protocols must be described in the [Export Control Review (ECR)](http://pm.portal.netiq.com/sites/productops/Export%20Classification%20Request/Forms/AllItems.aspx) document for the version of the component the changes are being submitted to.  Instructions for updating the document [are located here](http://pm.portal.netiq.com/sites/productops/Export%20Classification%20Request/__README%20How%20to%20complete%20an%20ECR.pdf).
    6.  Any dependency changes (additions, deletions, updates, or significant changes in usage) must be registered and approved via [Micro Focus ITLS](http://alliance.microfocus.com/ProductList.aspx). More information on how to register with ITLS [can be found here](http://wiki.esecurity.net:8090/display/IS/Library+ITLS+Registrations).
       * Only direct dependencies require registration - transitive dependencies do not, since they are implied. 
       * If the version of the next release is not determined yet, register the change in ITLS under the earliest likely release version. 
