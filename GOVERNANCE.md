@@ -82,7 +82,7 @@ A release is a revision of the project verified by the SC as compliant with rele
 
 The act of releasing may result in making a version of the project available for internal consumption by other teams (such as IQConnect) or making it generally available to customers (a "standalone release").
 
-Requests for the creation of a release should be directed to the SC.  The SC will inform the requestor what is required in order to perform the release.  The requestor, as well as anyone else interested in accelerating the release, are responsible for performing the tasks necessary to meet the release requirements.  The SC will verify the requirements have been met before publishing the release.  Once the requirements have been met, the SC will publish the release to the artifact distribution locations specified in the Component Resources section of the [README.md](README.md) file.
+Requests for the creation of a release should be directed to the SC.  The SC will inform the requester what is required in order to perform the release.  The requester, as well as anyone else interested in accelerating the release, are responsible for performing the tasks necessary to meet the release requirements.  The SC will verify the requirements have been met before publishing the release.  Once the requirements have been met, the SC will publish the release to the artifact distribution locations specified in the Component Resources section of the [README.md](README.md) file.
 
 The SC may create a wiki page to assist with collaborating with the contributors and community on the project management of the release.  The [Inner Source wiki space](http://jira.provo.novell.com:8090/display/IS/Inner+Source+Home) has an "Inner Source Release Template" defined that can be selected after clicking on the Create button to create a new wiki page.  This template has most of the common project management items already created.
 
@@ -90,7 +90,7 @@ These are the minimum requirements for releasing this project. There may be addi
 
 *   Create a release branch whose name indicates the release version number, such as release/1.0.0.0
 *   Tag source code for released version
-*   Regression Test - the required tests will be defined by the release requestor
+*   Regression Test - the required tests will be defined by the release requester
 *   Receive RTM approval for dependent software through [ITLS](http://alliance.microfocus.com/RegistrationList.aspx).  More information on how to register with ITLS [can be found here](http://wiki.esecurity.net:8090/display/IS/Library+ITLS+Registrations).
 *   Receive export approval from International Trade Services (currently tyler.flake@microfocus.com)
 *   Evaluate patent documentation in the [legal/PotentialPatents.md](legal/PotentialPatents.md) file. Add patent notices to the product as recommended by Legal.
