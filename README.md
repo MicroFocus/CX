@@ -1,12 +1,12 @@
-# <Project Name>
+# CX-App
 
-<Brief project description>
+The CX-App will be an application on top of other IAS products to provide a Unified User Experience
 
 This component accepts contributions and performs releases under an [Inner Source](http://wiki.esecurity.net:8090/display/IS/Inner+Source+Home) model.
 
 ### Benefits
 
-<Description of benefits>
+Unified Customer Experience overlapping existing IAS Products
 
 ## Component Resources
 
@@ -28,7 +28,7 @@ Customers of products that use this component should file support requests and b
 
 This project maintains a forum for discussions between the users and developers of this component.
 
-*   TBD; in the mean time email people, such as the steering committee, directly.
+*   https://chat.microfocus.net/group/team-cx-app
 
 ### Verifying Binaries
 
@@ -78,4 +78,12 @@ This section explains how to build from source if you wish to perform a build wi
 
 The core project team comprises a group of core committers and a sub-group that forms the _Steering Committee_ (SC) which governs the project. For more information about the governance of this project, see [the GOVERNANCE guide](GOVERNANCE.md) for this project.
 
-*   **<Full Name>** (_<Role>_) [<Email>](<Email>)
+*   **Jon Bultmeyer** (_Overall technical direction_) [Jon.Bultmeyer@microfocus.com]
+*	**Matt Ulery**	(_Product Manager_) [Matt.Ulery@microfocus.com]
+*	**Rik Peters**	(_Engineering Manager_) [Rik.Peters@microfocus.com]
+*	**Brett Berger** (_Project Manager_) [Brett.Berget@microfocus.com]
+*	**Lyndon Washington** (_Developer_) [Lyndon.Washington@microfocus.com]
+*	**Tony Stephens** (_Developer_)	[Tony.Stephens@microfocus.com]
+*	**Denis Nasyrov** (_Developer_) [Denis.Nasyrov@microfocus.com]
+*	**James Albright** (_Developer_) [James.Albright@microfocus.com]
+*	**Zack Grossbart** (_Developer_) [Zack.Grossbart@microfocus.com]

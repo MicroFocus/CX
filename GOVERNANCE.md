@@ -1,4 +1,4 @@
-# <Project Name> Project Governance
+# CX-App Project Governance
 
 *The Steering Committee should consume this template to create their own Governance document. Sections that require review are annotated with angle brackets (<>). The SC will also need to edit the README, CONTRIBUTOR, and COMMITTER templates as well. Make sure internal links between these four documents are correct.* 
 
