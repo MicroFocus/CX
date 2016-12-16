@@ -38,10 +38,13 @@ RUN echo '{ "allow_root": true }' > /root/.bowerrc
 RUN npm install
 RUN grunt replace:bowerForDev
 RUN bower install
+RUN npm rebuild node-sass
+RUN npm install
+RUN grunt dev
 
-CMD [ "npm", "install" ]
-CMD [ "bower", "install" ]
-CMD [ "npm", "start" ]
+# CMD [ "npm", "install" ]
+# CMD [ "bower", "install" ]
+# CMD [ "npm", "start" ]
 
 # ENTRYPOINT ["/bin/bash", "-c", "npm install"]
 # ENTRYPOINT ["/bin/bash", "-c", "bower install"]
