@@ -352,3 +352,38 @@ spawned uWSGI worker 2 (pid: 16, cores: 1)
 spawned uWSGI worker 3 (pid: 17, cores: 1)
 spawned uWSGI worker 4 (pid: 18, cores: 1)
 *** Stats server enabled on 127.0.0.1:9191 fd: 48 ***
+[uWSGI] getting INI configuration from /opt/cx/production.ini
+*** Starting uWSGI 2.0.14 (64bit) on [Fri Dec 16 15:09:43 2016] ***
+compiled with version: 5.4.0 20160609 on 13 December 2016 20:12:43
+os: Linux-4.4.27-moby #1 SMP Wed Oct 26 14:21:29 UTC 2016
+nodename: a46d446a691d
+machine: x86_64
+clock source: unix
+pcre jit disabled
+detected number of CPU cores: 4
+current working directory: /opt/cx
+detected binary path: /opt/penv/bin/uwsgi
+setgid() to 33
+setuid() to 33
+your memory page size is 4096 bytes
+detected max file descriptor number: 1048576
+lock engine: pthread robust mutexes
+thunder lock: disabled (you can enable it with --thunder-lock)
+uwsgi socket 0 bound to TCP address 0.0.0.0:6001 fd 3
+Python version: 3.5.2 (default, Nov 17 2016, 17:05:23)  [GCC 5.4.0 20160609]
+Set PythonHome to /opt/penv
+Python main interpreter initialized at 0x1a72f70
+python threads support enabled
+your server socket listen backlog is limited to 100 connections
+your mercy for graceful operations on workers is 60 seconds
+mapped 1700160 bytes (1660 KB) for 20 cores
+*** Operational MODE: preforking ***
+Loading paste environment: config:/opt/cx/production.ini
+WSGI app 0 (mountpoint='') ready in 2 seconds on interpreter 0x1a72f70 pid: 11 (default app)
+*** uWSGI is running in multiple interpreter mode ***
+spawned uWSGI master process (pid: 11)
+spawned uWSGI worker 1 (pid: 15, cores: 1)
+spawned uWSGI worker 2 (pid: 16, cores: 1)
+spawned uWSGI worker 3 (pid: 17, cores: 1)
+spawned uWSGI worker 4 (pid: 18, cores: 1)
+*** Stats server enabled on 127.0.0.1:9191 fd: 48 ***
