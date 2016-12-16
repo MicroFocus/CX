@@ -1,0 +1,133 @@
+@charset "utf-8";
+
+@import "variables";
+@import "mixins";
+
+html,
+body {
+    height: 100%;
+}
+
+.clear {
+    clear: both;
+}
+
+.height-auto {
+    height: auto;
+}
+
+// Fixed height
+.height-xs {
+    height: 100px;
+    overflow-y: auto;
+}
+
+.height-sm {
+    height: 200px;
+    overflow-y: auto;
+}
+
+.height-md {
+    height: 320px;
+    overflow-y: auto;
+}
+
+// Horizontal Rules
+// Default
+.hr-default {
+    border: 0;
+    border-top: 1px solid lighten($color-slate-grey, 40%);
+    margin: $spacing-base 0;
+}
+
+// Default
+.hr-dark {
+    border: 0;
+    border-top: 1px solid lighten($color-slate-grey, 20%);
+    margin: $spacing-base 0;
+}
+
+// Dashed
+.hr-dashed {
+    border: 0;
+    border-top: 1px dashed lighten($color-slate-grey, 35%);
+    margin: $spacing-sm 0;
+}
+
+// HR Spacers
+[class^="hr-"] {
+    &.hr-spacer {
+        &-xs {
+            margin: $spacing-xs 0;
+        }
+
+        &-sm {
+            margin: $spacing-sm 0;
+        }
+    }
+}
+
+// ----------------------------------------------
+// Spacers
+// ----------------------------------------------
+// Usage:
+// Always apply spacers either for DIV or SPAN tags.
+// For padding use "in", and for margins use "out" as the naming convention for the CSS selectors.
+// FOr Sizes: "sm", "base", "md", "lg" and "none"
+//
+// Padding - all sides
+// <div class="spacer-in-sm"></div> - Small
+// <div class="spacer-in-base"></div> - Normal
+// <div class="spacer-in-md"></div> - Medium
+// <div class="spacer-in-lg"></div> - Large
+// <div class="spacer-in-none"></div> - No padding
+//
+// Margin - all sides
+// Does not work with <span> tags.
+// <div class="spacer-out-sm"></div> - Small
+// <div class="spacer-out-base"></div> - Normal
+// <div class="spacer-out-md"></div> - Medium
+// <div class="spacer-out-lg"></div> - Large
+// <div class="spacer-out-none"></div> - No margin
+//
+// Vertical Padding
+// <div class="spacer-in-v-sm"></div> - Small
+// <div class="spacer-in-v-base"></div> - Normal
+// <div class="spacer-in-v-md"></div> - Medium
+// <div class="spacer-in-v-lg"></div> - Large
+// <div class="spacer-in-v-none"></div> - No padding for top and bottom
+//
+// Horizontal Margin
+// <div class="spacer-out-h-sm"></div> - Small
+// <div class="spacer-out-h-base"></div> - Normal
+// <div class="spacer-out-h-md"></div> - Medium
+// <div class="spacer-out-h-lg"></div> - Large
+// <div class="spacer-out-h-none"></div> - No margin for left and right side
+//
+// Applying margin or padding for specific side
+// <div class="spacer-out-top-sm"></div> - Small margin at the top
+// <div class="spacer-in-bottom-lg"></div> - Large padding at the bottom
+.spacer {
+    @each $boundary, $boundary-property in $box-boundary-list {
+        &-#{$boundary} {
+            @each $current-size, $current-size-value in $spacer-size-list {
+                @each $side in $spacer-sides {
+                    &-#{$side}-#{$current-size} {
+                        #{$boundary-property}-#{$side}: $current-size-value !important;
+                    }
+                }
+                &-#{$current-size} {
+                    #{$boundary-property}: $current-size-value;
+                }
+                &-v-#{$current-size} {
+                    #{$boundary-property}-top: $current-size-value;
+                    #{$boundary-property}-bottom: $current-size-value;
+                }
+                &-h-#{$current-size} {
+                    #{$boundary-property}-left: $current-size-value;
+                    #{$boundary-property}-right: $current-size-value;
+                }
+            }
+        }
+    }
+}

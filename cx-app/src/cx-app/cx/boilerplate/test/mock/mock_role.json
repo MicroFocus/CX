@@ -1,0 +1,36 @@
+{
+    "meta": {
+        "type": "role",
+        "@href": "https://192.168.1.140:8443/SentinelRESTServices/objects/role/402724C0-C6B9-1033-BB4F-000C2969BCB5" // jscs:ignore maximumLineLength
+    },
+    "createdate": "2016-03-07T17:56:50.684Z",
+    "tenant-id": 1,
+    "tenant-name": "default",
+    "moddate": "2016-03-07T17:56:50.684Z",
+    "all-alerts": true,
+    "all-events": true,
+    "name": "AlertRole",
+    "creator": {
+        "@href": "https://192.168.1.140:8443/SentinelRESTServices/objects/user/1"
+    },
+    "members": ["https://192.168.1.140:8443/SentinelRESTServices/objects/user/102"],
+    "modifier": {
+        "@href": "https://192.168.1.140:8443/SentinelRESTServices/objects/user/1"
+    },
+    "perms": [
+        {
+            "name": "shareAlertViews",
+            "value": "true",
+            "def": {
+                "@href": "https://192.168.1.140:8443/SentinelRESTServices/objects/permission/shareAlertViews"
+            }
+        },
+        {
+            "name": "manageAlerts",
+            "value": "true",
+            "def": {
+                "@href": "https://192.168.1.140:8443/SentinelRESTServices/objects/permission/manageAlerts"
+            }
+        }
+    ]
+}

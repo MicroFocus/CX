@@ -1,0 +1,89 @@
+@charset "utf-8";
+
+@import "../_globals/variables";
+@import "../_globals/mixins";
+
+// Progress Indicator
+.progress-indicator {
+    $indicator-bg: rgba(255, 255, 255, .8);
+    background: $indicator-bg;
+    height: 150px;
+    position: relative;
+    width: 100%;
+    z-index: 1000;
+
+    .progress-indicator-spinner {
+        @include animation(spin 2s linear infinite);
+        $c1: #005195;
+        border: 3px solid transparent;
+        border-radius: 50%;
+        border-top-color: $c1;
+        display: block;
+        height: 80px;
+        left: 50%;
+        margin: -56px 0 0 -40px;
+        position: relative;
+        top: 50%;
+        width: 80px;
+
+        // Before
+        &:before {
+            @include animation(spin 1.7s linear infinite);
+            $c2: #009ddc;
+            border: 3px solid transparent;
+            border-radius: 50%;
+            border-top-color: $c2;
+            bottom: 5px;
+            content: "";
+            left: 5px;
+            position: absolute;
+            right: 5px;
+            top: 5px;
+        }
+
+        // After
+        &:after {
+            @include animation(spin 1.2s linear infinite);
+            $c3: #b4d6f8;
+            border: 3px solid transparent;
+            border-radius: 50%;
+            border-top-color: $c3;
+            bottom: 15px;
+            content: "";
+            left: 15px;
+            position: absolute;
+            right: 15px;
+            top: 15px;
+        }
+
+    }
+
+    &.indicator-embedded .progress-indicator-spinner {
+        position: absolute;
+    }
+
+    &.indicator-embedded-overlay {
+        height: 100%;
+        position: absolute;
+        width: 100%;
+    }
+
+    // Spinner Label
+    .progress-indicator-label {
+        width: 100%;
+        padding: 0 4em;
+        position: absolute;
+        top: calc(50% + 40px);
+        font-size: $theme-font-size-md;
+        font-weight: $theme-font-weight-normal;
+        text-align: center;
+        letter-spacing: .1em;
+    }
+
+}
+
+// Overlay progress indicator within modal body
+.modal-body .progress-indicator.indicator-embedded-overlay {
+    margin: -16px -24px;
+}
+

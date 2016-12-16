@@ -1,0 +1,135 @@
+@charset "utf-8";
+
+@import "../_globals/variables";
+@import "../_globals/mixins";
+
+// Text fonts declaration - Roboto
+@include font-face("Roboto", $base-font-regular-url, 400, normal, $file-formats: ttf eot svg woff);
+@include font-face("Roboto", $base-font-italic-url, 400, italic, $file-formats: ttf eot svg woff);
+@include font-face("Roboto", $base-font-semibold-url, 500, normal, $file-formats: ttf eot svg woff);
+@include font-face("Roboto", $base-font-semibold-italic-url, 500, italic, $file-formats: ttf eot svg woff);
+@include font-face("Roboto", $base-font-bold-url, 700, normal, $file-formats: ttf eot svg woff);
+@include font-face("Roboto", $base-font-bold-italic-url, 700, italic, $file-formats: ttf eot svg woff);
+
+body {
+    background: $body-bg-color;
+    color: $color-accent;
+    font-family: $base-font-family;
+    font-size: $theme-font-size-base;
+    font-weight: $theme-font-weight-normal;
+}
+
+// Small
+small,
+.small {
+    font-size: $theme-font-size-xs;
+    font-weight: $theme-font-weight-normal;
+}
+
+.main-content a {
+    color: $color-dark-primary-blue;
+
+    &:hover {
+        text-decoration: underline;
+    }
+}
+
+// These text styles will changed in future
+h1 {
+    font-size: 1.5em;
+}
+
+.heading-1 {
+    font-size: $theme-font-size-xl;
+    font-weight: $theme-font-weight-normal;
+    margin: $spacing-base 0 $spacing-sm;
+}
+
+// Dashboard
+.dashboard-title {
+    font-size: $theme-font-size-xxl;
+    font-weight: $theme-font-weight-normal;
+    margin: $spacing-base 0 $spacing-xs;
+}
+
+// Simple Bulleted List
+.simple-ul {
+    padding-left: 20px;
+
+    li {
+        margin-bottom: $spacing-sm;
+    }
+
+}
+
+// Watermark Text
+.text-watermark {
+    @include opacity(.7);
+}
+
+// Text muted
+.text-muted {
+    color: $color-slate-grey;
+}
+
+// Label only
+.label-text {
+    color: $color-primary-text;
+    font-size: $theme-font-size-base;
+    font-weight: $theme-font-weight-semibold;
+    margin-right: 4px;
+}
+
+// Label value pair
+.label-block {
+    color: $color-slate-grey;
+    display: block;
+    margin-right: $spacing-md;
+    font-size: $theme-font-size-xs;
+
+    .label-block-value,
+    strong {
+        color: $color-primary-text;
+        display: block;
+        font-size: $theme-font-size-base;
+        font-weight: $theme-font-weight-semibold;
+        margin-right: 4px;
+    }
+
+    .label-block-value-muted {
+        color: $color-slate-grey;
+        display: block;
+        font-size: $theme-font-size-base;
+        font-weight: $theme-font-weight-normal;
+        margin-right: 4px;
+    }
+
+    &.label-block-horz {
+        display: inline-block;
+    }
+
+}
+
+.label-block-inline {
+    color: $color-primary-text;
+    display: inline-block;
+    margin-right: $spacing-base;
+    font-weight: $theme-font-weight-semibold;
+
+    .label-block-value,
+    strong {
+        color: $color-slate-grey;
+        display: inline-block;
+        font-weight: $theme-font-weight-normal;
+        margin-left: 4px;
+    }
+
+    .label-block-value-muted {
+        color: $color-slate-grey;
+        display: block;
+        font-size: $theme-font-size-base;
+        font-weight: $theme-font-weight-normal;
+        margin-right: 4px;
+    }
+
+}

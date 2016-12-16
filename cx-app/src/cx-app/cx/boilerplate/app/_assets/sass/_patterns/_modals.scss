@@ -1,0 +1,91 @@
+@charset "utf-8";
+
+@import "../_globals/variables";
+@import "../_globals/mixins";
+
+// Modal
+.modal-backdrop {
+    background-color: $color-full-black;
+
+    &,
+    &.in {
+        @include opacity(.65);
+    }
+}
+
+.modal {
+    .wide {
+        width: 90%;
+    }
+
+    .modal-content {
+        overflow: hidden;
+    }
+
+    .modal-header {
+        background-color: $color-dark-primary-blue;
+        padding: $spacing-base;
+        color: $color-white;
+
+        .close {
+            @extend .icon;
+            @extend .icon-cross-circle;
+            @include opacity(.7);
+            color: $color-white;
+            margin-right: 0 !important;
+
+            &:hover,
+            &:focus {
+                @include opacity(.9);
+            }
+        }
+    }
+
+    .modal-body {
+        padding: $spacing-base $spacing-md;
+
+        &.modal-body-dark {
+            background-color: $body-bg-color;
+        }
+
+        .modal-body-content-wrapper-white {
+            @include shadow-default();
+            background-color: $color-white;
+            margin: (-$spacing-base) (-$spacing-md);
+            overflow: auto;
+
+            .modal-body-content {
+                padding: $spacing-base $spacing-md 0;
+            }
+        }
+    }
+
+    .modal-footer {
+        border-top: solid 1px darken($color-light-grey, 10%);
+        background-color: lighten($color-light-grey, 3%);
+        padding: $spacing-sm $spacing-base;
+    }
+}
+
+// Confirmation modal
+.modal .modal-content-confirm {
+    position: relative;
+    width: 80%;
+    margin: $spacing-md auto;
+
+    .icon {
+        position: absolute;
+        top: 6px;
+        font-size: $theme-font-size-xxl;
+        color: $color-nf-error;
+    }
+
+    .confirm-message-title {
+        padding-left: $theme-font-size-xl + 24;
+        font-size: $theme-font-size-lg;
+        font-weight: $theme-font-weight-bold;
+        color: $color-primary-text;
+    }
+
+}
+

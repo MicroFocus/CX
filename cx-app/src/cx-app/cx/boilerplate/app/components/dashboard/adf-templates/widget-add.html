@@ -1,0 +1,27 @@
+<div class="modal-header">
+    <button type="button" class="close" ng-click="closeDialog()" aria-hidden="true"></button>
+    <h4 class="modal-title">
+        <i class="icon icon-plus"></i>
+        <span translate>
+            Add new widget
+        </span>
+    </h4>
+</div>
+<div class="modal-body">
+    <div class="list-group">
+        <a href="" ng-repeat="(key, widget) in widgets" ng-click="addWidget(key)" class="list-group-item">
+            <h4 class="spacer-out-bottom-sm">{{ widget.title | translate }}</h4>
+            <p class="small" ng-if="widget.description">
+                {{ widget.description | translate }}
+            </p>
+        </a>
+    </div>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-default" ng-click="closeDialog()">
+        <i class="icon icon-cross-circle"></i>
+        <span translate>
+            Close
+        </span>
+    </button>
+</div>

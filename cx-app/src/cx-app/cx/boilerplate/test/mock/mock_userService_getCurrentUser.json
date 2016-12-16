@@ -1,0 +1,38 @@
+{
+    "auth-source": "DATABASE",
+    "createdate": "2015-11-23T16:04:35.983Z",
+    "creator": {},
+    "meta": {
+        "@href": "https://164.99.19.72:8443/SentinelRESTServices/objects/user/111",
+        "type": "user"
+    },
+    "moddate": "2015-11-23T16:04:35.983Z",
+    "modifier": {},
+    "name": "admin",
+    "perms": {
+        "all-alerts": true,
+        "all-events": true,
+        "chg-pwd": false,
+        "isadmin": true,
+        "perm-set": [
+            "manageIncidents",
+            "solutionDesigner",
+            "runReports",
+            "manageCorrelation",
+            "viewNetflowData",
+            "netflowProvider",
+            "viewInternalEvents",
+            "_adminRole_"
+        ]
+    },
+    "roles": [
+        "https://164.99.19.72:8443/SentinelRESTServices/objects/role/C3939B90-D674-102C-B20A-000FFE4D958B",
+        "https://164.99.19.72:8443/SentinelRESTServices/objects/role/A1111A11-A111-111A-A11A-111AAA1A111A"
+    ],
+    "state": "ACTIVE",
+    "status": 200,
+    "statusText": "OK",
+    "sys": false,
+    "tenant-id": 1,
+    "tenant-name": "default"
+}

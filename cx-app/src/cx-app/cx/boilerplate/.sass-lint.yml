@@ -1,0 +1,111 @@
+# Rule Configuration
+options:
+    formatter: stylish
+files:
+    include: 'app/_assets/sass/**/*.s+(a|c)ss'
+    ignore: [
+        'app/_assets/sass/_globals/_mixins.scss',
+        'app/_assets/sass/_globals/_variables.scss',
+        'app/_assets/sass/_globals/_utility.scss',
+        'app/_assets/sass/_patterns/_layout.scss',
+        'app/_assets/sass/_patterns/_timeline.scss',
+        'app/_assets/sass/shame_escalate.scss',
+        'app/_assets/sass/shame2.scss'
+    ]
+    exclude: 'app/_assets/sass/_globals/_mixins.scss'
+rules:
+    # Extends
+    extends-before-mixins: 1
+    extends-before-declarations: 1
+    placeholder-in-extend: 0
+
+    # Mixins
+    mixins-before-declarations:
+        - 2
+        - exclude:
+            - breakpoint
+            - mq
+
+    # Line Spacing
+    one-declaration-per-line: 1
+    empty-line-between-blocks:
+        - 1
+        - include: true
+    single-line-per-selector: 1
+
+    # Disallows
+    no-debug: 1
+    no-duplicate-properties: 1
+    no-empty-rulesets: 1
+    no-extends: 0
+    no-ids: 0
+    no-important: 0
+    no-warn: 1
+    no-color-keywords: 1
+    no-invalid-hex: 1
+    no-css-comments: 1
+    no-url-protocols: 0
+    no-transition-all: 0
+    no-color-literals:
+        - 1
+        - allow-rgba: false
+    no-qualifying-elements:
+        - 0
+        - allow-element-with-attribute: true,
+        - allow-element-with-class: false,
+        - allow-element-with-id: true
+    no-mergeable-selectors:
+        - 0
+        - whitelist: ['.content']
+
+    # Style Guide
+    border-zero: 1
+    clean-import-paths:
+        - 1
+        - leading-underscore: false
+        - filename-extension: false
+    empty-args:
+        - 1
+        - include: true
+
+    hex-length: 1
+    hex-notation:
+        - 2
+        - style: lowercase
+    indentation:
+        - 2
+        - size: 4
+    leading-zero: 1
+    nesting-depth:
+        - 2
+        - max-depth: 6
+    property-sort-order:
+        - 0
+        - order: 'smacss'
+    quotes:
+        - 1
+        - style: double
+    variable-for-property: 1
+    zero-unit:
+        - 1
+        - include: false
+
+    # Nesting
+    force-attribute-nesting: 1
+    force-element-nesting: 0
+    force-pseudo-nesting: 1
+
+    # Inner Spacing
+    space-after-comma: 1
+    space-before-colon:
+        - 2
+        - include: false
+    space-after-colon: 1
+    space-before-brace: 1
+    space-before-bang: 1
+    space-after-bang: 1
+    space-between-parens: 1
+
+    # Final Items
+    trailing-semicolon: 1
+    final-newline: 1

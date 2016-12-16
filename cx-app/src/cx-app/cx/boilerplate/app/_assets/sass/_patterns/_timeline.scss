@@ -1,0 +1,99 @@
+@charset "utf-8";
+
+@import "../_globals/variables";
+@import "../_globals/mixins";
+
+// Timeline
+.timeline {
+    $list-entry-position: 24px;
+    $vertical-line-top-position: 40px;
+
+    margin-top: -20px;
+    position: relative;
+
+    &:after {
+        content: "";
+        position: absolute;
+        width: 1px;
+        background-color: $color-slate-grey;
+        left: $list-entry-position;
+        top: $vertical-line-top-position;
+        bottom: 0;
+        margin-left: -2px;
+    }
+
+    .timeline-block {
+        &-header {
+            @include border-radius(2px);
+            position: relative;
+            display: inline-block;
+            background-color: $color-slate-grey;
+            margin: $spacing-md 0 0 0;
+            padding: .2em .6em;
+            font-size: $theme-font-size-xs;
+            line-height: 1;
+            color: $color-white;
+            cursor: default;
+            z-index: 1;
+
+            &:first-child {
+                margin-top: 40px;
+            }
+        }
+
+        // Timeline Entry List - List that contains the changes for a given day
+        .timeline-entry-list {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+            margin-left: $list-entry-position;
+            margin-top: $spacing-base;
+
+            .timeline-entry-list-item {
+                position: relative;
+                list-style: none;
+                padding: 0 0 0 10px;
+                margin-top: $list-entry-position;
+
+                &:first-child {
+                    margin-top: 0;
+                }
+
+                &:before {
+                    $circle-radius: 10px;
+                    $circle-position: ($circle-radius / 2) + 1;
+                    @include border-radius($circle-radius);
+                    content: "";
+                    position: absolute;
+                    top: 2px;
+                    left: -#{$circle-position};
+                    border: solid 2px $color-slate-grey;
+                    background-color: $color-white;
+                    width: $circle-radius;
+                    height: $circle-radius;
+                    z-index: 1;
+                }
+
+                .list-item-time {
+                    margin: 0 0 8px;
+                    font-size: $theme-font-size-xs;
+                    color: $color-slate-grey;
+                }
+
+                .list-item-content {
+                    @include border-radius(4px);
+                    @include shadow-default();
+                    display: inline-block;
+                    border: solid 1px lighten($color-slate-grey, 30%);
+                    background-color: $color-white;
+                    padding: $spacing-sm $spacing-base;
+                }
+            }
+
+            .system-entry {
+                background-color: $color-grey !important;
+            }
+        }
+
+    }
+}

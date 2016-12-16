@@ -1,0 +1,21 @@
+.DS_Store
+.idea
+.project
+.tmp
+.sass-cache
+workspace.xml
+npm-debug.log
+dist
+target
+node_modules
+build
+
+# bower_components will be commited for build and archive purposes
+app/_assets/bower
+app/_assets/css
+logs
+index.html
+components/landing/landing.html
+components/login/login.html
+layout/global/navigation-global.html
+layout/sidebar/navigation-sidebar.html

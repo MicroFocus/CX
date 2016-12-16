@@ -1,0 +1,74 @@
+.ui-grid .ui-grid-pager-panel {
+  position: fixed; }
+
+.tab-content {
+  background-color: #fff; }
+  .tab-content .tabs-hidden .patternNav .nav-tabs {
+    display: none; }
+  .tab-content .tabs-hidden .patternNav .tabs-flat .nav-tabs {
+    display: block; }
+  .tab-content .tabs-hidden .patternNav .tab-content {
+    border-top: 0; }
+  .tab-content .tabs-hidden .codeTabs .nav-tabs {
+    display: block; }
+  .tab-content .nav-tabs {
+    padding: 10px;
+    border-bottom: 0; }
+    .tab-content .nav-tabs li {
+      margin-right: 10px; }
+      .tab-content .nav-tabs li a {
+        border: 0;
+        border-radius: 4px;
+        border-bottom-color: #fff;
+        background-color: #e6e6e6;
+        color: #53626a; }
+      .tab-content .nav-tabs li.active a {
+        border: 2;
+        border-radius: 4px;
+        border-bottom-color: #dedede;
+        background-color: #fff;
+        color: #53626a; }
+  .tab-content .tab-content {
+    padding-top: 10px;
+    border-top: 1px solid #bdbdbd;
+    background: #fff; }
+  .tab-content .tabs-flat {
+    padding: 5px 0; }
+
+.palette {
+  display: inline-table;
+  width: 100%;
+  margin-left: 0;
+  font-size: 0;
+  list-style: none; }
+  .palette h3 {
+    color: #bdbdbd;
+    font-size: 14px;
+    font-weight: 600; }
+  .palette li {
+    display: table-cell;
+    width: 16%;
+    margin-right: 1%;
+    padding-right: 1%;
+    color: #fff;
+    font-size: 13px;
+    text-align: center; }
+  .palette span {
+    display: block; }
+  .palette .color {
+    height: 80px;
+    padding-top: 1.5em; }
+    .palette .color.light {
+      color: #fff; }
+    .palette .color.dark {
+      color: #000; }
+  .palette .color:first-child {
+    border: 5px solid #000;
+    border-radius: 5px 5px 0 0; }
+  .palette .color:last-child {
+    border-radius: 0 0 5px 5px; }
+
+.patterns-description h4 {
+  margin-top: 2rem; }
+
+/*# sourceMappingURL=patterns.css.map */

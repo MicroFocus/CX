@@ -1,0 +1,18 @@
+{
+    "title": "",
+    "desc": "",
+    "icon": "",
+    "structure": "6-6",
+    "rows": [
+        {
+            "columns": [
+                {
+                    "styleClass": "col-md-6"
+                },
+                {
+                    "styleClass": "col-md-6"
+                }
+            ]
+        }
+    ]
+}

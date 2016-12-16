@@ -1,0 +1,32 @@
+<div class="modal-header">
+    <div class="pull-right widget-icons">
+        <a href="" ng-if="widget.reload" ng-click="reload()" aria-label="Reload widget content">
+            <i class="fa fa-refresh"></i>
+            <span class=sr-only>
+                Reload widget content
+            </span>
+        </a>
+        <a href="" ng-click="closeDialog()" aria-label="Reload widget content">
+            <i class="fa fa-remove"></i>
+            <span class="sr-only">
+                Reload widget content
+            </span>
+        </a>
+    </div>
+    <h4 class="modal-title">
+        {{ definition.title }}
+    </h4>
+</div>
+<div class="modal-body">
+    <adf-widget-content model="definition" content="widget"></adf-widget-content>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-primary"
+            type="button"
+            role="button"
+            ng-click="closeDialog()"
+            aria-label="Close the widget"
+            translate>
+        Close
+    </button>
+</div>

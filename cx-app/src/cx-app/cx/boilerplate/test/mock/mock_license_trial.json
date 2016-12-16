@@ -1,0 +1,110 @@
+{
+    "objects": [
+        {
+            "meta": {
+                "type": "system-license",
+                "@href": "https://172.16.68.134:8443/SentinelRESTServices/objects/system-license"
+            },
+            "max-eps": 2147483647,
+            "hide-tagged-events": false,
+            "license-list": [
+                {
+                    "serial": "12022014",
+                    "permanent": false,
+                    "installed-key": "B0GPMBFqtngnAB/X7jOAjxzMSRZ/RjvK6jA5tBREPsyf6rKrbXQD7Z0/+I+nDg98UVnSdTaa2oqxQv665t80JNvFBm+ja807LL3XxRFR8sTq40LhCLVDkgzzqP7AjsVZWqkz1n+XXufWmiaVcoXUnzBeY2aCzIxmaABcPSzbZ8Rc1ImoyWG5B+QiPr2CCd1igWdzsHl/o1mra21mOukCVCi2cnfb2ROkN+Xg2vKDWwya3XjCTEpDDUTftLTC+W9JG87fuNbxV9jyzhljLq7tddeJYjn9JF6jxkSqN7xf8xR8S4gWF/y9QW8g8BatigUEZSCUAvgmZwqSiAoZLfGEXc57I9Lq+Ggifrqso1bY3q0J18mLZdJQfDnfXK/wbmfe",
+                    "eps": 2147483647,
+                    "expiration": "2016-05-25T03:59:59.000Z",
+                    "host-id": "00000000",
+                    "applications": "Actions,Active-View,COLLECTOR,Correlation,Data-Restoration,Data-Synchronization,Distributed-Search,Rules,Security-Intelligence,Sentinel-7,Sentinel-Link,Unrestricted-Event-Store",
+                    "unlimited-eps": true,
+                    "plugins": [
+                        {
+                            "identity-track-collector": false,
+                            "name": "COLLECTOR",
+                            "expiration": "2016-05-25T03:59:59.000Z",
+                            "type": "COLLECTOR"
+                        }
+                    ]
+                },
+                {
+                    "serial": "12022014",
+                    "permanent": true,
+                    "installed-key": "B0GPMBFqtnjSY7W6xc+QohS3GSIb2N5TCYgPrD5jk8IoKZ0xSHkmYRmMaO41DsbIxlthPQhwau06scPM0LdMc94SVRJSMLZP9QT3jYsjs4thWXcs0W+sHZ7Id/GWuSDCUstJr4bBbSULd8bcElZascc1mxlp/zrVAjZccwioXEM7NQf1ThnszigBgsOBRd//",
+                    "eps": 25,
+                    "expiration": "292278994-08-17T07:12:55.807Z",
+                    "host-id": "00000000",
+                    "applications": "Actions,Active-View,COLLECTOR,Restricted-Event-Store,Sentinel-7",
+                    "unlimited-eps": false,
+                    "plugins": [
+                        {
+                            "identity-track-collector": false,
+                            "name": "COLLECTOR",
+                            "expiration": "292278994-08-17T07:12:55.807Z",
+                            "type": "COLLECTOR"
+                        }
+                    ]
+                }
+            ],
+            "licensed-plugin-list": [
+                {
+                    "identity-track-collector": false,
+                    "name": "COLLECTOR",
+                    "type": "COLLECTOR"
+                }
+            ],
+            "is-trial": true,
+            "expiration": "2016-05-25T03:59:59.000Z",
+            "server-date": "2016-05-25T03:59:59.000Z",
+            "version": 64687233633456,
+            "licensed-application-list": [
+                {
+                    "name": "Sentinel-7"
+                },
+                {
+                    "name": "Correlation",
+                    "expiration": "2016-05-25T03:59:59.000Z"
+                },
+                {
+                    "name": "Actions"
+                },
+                {
+                    "name": "Restricted-Event-Store"
+                },
+                {
+                    "name": "Data-Synchronization",
+                    "expiration": "2016-05-25T03:59:59.000Z"
+                },
+                {
+                    "name": "Distributed-Search",
+                    "expiration": "2016-05-25T03:59:59.000Z"
+                },
+                {
+                    "name": "Sentinel-Link",
+                    "expiration": "2016-05-25T03:59:59.000Z"
+                },
+                {
+                    "name": "Rules",
+                    "expiration": "2016-05-25T03:59:59.000Z"
+                },
+                {
+                    "name": "Data-Restoration",
+                    "expiration": "2016-05-25T03:59:59.000Z"
+                },
+                {
+                    "name": "Security-Intelligence",
+                    "expiration": "2016-05-25T03:59:59.000Z"
+                },
+                {
+                    "name": "Unrestricted-Event-Store",
+                    "expiration": "2016-05-25T03:59:59.000Z"
+                },
+                {
+                    "name": "COLLECTOR"
+                },
+                {
+                    "name": "Active-View"
+                }
+            ]
+        }
+    ]
+}

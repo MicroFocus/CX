@@ -1,0 +1,305 @@
+@charset "utf-8";
+
+@import "../_globals/variables";
+@import "../_globals/mixins";
+
+$table-row-selected-color:  lighten($color-light-blue, 26%);
+$table-row-striped:         lighten($color-slate-grey, 50%);
+
+// ----------------------------------------
+// Table
+// ----------------------------------------
+
+// Table default
+.table {
+    // Cells
+    > thead,
+    > tbody,
+    > tfoot {
+        > tr {
+            > th,
+            > td {
+                padding: $spacing-xs $spacing-base;
+                border-bottom: 1px solid $color-grey;
+                color: $color-primary-text;
+                font-size: $theme-font-size-sm;
+                font-weight: $theme-font-weight-normal;
+                vertical-align: top;
+            }
+        }
+    }
+
+    // Table Header Cells
+    > thead > tr > th {
+        border-bottom: 2px solid $table-border-color;
+        color: $color-slate-grey;
+        font-size: $theme-font-size-xs;
+        vertical-align: bottom;
+    }
+}
+
+// Table Striped
+.table-striped {
+    > tbody > tr {
+        &:nth-of-type(odd) {
+            background-color: $color-white;
+        }
+
+        &:nth-of-type(even) {
+            background-color: $table-row-striped;
+        }
+
+    }
+}
+
+// Table with hover color
+.table-hover tr {
+    &:hover td {
+        border-bottom: solid 1px $color-primary-blue;
+        background-color: $table-row-selected-color;
+    }
+}
+
+// Table Utility Classes
+.cell-value-break {
+    word-break: break-word;
+}
+
+
+// ----------------------------------------
+// UI Grid
+// ----------------------------------------
+// UI Grid Auto Height
+.ui-grid-viewport,
+.ui-grid-canvas,
+.alerts-grid,
+.trigger-events-grid {
+    height: auto !important;
+}
+
+.ui-grid {
+    border: 0;
+}
+
+// Turning off background for selected cells.
+.ui-grid-cell-focus {
+    background: transparent;
+}
+
+.ui-grid-selection-row-header-buttons {
+    margin: 0;
+    padding: 0;
+    border-color: transparent;
+    background-color: transparent;
+}
+
+.ui-grid .ui-grid-render-container-body .ui-grid-viewport {
+    overflow-x: auto !important;
+}
+
+.ui-grid-contents-wrapper {
+
+    // UI Grid Header
+    .ui-grid-header {
+        border: solid 1px darken($color-grey, 15%);
+        border-right-width: 0;
+        border-left-width: 0;
+
+        .ui-grid-top-panel {
+            background: none;
+            background-color: $color-white;
+            background-image: none;
+            color: $color-primary-text;
+            font-size: $theme-font-size-xs;
+            font-weight: $theme-font-weight-normal;
+
+            .ui-grid-header-cell {
+                border: 0;
+            }
+        }
+
+        // Column Header Sorting
+        .sortable .ui-grid-header-cell-primary-focus > .ui-grid-invisible {
+            visibility: visible;
+        }
+
+        .sortable .ui-grid-header-cell-primary-focus .ui-grid-invisible .ui-grid-icon-blank {
+            @extend .icon-sortable;
+
+            &:before {
+                @extend .icon;
+            }
+        }
+    }
+
+    // Checkbox column
+    .ui-grid-row,
+    .ui-grid-header-cell {
+        .ui-grid-icon-ok {
+            &:before {
+                @extend .icon;
+                font-size: 16px;
+                margin: 0;
+            }
+
+            @extend .icon-square-outline;
+            @include opacity(1);
+            color: desaturate(lighten($color-slate-grey, 30%), 20%);
+
+            &:hover {
+                color: $color-slate-grey;
+            }
+        }
+
+        &-selected .ui-grid-icon-ok,
+        .ui-grid-all-selected.ui-grid-icon-ok {
+            @extend .icon-checkbox-square;
+            color: $color-primary-blue;
+        }
+
+        &-error .ui-grid-icon-ok {
+            color: darken($ui-grid-row-error-border-color, 10%);
+        }
+    }
+
+    .ui-grid-header-cell .ui-grid-icon-ok,
+    .ui-grid-header-cell .ui-grid-all-selected.ui-grid-icon-ok {
+        margin-left: 2px;
+    }
+
+    // Header cell - Sorted
+    .ui-grid-cell-contents.ui-grid-header-cell-primary-focus {
+        color: $color-accent;
+        font-weight: $theme-font-weight-semibold;
+    }
+
+    // Header Cell - Unsorted
+    [aria-sort="none"] .ui-grid-header-cell-primary-focus {
+        color: $color-slate-grey;
+        font-weight: $theme-font-weight-normal;
+
+        i {
+            color: desaturate(lighten($color-slate-grey, 20%), 20%);
+        }
+    }
+
+    // Header Cell - Sort order
+    .ui-grid-header-cell .ui-grid-sort-priority-number {
+        bottom: initial;
+        margin-left: -6px;
+    }
+
+    .ui-grid-render-container-body .ui-grid-viewport {
+        overflow: auto !important;
+    }
+
+    // Grid Content Row
+    .ui-grid-row {
+        &:nth-child(even) .ui-grid-cell,
+        &:nth-child(odd) .ui-grid-cell {
+            @include simple-transition();
+
+            border-right: 0;
+            border-bottom: solid 1px $color-grey;
+            background-color: $color-white;
+            color: $color-primary-text;
+            font-size: $theme-font-size-sm;
+            font-weight: $theme-font-weight-normal;
+        }
+
+        &:hover .ui-grid-cell {
+            border-bottom: solid 1px darken($color-grey, 8%);
+            background-color: darken($color-white, 3%);
+        }
+    }
+
+    // Grid Content Row selected
+    .ui-grid-row-selected {
+        &:nth-child(even) .ui-grid-cell,
+        &:nth-child(odd) .ui-grid-cell {
+            border-bottom: solid 1px $color-primary-blue;
+            background-color: $table-row-selected-color;
+        }
+    }
+
+    .ui-grid-row-error {
+        &:nth-child(even) .ui-grid-cell,
+        &:nth-child(odd) .ui-grid-cell {
+            border-bottom: solid 1px $ui-grid-row-error-border-color;
+            background-color: $ui-grid-row-error-bg;
+            color: $color-primary-text !important;
+        }
+    }
+}
+
+// UI Grid Pagination
+.ui-grid .ui-grid-pager-panel {
+    position: relative;
+    padding: 4px 16px;
+    border: solid 1px darken($color-grey, 10%);
+    border-right: 0;
+    border-left: 0;
+    background-color: $color-grey;
+    font-size: $theme-font-size-xs;
+    font-weight: $theme-font-weight-normal;
+    box-sizing: border-box;
+
+    .ui-grid-pager-count {
+        display: inline-block;
+        margin-right: $spacing-md;
+        float: none;
+    }
+
+    .ui-grid-pager-label {
+        vertical-align: middle;
+    }
+
+    $pager-control-height: 22px;
+
+    .grid-pager-group {
+        display: inline-block;
+        margin-right: $spacing-md;
+        line-height: normal;
+        vertical-align: middle;
+    }
+
+    .grid-pager-label {
+        display: inline-block;
+        vertical-align: middle;
+    }
+
+    .grid-pager-navigation {
+        display: inline-block;
+        margin-right: $spacing-md;
+        vertical-align: middle;
+
+        .btn-pager {
+            @include border-radius(2px);
+
+            min-width: 20px;
+            height: $pager-control-height;
+            margin-right: $spacing-xs;
+            padding: 0 6px;
+            border: solid 1px $color-slate-grey;
+            background-color: $color-slate-grey;
+            color: $color-white;
+            box-sizing: border-box;
+
+            .icon {
+                font-size: $theme-font-size-xs;
+            }
+
+            &[disabled] {
+                @include opacity(.3);
+            }
+        }
+    }
+
+    .grid-pager-goto input,
+    .grid-pager-row-count select {
+        height: $pager-control-height;
+        margin: 0 $spacing-sm;
+        padding: 0 0 0 4px;
+        vertical-align: middle;
+    }
+}

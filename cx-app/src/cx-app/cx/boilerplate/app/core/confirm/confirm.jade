@@ -1,0 +1,13 @@
+div.modal-body
+    div.modal-content-confirm
+        i.icon.icon-warning-triangle
+        div.confirm-message-title
+            | {{ data.text }}
+
+div.modal-footer
+    button.btn.btn-primary(ng-click="ok()")
+        i.icon.icon-check
+        | {{ data.ok }}
+    button.btn.btn-default.pull-left(ng-click="cancel()")
+        i.icon.icon-cancel
+        | {{ data.cancel }}

@@ -1,0 +1,106 @@
+@charset "utf-8";
+
+@import "../_globals/variables";
+@import "../_globals/mixins";
+
+// Charts
+.d3-chart-bar {
+    position: relative;
+    padding: $spacing-sm 0;
+
+    text {
+        font-family: $base-font-family;
+        font-weight: $theme-font-weight-semibold;
+        font-size: $theme-font-size-xs;
+        fill: $color-secondary-text;
+    }
+
+    .tick-text {
+        fill: $color-slate-grey;
+        font-weight: $theme-font-weight-bold;
+    }
+
+    .axis-label {
+        fill: $color-secondary-text;
+    }
+}
+
+.d3-chart-type-priority {
+    @mixin text-properties() {
+        fill-opacity: 1;
+
+        text {
+            @include transform(translateY(-4px));
+            fill: $color-accent;
+            font-size: $theme-font-size-base;
+            font-weight: $theme-font-weight-bold;    
+        }
+    }
+
+    [class*="#{$priority-class-name}"] {
+        @include text-properties();
+    }
+
+    // Priority 0 - 19
+    @for $i from 0 through 19 {
+        .#{$priority-class-name}-#{$i},
+        .#{$priority-class-name}-#{$i} rect {
+            fill: $priority-0-19;
+        }
+    }
+
+    // Priority 20 - 49
+    @for $i from 20 through 49 {
+        .#{$priority-class-name}-#{$i},
+        .#{$priority-class-name}-#{$i} rect {
+            fill: $priority-20-49;
+        }
+    }
+
+    // Priority 50 - 79
+    @for $i from 50 through 79 {
+        .#{$priority-class-name}-#{$i},
+        .#{$priority-class-name}-#{$i} rect {
+            fill: $priority-50-79;
+        }
+    }
+
+    // Priority 80 - 99
+    @for $i from 80 through 99 {
+        .#{$priority-class-name}-#{$i},
+        .#{$priority-class-name}-#{$i} rect {
+            fill: $priority-80-99;
+        }
+    }
+
+    // Priority 100
+    .#{$priority-class-name}-100,
+    .#{$priority-class-name}-100 rect {
+        fill: $priority-100;
+    }
+
+    .nvd3 {
+        .nv-x .nv-axis .tick line {
+            fill: none;
+            stroke: none;
+        }
+
+        .nv-bar {
+            cursor: pointer;
+            fill-opacity: 1;
+        }
+
+        .nv-y .nv-axis .tick line {
+            stroke-dasharray: 3;
+        }
+
+        .nv-y .nv-axis path {
+            display: none;
+        }
+
+    }
+   
+}
+
+
+

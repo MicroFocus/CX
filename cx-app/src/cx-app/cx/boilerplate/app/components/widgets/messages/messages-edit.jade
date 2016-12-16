@@ -1,0 +1,22 @@
+form.form-inline(role="form")
+    div
+        label(translate)
+            | Links
+
+    div.row.spacer-out-bottom-xs(ng-repeat="link in config.links")
+        div.col-md-4
+            label.sr-only(for="title-{{ $index }}", translate)
+                | Title
+            input.form-control(type="text", id="title-{{ $index }}", placeholder="{{ 'Title' | translate }}", ng-model="link.title", required)
+        div.col-md-6.no-gutters
+            label.sr-only(for="href-{{ $index }}", translate)
+                | URL
+            input.form-control(type="url", id="href-{{ $index }}", placeholder="{{ 'http://example.com' | translate }}", ng-model="link.url", required)
+        div.col-md-2
+            button.btn.btn-danger-alt(type="button", ng-click="removeLink($index)", aria-label="{{ 'Remove Link' | translate }}")
+                i.icon.icon-only.icon-minus-circle
+    hr.hr-default.hr-spacer-xs
+    button.btn.btn-sm.btn-default(type="button", ng-click="addLink()")
+        i.icon.icon-plus
+        span(translate)
+            | Add Link

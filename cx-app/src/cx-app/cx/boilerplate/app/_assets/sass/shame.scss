@@ -1,0 +1,80 @@
+@charset "utf-8";
+
+@import "_globals/variables";
+@import "_globals/mixins";
+
+.nav-header-wrapper {
+    left: 0;
+    position: fixed;
+    right: 0;
+    top: 0;
+    z-index: 10;
+}
+
+.nav-content-wrapper {
+    bottom: 0;
+    position: fixed;
+    width: 100%;
+    // top will be set dynamically based on #nav-header-wrapper height, so don't set top explicitly here.
+}
+
+.main-content {
+    height: 100%;
+    margin-left: 60px;
+    margin-top: 0;
+    overflow-x: hidden;
+    overflow-y: auto;
+    width: calc(100% - 60px);
+}
+
+.main-content.expanded {
+    margin-left: 98px;
+}
+
+.main-content.collapsed {
+    margin-left: 60px;
+}
+
+.main-content-padding {
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+// Section header for overview in Alert Details.
+h3.header {
+    border-bottom: 1px solid $color-light-blue;
+    margin: 0;
+    padding: 0 0 10px;
+}
+
+.ui-grid-pager-count-container {
+    float: left;
+}
+
+.ui-grid-selection-row-header-buttons {
+    background-color: transparent;
+    border-color: transparent;
+    margin: 0;
+    padding: 0;
+}
+
+.page-loader {
+    height: 100vh;
+    position: relative;
+    width: 100%;
+    z-index: 5;
+
+    .progress-indicator {
+        height: 100vh;
+        z-index: 5;
+    }
+}
+
+// hide arrow
+.tooltip.score-tooltip .tooltip-arrow {
+    display: none;
+}
+
+span.value.highlight {
+    background: $color-gold;
+}

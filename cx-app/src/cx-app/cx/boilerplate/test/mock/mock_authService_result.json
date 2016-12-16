@@ -1,0 +1,17 @@
+{
+    "auth-source": "DATABASE",
+    "createdate": "2015-11-23T16:04:35.983Z",
+    "creator": {},
+    "meta": {},
+    "moddate": "2015-11-23T16:04:35.983Z",
+    "modifier": {},
+    "name": "admin",
+    "perms": {},
+    "roles": ["Role1", "Role2"],
+    "state": "ACTIVE",
+    "status": 200,
+    "statusText": "OK",
+    "sys": false,
+    "tenant-id": 1,
+    "tenant-name": "default"
+}

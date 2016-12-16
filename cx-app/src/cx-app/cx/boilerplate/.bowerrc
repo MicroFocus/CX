@@ -1,0 +1,6 @@
+{
+    "directory": "./cx-app/src/cx-app/cx/boilerplate/app/_assets/bower/",
+    "resolvers": [
+        "bower-shrinkwrap-resolver"
+    ]
+}

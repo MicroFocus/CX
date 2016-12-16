@@ -1,0 +1,121 @@
+@charset "utf-8";
+
+@import "../_globals/variables";
+@import "../_globals/mixins";
+
+.vertical-nav {
+    margin: 0;
+    padding: 0;
+
+    li {
+        display: block;
+        margin: 10px;
+        padding: 0;
+
+        .list-item-title {
+            margin: 0 0 $spacing-xs;
+            color: $color-primary-text;
+            font-size: $theme-font-size-md;
+            font-weight: $theme-font-weight-semibold;
+        }
+
+        a {
+            cursor: pointer;
+        }
+
+        &.active {
+            background-color: white;
+        }
+    }
+}
+
+// List - Single Selection
+.list-selection-single {
+    margin: 0;
+    padding: 0;
+
+    li {
+        display: block;
+        margin: 0;
+        padding: 0;
+
+        .list-item {
+            @include border-radius(4px);
+            @include simple-transition();
+            margin-bottom: $spacing-sm;
+            position: relative;
+            display: block;
+            border: solid 1px lighten($color-slate-grey, 30%);
+            padding: $spacing-base;
+            text-decoration: none;
+
+            &-title {
+                font-size: $theme-font-size-md;
+                font-weight: $theme-font-weight-semibold;
+                color: $color-primary-text;
+                margin: 0 0 $spacing-xs;
+            }
+
+            &-content {
+                color: $color-slate-grey;
+            }
+
+            &:hover {
+                background-color: lighten($color-light-blue, 26%);
+                border-color: $color-primary-blue;
+
+                &:before {
+                    @extend .icon;
+                    @extend .icon-plus;
+                    position: absolute;
+                    right: $spacing-base;
+                    top: 50%;
+                    $top-margin: ($theme-font-size-lg / 2) - $theme-font-size-lg;
+                    margin-top: $top-margin;
+                    font-size: $theme-font-size-lg;
+                    color: $color-primary-blue;
+                }
+
+            }
+
+        }
+
+    }
+
+}
+
+dl.dl-horizontal {
+    position: relative;
+
+    dt {
+        width: 100px;
+        font-weight: $theme-font-weight-normal;
+        padding-top: $spacing-xs;
+        padding-bottom: $spacing-xs;
+        text-align: left;
+
+        &:after {
+            position: absolute;
+            content: "";
+            background-color: lighten($color-slate-grey, 40%);
+            height: 1px;
+            left: 0;
+            right: 0;
+            margin-top: -$spacing-xs;
+        }
+
+        &:first-child {
+            &:after {
+                background-color: transparent;
+            }
+        }
+
+    }
+
+    dd {
+        @extend .text-muted;
+        margin-left: 110px;
+        padding-top: $spacing-xs;
+    }
+
+}

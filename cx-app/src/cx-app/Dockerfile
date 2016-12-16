@@ -16,6 +16,5 @@ RUN . /opt/penv/bin/activate; python3 setup.py develop
 
 COPY conf/supervisor-app.conf /etc/supervisor/conf.d/supervisord.conf
 
-
 EXPOSE 80
 CMD ["supervisord", "-n"]
