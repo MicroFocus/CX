@@ -18,7 +18,6 @@
      build: ../src/cx-app/cx/boilerplate
      ports:
        - "8080:8080"
-     command: /bin/bash -c "npm install && grunt replace:bowerForDev && bower install && npm rebuild node-sass && grunt dist"
    nginx:
      build: nginx
      ports:
