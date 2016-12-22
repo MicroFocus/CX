@@ -23,4 +23,7 @@
      ports:
        - "80:80"
      command: /bin/bash -c "nginx -g 'daemon off;'"
+     depends_on:
+       - web
+       - boilerplate
 

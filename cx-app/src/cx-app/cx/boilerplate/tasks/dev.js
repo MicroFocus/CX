@@ -55,8 +55,8 @@ module.exports = function(grunt) {
         "usemin",
 
         "jshint",
-        "jscs",
-        "sasslint",
+        //"jscs",
+        //"sasslint",
 
         // Run copy:sourceHTML which copies the native HTML files (not compiled from jade) to build directory for localization
         // This task is only needed in dev for the generation of pot file which is checked in by the developer
