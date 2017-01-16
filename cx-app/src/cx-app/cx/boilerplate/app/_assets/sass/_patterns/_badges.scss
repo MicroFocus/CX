@@ -90,7 +90,7 @@
 .priority-radio-group {
 
     input {
-        &[type=radio] {
+        &[type="radio"] {
             position: absolute;
             margin: 0;
             padding: 0;
@@ -121,7 +121,7 @@
         }
 
         input {
-            &[type=radio] {
+            &[type="radio"] {
 
                 &:focus + .rb-label {
                     @include box-shadow(0, 0, 6px, 0, $color-primary-blue);
@@ -131,7 +131,7 @@
                     padding-left: 10px;
                     color: $color-white;
 
-                    &:before {
+                    &::before {
                         padding-right: 4px;
                         content: "\2713";
                     }
@@ -184,7 +184,7 @@
 
     label {
         input {
-            &[type=radio] {
+            &[type="radio"] {
                 &:checked + .rb-label {
 
                     // Priority 0 - 19
@@ -261,7 +261,7 @@
     // Selected or checked state
     label {
         input {
-            &[type=radio] {
+            &[type="radio"] {
                 &:checked + .rb-label {
 
                     @for $i from 0 through 5 {

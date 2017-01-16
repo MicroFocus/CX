@@ -16,10 +16,20 @@
 
     /**
      * @ngdoc directive
-     * @name patternLibrary
+     * @name patterns_directive
      * @memberof app.patterns
      * @summary
      *  This directive contains the loading indicator that will show mostly during UI-Router resolves.
+     *
+     * @example
+     * The initial holder directive, filled out from the $scope.patterns defined in the controller.
+     * <div patterns="pattern" src="pattern.path" source="source"></div>
+     *
+     * This in turns fills out the following template with the pertinant parts:
+     *  <div ng-class="{ 'col-md-6': patterns.layout === 2, 'col-md-12': patterns.layout === 1 }">
+     *  <div class="patterns-description"></div>
+     *  <div class="pattern"></div>
+     *  <code class="language-markup">{{ code.code | trim }}</code>
      *
      * @requires $http
      * @requires $templateCache
@@ -27,6 +37,16 @@
      * @requires $q
      * @requires $timeout
      * @requires logger
+     *
+     * @property {string} restrict - "A" Attribute Only
+     * @property {boolean} replace - "false" Does not replace template
+     * @property {string} templateUrl - "components/patterns/patterns.template.html"
+     * @property {Object} scope
+     * @property {string} scope.patterns - "=" pass through object
+     * @property {string} scope.src - "=" Ends up mapping to the $scope.patterns.children[i].path.  This is parsed into the templates
+     * @property {string} scope.source - "=" pass through object
+     * @property {Function} scope.link
+     * @property {Function} scope.compile
      */
     function patterns ($http, $templateCache, $compile, $q, $timeout, logger) {
         var totalcount = 0;
@@ -40,24 +60,74 @@
                 src: "=",
                 source: "="
             },
+            /**
+             * @ngdoc function
+             * @name link
+             * @memberof app.patterns.patterns_directive
+             * @summary
+             * The Link Function of the Patterns Direction.
+             *
+             * @description
+             * Has two exposed functions; showTab and watch the tab elements.
+             *
+             * @param scope
+             */
             link: function (scope) {
+                /**
+                 * @ngdoc function
+                 * @name showTab
+                 * @memberof app.patterns.patterns_directive.link
+                 * @summary
+                 * Sets scope.tab to passed in tab value.
+                 *
+                 * @param tab
+                 */
                 scope.showTab = function (tab) {
-                    console.log("showTab: ", tab);
                     scope.tab = tab;
                 };
 
+                /**
+                 * @ngdoc watch
+                 * @name watch_tab
+                 * @memberof app.patterns.patterns_directive.link
+                 * @summary
+                 * Sets scope.tab to null, then to new value.
+                 *
+                 * @param tab
+                 */
                 scope.$watch("tab", function (tab) {
                     console.log("watch tag: ", tab);
                     scope.tab = null;
                     scope.tab = tab;
                 });
             },
+
+            /**
+             * @ngdoc function
+             * @name compile
+             * @memberof app.patterns.patterns_directive
+             * @summary
+             * Compiles the element using the attributes.
+             *
+             * @param {Object} element
+             * @param {Object} attr
+             */
             compile: function (element, attr) {
                 var count = 0;
 
                 return function (scope, element) {
                     var changeCounter = 0;
 
+                    /**
+                     * @ngdoc watch
+                     * @name patterns_watch
+                     * @memberof app.patterns.patterns_directive.compile
+                     * @summary
+                     * Watches the patterns attributes, and if it finds the JSON object updated it sets the
+                     * totalcount and the scope.patterns.
+                     *
+                     * @param {Object} newValue
+                     */
                     scope.$watch("patterns", function (newValue) {
                         // logger.info("patterns watch fired: ", newValue);
                         if (newValue) {
@@ -67,14 +137,56 @@
                         }
                     }, true);
 
+                    /**
+                     * @ngdoc function
+                     * @name showTab
+                     * @memberof app.patterns.patterns_directive.compile
+                     * @summary
+                     * Sets scope.tab to passed in tab value.
+                     *
+                     * @todo determine if this duped code within link is needed in both places
+                     * @param tab
+                     */
                     scope.showTab = function (tab) {
                         scope.tab = tab;
                     };
 
+                    /**
+                     * @ngdoc watch
+                     * @name watch_tab
+                     * @memberof app.patterns.patterns_directive.compile
+                     * @summary
+                     * Sets scope.tab to null, then to new value.
+                     *
+                     * @todo determine if this duped code within link is needed in both places
+                     * @param tab
+                     */
                     scope.$watch("tab", function (tab) {
                         scope.tab = tab;
                     });
 
+                    /**
+                     * @ngdoc watch
+                     * @name source_watch
+                     * @memberof app.patterns.patterns_directive.compile
+                     * @summary
+                     * If the source attribute is populated; we loop through the JSON object to find the codeTypes and poulate that.
+                     *
+                     * @property {Object} scope.codeTypes
+                     * @property {Object} scope.tabs
+                     * @property {string} scope.tabs.title - maps to code match.  (html|css|sass|scss|js)
+                     * @property {string} scope.tabs.code - maps to key+1 (next item in array) OR if no match +2.
+                     * @todo - figure out the plus+2 match in the codeTypes
+                     *
+                     * @example
+                     * // Always in groups of 3.
+                     * // First item always empty.
+                     * $scope.codeTypes: [
+                     *      "",
+                     *      "js",
+                     *      "↵  HTML/JS CONTENT"
+                     * ]
+                     */
                     scope.$watch("source", function (source) {
                         scope.tabs = [];
                         if (source) {
@@ -117,37 +229,45 @@
                         }
                     });
 
+                    /**
+                     * @ngdoc watch
+                     * @name src_watch
+                     * @memberof app.patterns.patterns_directive.compile
+                     * @summary
+                     * If the src attribute is modified we loop through and parse the markdown.
+                     *
+                     * @property {Object} scope.codeTypes
+                     * @property {Object} scope.tabs
+                     *
+                     * @requires $http
+                     */
                     scope.$watch("src", function (src) {
                         var thisChangeId = ++changeCounter;
-                        // logger.info("srcExp watch fired: ", src);
 
                         if (src) {
+                            // Pull the markdown document
                             $http.get(src, {
                                 cache: $templateCache
                             }).success(function (response) {
-                                /**
-                                 * Parsing Markdown files
-                                 * @type {Object}
-                                 */
                                 var parsedContent = {
                                     yaml: "",
                                     markdown: "",
                                     html: "",
                                     meta: {}
                                 };
+                                // @todo document this weird regex
                                 var re = /^(-{3}(?:\n|\r)([\w\W]+?)-{3})?([\w\W]*)*/;
                                 var results = re.exec(response.trim());
                                 var conf = {};
                                 var yamlOrJson; // Flag to check if we're reading markdown or json
                                 var name = "content"; // Conf element to find
-                                /* Add description */
+                                // Elements on
                                 var $description = element.find(".patterns-description");
                                 var $example = element.find(".pattern");
                                 var code = element.find("code"); // the raw code to display
                                 if (thisChangeId !== changeCounter) {
                                     return;
                                 }
-                                // logger.info("GOT RESULT: ", results);
 
                                 /* Increment counter */
                                 count++;
@@ -198,14 +318,13 @@
                                     var codeTrimmed = codeText.replace(/(^[\-,\n,\r]+```.*\n)+/g, "");
 
                                     /* Adds codes to the code block */
-                                    // code.text(conf.content.trim());
                                     code.text(codeTrimmed);
 
                                     /* Highlighting */
-                                    // logger.info("CODE HIGHLIGHTING else", code.text);
                                     hljs.configure({useBR: true});
                                     hljs.initHighlighting();
 
+                                    // @todo remove this jquery
                                     $("div.code").each(function (i, block) {
                                         hljs.highlightBlock(block);
                                     });
@@ -214,11 +333,20 @@
                                     // hljs.highlight("HTML", code);
                                 }
 
-                            }).error(function () {
-                                if (thisChangeId === changeCounter) {
-                                    element.html("");
+                            }).error(
+                                /**
+                                 * @ngdoc callback
+                                 * @name error_callback
+                                 * @memberof app.patterns.patterns_directive.compile
+                                 * @summary
+                                 * If there is an error calling the http pattern, empty the element
+                                 */
+                                function () {
+                                    if (thisChangeId === changeCounter) {
+                                        element.html("");
+                                    }
                                 }
-                            });
+                            );
                         } else {
                             element.html("");
                         }

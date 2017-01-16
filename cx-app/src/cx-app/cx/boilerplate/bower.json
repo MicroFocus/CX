@@ -33,7 +33,7 @@
         "Sortable": "1.3.0",
         "jquery": "~2.2.4",
         "angular-marked": "^1.2.2",
-        "adf-angular-dashboard-framework": "https://Tstephens:88Rolltide@secmgmtgit.provo.novell.com:8443/scm/sen/adf-dashboard-framework.git#v0.13.c",
+        "adf-angular-dashboard-framework": "https://USERNAME:PASSWORD@secmgmtgit.provo.novell.com:8443/scm/sen/adf-dashboard-framework.git#v0.13.c",
         "js-yaml": "~3.5.2",
         "highlightjs": "^9.7.0"
     },

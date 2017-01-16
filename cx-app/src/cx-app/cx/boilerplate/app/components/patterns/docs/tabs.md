@@ -9,8 +9,8 @@ description: |
   
   #### Considerations
   These are considerations
-  - Try not to nest tabs directly (subtabs).  Pattern typically isn't clear to users.
-  - Tab title length is a concern, especially with i18n.
+  - Don't nest tabs directly (subtabs).  Pattern typically isn't clear to users.
+  - Tab title length is a concern, especially with i18n.  Pay attention to the number of top-level tabs and horizontal spacing.
   - No actions in a tab header.
 
   #### Links

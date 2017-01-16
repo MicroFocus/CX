@@ -102,7 +102,7 @@
             logger.dev("DashboardController activated");
             //jscs:disable
             vm.dashboard = {
-                title: "Sample 01",
+                title: "Example Dashboard",
                 structure: "6-6",
                 rows: [{
                     columns: [{

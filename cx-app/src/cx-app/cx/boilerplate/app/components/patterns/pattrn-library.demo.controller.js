@@ -1,13 +1,6 @@
 (function () {
     "use strict";
 
-    /**
-     * @ngdoc overview
-     * @name app.patterns
-     * @memberof app.widgets
-     * @summary
-     *
-     **/
     angular
         .module("app.patterns")
         .controller("demoController", PatternLibraryDemoController)
@@ -35,7 +28,8 @@
      *  The Pattern Library Module Demo Controller
      * @requires $scope
      * @requires {@Link app.core.logger}
-     * @requires config - the widget Config object.
+     * @requires growl
+     * @requires $templateCache
      * @constructor
      */
     function PatternLibraryDemoController ($scope,

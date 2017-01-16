@@ -2,10 +2,10 @@ link(rel="stylesheet", src="components/patterns/patterns.css")
 script(type="text/javascript")
     |   //<![CDATA[
     |   if(document.createStyleSheet) {
-    |       document.createStyleSheet('http://localhost:9000/components/patterns/patterns.css');
+    |       document.createStyleSheet('http://0.0.0.0:8080//components/patterns/patterns.css');
     |   }
     |   else {
-    |   var styles = "@import url('http://localhost:9000/components/patterns/patterns.css');";
+    |   var styles = "@import url('http://0.0.0.0:8080//components/patterns/patterns.css');";
     |   var newSS=document.createElement('link');
     |   newSS.rel='stylesheet';
     |   newSS.href='data:text/css,'+escape(styles);
@@ -16,9 +16,15 @@ div.row-fluid
     div.tabbable.tabs-left
         ul.col-md-1.vertical-nav.secondary-nav
             li(ng-repeat="category in patterns")
-                span.list-item-title
+                a.list-item-title(href=""
+                    data-toggle="category.slug"
+                    data-target="category.slug"
+                    ng-class="{'btn-toggle-details': !isActive, 'btn-toggle-details btn-collapse': isActive}"
+                    class="btn-toggle-details"
+                    ng-init="isActive = true"
+                    ng-click="isActive = !isActive")
                     | {{ category.name }}
-                ul.vertical-nav(ng-repeat="pattern in category.children")
+                ul.vertical-nav(ng-repeat="pattern in category.children", id="category.slug" uib-collapse="!isActive" class="rbm-content-details collapse")
                     li(ng-class="{ 'active' : pattern.active === true }")
                         a(ng-click="showTab($parent.$index, $index)")
                             | {{ pattern.name }}

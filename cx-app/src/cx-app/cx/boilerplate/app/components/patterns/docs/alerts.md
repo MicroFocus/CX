@@ -21,9 +21,9 @@ description: |
   - Success
   
   #### Implement
-  To implement just include the following directive:
+  To implement just include the following directive: (note: limit-messages is optional, as is inline)
   ```html
-  <div class="inline-notification" growl reference="1" inline="true"></div>
+  <div class="inline-notification" growl reference="1" inline="true" limit-messages="XXX"></div>
   ```
   
   #### Options /  Global Configuration
@@ -89,13 +89,22 @@ description: |
   
 html: |
   <div ng-controller="demoController">
+      <h4>Default Notifications - Limited to 2</h4>
       <div class="container-fluid">
-          <div class="inline-notification" growl reference="1" inline="true"></div>
+          <div class="inline-notification" growl reference="1" inline="true" limit-messages="2"></div>
           <div class="btn-group" role="group">
               <button ng-click="basicUsage('warning', {referenceId: 1})" type="button" class="btn btn-warning">Warning</button>
               <button ng-click="basicUsage('info', {referenceId: 1})" type="button" class="btn btn-info">Info</button>
               <button ng-click="basicUsage('danger', {referenceId: 1})" type="button" class="btn btn-danger">Danger</button>
               <button ng-click="basicUsage('success', {referenceId: 1})" type="button" class="btn btn-success">Success</button>
+          </div>
+      </div>
+      <h4>Custom Notifications</h4>
+      <div class="container-fluid">
+          <div class="inline-notification" growl reference="2" inline="true"></div>
+          <div class="btn-group" role="group">
+              <button ng-click="basicUsage('warning', {referenceId: 2, ttl: 10000, disableCountDown: false})" type="button" class="btn btn-warning">Time To Live</button>
+              <button ng-click="basicUsage('info', {referenceId: 1})" type="button" class="btn btn-info">Target Default Notification</button>
           </div>
       </div>
   </div>
@@ -134,3 +143,36 @@ $scope.basicUsage = function (type, config) {
             growl.error("Ups, error message here!", config);
     }
 };
+/**
+ * @name app.runBlock.growl_templateCache
+ * @memberof app.runBlock
+ * @desc
+ *  This updates the templateCache for Angular-Growl.  Extended template to remove the `&times;` close cross.
+ * @requires $templateCache
+ * @requires growl
+ */
+$templateCache.put("templates/growl/growl.html", "" +
+    "<div class=\"growl-container\" ng-class=\"wrapperClasses()\">" +
+        "<div class=\"growl-item alert\" " +
+            "ng-repeat=\"message in growlMessages.directives[referenceId].messages\" " +
+            "ng-class=\"alertClasses(message)\" " +
+            "ng-click=\"stopTimeoutClose(message)\">" +
+            "<button type=\"button\"" +
+                "class=\"close\"\ " +
+                "data-dismiss=\"alert\" " +
+                "aria-hidden=\"true\" " +
+                "ng-click=\"growlMessages.deleteMessage(message)\"" +
+                "ng-show=\"!message.disableCloseButton\">" +
+                    " " +
+            "</button>" +
+            "<button type=\"button\"" +
+                "class=\"close\"" +
+                "aria-hidden=\"true\"" +
+                "ng-show=\"showCountDown(message)\">" +
+                    "{{ message.countdown }}" +
+            "</button>" +
+            "<h4 class=\"growl-title\" ng-show=\"message.title\" ng-bind=\"message.title\"></h4>" +
+            "<div class=\"growl-message\" ng-bind-html=\"message.text\"></div>" +
+        "</div>" +
+    "</div>"
+);

@@ -11,10 +11,18 @@
 
     /**
      * @ngdoc filter
-     * @name TrimFilter
+     * @name trim_filter
      * @memberof app.patterns
      * @summary
-     *  The Pattern Library Trim Filter for the code blocks
+     *  The Pattern Library Trim Filter for the code blocks.  Basically trim the value of the passed in string.
+     *
+     * @description
+     * Using Regex we replace any spaces (or consecutive spaces) at the beginning AND/OR end of the string.
+     * We use Rgex instead of .trim to work with IE <9.
+     *
+     * @example
+     * <code class="language-markup">{{ code.code | trim }}</code>
+     *
      * @requires {@Link app.core.logger}
      */
     function TrimFilter (logger) {
@@ -22,7 +30,7 @@
             if (!angular.isString(value)) {
                 return value;
             }
-            return value.replace(/^\s+|\s+$/g, ""); // you could use .trim, but it's not going to work in IE<9
+            return value.replace(/^\s+|\s+$/g, "");
         };
     }
 })();
