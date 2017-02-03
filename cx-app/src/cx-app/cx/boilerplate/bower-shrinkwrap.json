@@ -1,80 +1,80 @@
 {
-  "https://github.com/FortAwesome/Font-Awesome.git": {
-    "4.6.3": "4.6.3"
-  },
-  "https://github.com/Hypercubed/angular-marked.git": {
-    "1.2.2": "c2e24ace21effa32d663d8c99266fca02e94a735"
-  },
-  "https://github.com/JanStevens/angular-growl-2.git": {
-    "0.7.9": "0.7.9"
-  },
-  "https://github.com/RubaXa/Sortable.git": {
-    "1.3.0": "1.3.0"
-  },
-  "https://github.com/a8m/angular-filter.git": {
-    "0.5.9": "0.5.9"
-  },
-  "https://github.com/angular-ui/angular-ui-router-bower.git": {
-    "0.2.18": "0.2.18"
-  },
-  "https://github.com/angular-ui/bootstrap-bower.git": {
-    "0.14.3": "0.14.3"
-  },
-  "https://github.com/angular-ui/bower-ui-grid.git": {
-    "3.1.1": "3.1.1"
-  },
-  "https://github.com/angular/bower-angular-animate.git": {
-    "1.4.12": "1.4.12"
-  },
-  "https://github.com/angular/bower-angular-aria.git": {
-    "1.4.12": "1.4.12"
-  },
-  "https://github.com/angular/bower-angular-cookies.git": {
-    "1.4.12": "1.4.12"
-  },
-  "https://github.com/angular/bower-angular-messages.git": {
-    "1.4.12": "1.4.12"
-  },
-  "https://github.com/angular/bower-angular-mocks.git": {
-    "1.4.12": "1.4.12"
-  },
-  "https://github.com/angular/bower-angular-resource.git": {
-    "1.4.12": "1.4.12"
-  },
-  "https://github.com/angular/bower-angular-sanitize.git": {
-    "1.4.12": "1.4.12"
-  },
-  "https://github.com/angular/bower-angular.git": {
-    "1.4.12": "1.4.12"
-  },
-  "https://github.com/chjj/marked.git": {
-    "0.3.6": "eddec20467c2d10c7769061ee9074e268500966f"
-  },
-  "https://github.com/components/highlightjs.git": {
-    "9.7.0": "01c06a001ed1adebcc0e9a1914cc118273624a1b"
-  },
-  "https://github.com/jquery/jquery-dist.git": {
-    "2.2.4": "2.2.4"
-  },
-  "https://github.com/moment/moment.git": {
-    "2.10.6": "2.10.6"
-  },
-  "https://github.com/nodeca/js-yaml.git": {
-    "3.5.5": "3.5.5"
-  },
-  "https://github.com/ocombe/ocLazyLoad.git": {
-    "1.0.9": "1.0.9"
-  },
-  "https://github.com/rubenv/angular-gettext.git": {
-    "2.2.1": "2.2.1"
-  },
-  "https://github.com/thoughtbot/bourbon.git": {
-    "4.2.7": "4.2.7"
-  },
-  "https://github.com/urish/angular-moment.git": {
-    "0.10.3": "0.10.3"
-  },
-  "${private_bower_registery_base_url}/sen/adf-dashboard-framework.git": {
-    "v0.13.c": "8aba275d178da99946dd687a081cc3bfce2bdfa8"
-  }
+    "https://github.com/FortAwesome/Font-Awesome.git": {
+        "4.6.3": "4.6.3"
+    },
+    "https://github.com/Hypercubed/angular-marked.git": {
+        "1.2.2": "c2e24ace21effa32d663d8c99266fca02e94a735"
+    },
+    "https://github.com/JanStevens/angular-growl-2.git": {
+        "0.7.9": "0.7.9"
+    },
+    "https://github.com/RubaXa/Sortable.git": {
+        "1.3.0": "1.3.0"
+    },
+    "https://github.com/a8m/angular-filter.git": {
+        "0.5.9": "0.5.9"
+    },
+    "https://github.com/angular-ui/angular-ui-router-bower.git": {
+        "0.2.18": "0.2.18"
+    },
+    "https://github.com/angular-ui/bootstrap-bower.git": {
+        "0.14.3": "0.14.3"
+    },
+    "https://github.com/angular-ui/bower-ui-grid.git": {
+        "3.1.1": "3.1.1"
+    },
+    "https://github.com/angular/bower-angular-animate.git": {
+        "1.4.12": "1.4.12"
+    },
+    "https://github.com/angular/bower-angular-aria.git": {
+        "1.4.12": "1.4.12"
+    },
+    "https://github.com/angular/bower-angular-cookies.git": {
+        "1.4.12": "1.4.12"
+    },
+    "https://github.com/angular/bower-angular-messages.git": {
+        "1.4.12": "1.4.12"
+    },
+    "https://github.com/angular/bower-angular-mocks.git": {
+        "1.4.12": "1.4.12"
+    },
+    "https://github.com/angular/bower-angular-resource.git": {
+        "1.4.12": "1.4.12"
+    },
+    "https://github.com/angular/bower-angular-sanitize.git": {
+        "1.4.12": "1.4.12"
+    },
+    "https://github.com/angular/bower-angular.git": {
+        "1.4.12": "1.4.12"
+    },
+    "https://github.com/chjj/marked.git": {
+        "0.3.6": "eddec20467c2d10c7769061ee9074e268500966f"
+    },
+    "https://github.com/components/highlightjs.git": {
+        "9.7.0": "01c06a001ed1adebcc0e9a1914cc118273624a1b"
+    },
+    "https://github.com/jquery/jquery-dist.git": {
+        "2.2.4": "2.2.4"
+    },
+    "https://github.com/moment/moment.git": {
+        "2.10.6": "2.10.6"
+    },
+    "https://github.com/nodeca/js-yaml.git": {
+        "3.5.5": "3.5.5"
+    },
+    "https://github.com/ocombe/ocLazyLoad.git": {
+        "1.0.9": "1.0.9"
+    },
+    "https://github.com/rubenv/angular-gettext.git": {
+        "2.3.8": "2.3.8"
+    },
+    "https://github.com/thoughtbot/bourbon.git": {
+        "4.2.7": "4.2.7"
+    },
+    "https://github.com/urish/angular-moment.git": {
+        "0.10.3": "0.10.3"
+    },
+    "${private_bower_registery_base_url}/iosi/adf.git": {
+        "release/0.12.0a": "a008291e9cfee6189064e38d3517220bb0a88dba"
+    }
 }
