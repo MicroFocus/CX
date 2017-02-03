@@ -1,0 +1,23 @@
+ version: '2'
+ services:
+   db:
+     image: postgres
+     environment:
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=cx
+   web:
+     build: ../src/cx-app
+     volumes:
+       - ./logs:/opt/logs
+     ports:
+       - "6001:6001"
+     depends_on:
+       - db
+   nginx:
+     build: nginx
+     ports:
+       - "80:80"
+     command: /bin/bash -c "nginx -g 'daemon off;'"
+     depends_on:
+       - web
