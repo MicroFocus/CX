@@ -78,3 +78,150 @@ h3.header {
 span.value.highlight {
     background: $color-gold;
 }
+
+//
+// The following are changes were made to create the Micro Focus IAS look and feel.  These changes are here for now, but
+// need to be worked into the correct place in the right *.scss files.
+//
+
+
+
+$mf-font: "Helvetica Neue Thin", "Helvetica Neue", Helvetica, Arial, san-serif;
+
+body {
+    background-color: white;
+}
+
+.panel {
+    background-color: #eef2f2;
+}
+
+.navbar-global {
+    background: linear-gradient(to right, #01A9E7, #007CD0);
+
+    .navbar-brand {
+        background: none;
+        margin-top: 0;
+
+        &:before {
+            color: #fff;
+            content: "CX-App";
+            font-family: $mf-font;
+            font-size: 22px;
+            font-weight: 200;
+            letter-spacing: 1px;
+        }
+    }
+
+    .navbar-nav {
+        > .dropdown {
+            span.icon {
+                &:before {
+                    content: "\e901";
+                }
+            }
+
+            a {
+                color: #fff;
+                font-family: $mf-font;
+                font-size: 13px;
+
+                &, &:hover, &:focus, &:active {
+                    background-color: transparent;
+                }
+
+                > .icon {
+                    display: none;
+                }
+            }
+
+        }
+
+        > .open > a {
+            &, &:hover, &:focus, &:active {
+                background-color: transparent;
+            }
+        }
+
+        .dropdown-menu {
+            background-color: #434c50;
+            top: 40px;
+
+            &::before {
+                display: none;
+            }
+
+            li {
+                margin-left: 5px;
+                margin-right: 5px;
+
+                a {
+                    border-radius: 2px;
+                    color: #f6f6f6;
+
+                    &:hover {
+                        background-color: #59656a;
+                    }
+
+                    .icon {
+                        display: none;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.dashboard-container {
+    .panel {
+        border: none;
+        box-shadow: initial;
+
+        .panel-heading {
+            border-bottom: none;
+
+            .panel-title {
+                color: #808080;
+                font-family: $mf-font;
+                font-size: 15px;
+                text-transform: uppercase;
+
+                .icon {
+                    display: none;
+                }
+            }
+        }
+    }
+
+    .btn {
+        background-color: #f6f9f8 !important;
+        border: 1px solid #dae1e1;
+        color: #434c50;
+        font-family: $mf-font;
+        font-size: 14px;
+
+        &:hover, &:focus, &:active {
+            border: 1px solid #01a9e7;
+            box-shadow: none;
+            color: #1773bb;
+            cursor: pointer;
+        }
+
+        > .icon {
+            display: none;
+        }
+    }
+
+    h2.dashboard-title {
+        color: #1f1f1f;
+        font-family: $mf-font;
+        font-size: 24px;
+        font-weight: unset;
+    }
+
+    small.label-block-inline {
+        color: #808080;
+        font-family: $mf-font;
+        font-size: 12px;
+    }
+}
