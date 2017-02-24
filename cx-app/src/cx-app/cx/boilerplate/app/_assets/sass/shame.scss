@@ -310,6 +310,7 @@ ul.secondary-nav {
     li {
         &.active {
             background-color: #f6f9f8;
+            border-radius: 2px;
 
             a {
                 color: #1773bb;
@@ -324,5 +325,17 @@ ul.secondary-nav {
                 text-decoration: none;
             }
         }
+    }
+}
+
+#main-content .tabbable.tabs-left {
+    > .secondary-nav {
+        width: 175px;
+    }
+
+    > .tab-content {
+        margin-left: 175px;
+        min-width: 600px;
+        width: auto;
     }
 }
