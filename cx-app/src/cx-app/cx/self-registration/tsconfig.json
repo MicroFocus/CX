@@ -1,0 +1,24 @@
+{
+    "compileOnSave": true,
+    "compilerOptions": {
+        "module": "commonjs",
+        "target": "es5",
+        "noImplicitAny": false,
+        "sourceMap": true,
+        "experimentalDecorators": true,
+        "emitDecoratorMetadata": true,
+        "moduleResolution": "node",
+        "pretty": true,
+        "stripInternal": true,
+        "noEmitHelpers": true,
+        "importHelpers": true,
+        "typeRoots": [
+            "node_modules/@types"
+        ],
+        "types": ["node", "mocha", "core-js"],
+        "outDir": ".ts-output"
+    },
+    "exclude": [
+        "node_modules"
+    ]
+}
