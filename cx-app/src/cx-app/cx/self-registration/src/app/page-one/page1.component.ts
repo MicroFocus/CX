@@ -6,8 +6,13 @@ import {Component} from 'ng-metadata/core';
     template: require('./page1.component.html')
 })
 export class PageOneComponent {
-    public Reg(): void
-        {
-            console.log('hey there');
-        }
+    public m_showCode = false;
+    
+    public showReg(): void {
+        this.m_showCode = true;
+    }
+
+    public showInfo(): void {
+        //no-op
+    }
 }
