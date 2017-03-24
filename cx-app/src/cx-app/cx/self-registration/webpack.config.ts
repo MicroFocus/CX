@@ -63,20 +63,22 @@ const commonConfig: webpack.Configuration = {
                 test: /\.js$/,
                 use: "source-map-loader",
                 enforce: "pre"
+            },
+            {
+                test: /\.(eot|svg|ttf|woff|woff2)$/,
+                loader: 'file-loader?name=fonts/[name].[ext]'
             }
         ]
     },
     plugins: [
         new CopyWebpackPlugin([
             {from: 'src/assets', to: './assets'},
-            {context: 'node_modules/mf-icons/dist', from: '**/*', to: './assets/mfux'},
             {context: 'node_modules/ng-mfux/dist', from: '*.css', to: './assets/mfux'},
             {context: 'node_modules/ng-mfux/dist', from: '*.js', to: './assets/mfux'}
         ]),
 
         // Dynamically add references to libraries from CDN and the assets folder
         new HtmlWebpackExternalsPlugin([
-            {name: 'mf-icons.css', url: 'assets/mfux/mf-icons.css'},
             {name: 'ng-mfux.css',  url: 'assets/mfux/ng-mfux.css'},
             {name: 'ng-mfux.js',   url: 'assets/mfux/ng-mfux.js'}
         ]),
