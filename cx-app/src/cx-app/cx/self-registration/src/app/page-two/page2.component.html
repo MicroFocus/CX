@@ -1,1 +1,69 @@
-This is content from page two!!!
+<div id="self-reg-page2" class="content" style="display: block;">
+    <div class="signin-div">
+        <span class="first">Enter your information</span>
+        <span class="icon_m_help image-but"></span>
+    </div>
+    
+    <div class="signin-div">
+        <div class="section-element">
+            <span class="label label-large">Title</span>
+            <span class="title-pre"><input type="radio"><span class="label-large-dark">Ms</span></span>
+            <span class="title-pre"><input type="radio"><span class="label-large-dark">Mr</span></span>
+            <span class="title-pre"><input type="radio"><span class="label-large-dark">Dr</span></span>
+        </div>
+        
+        <div class="section-element">
+            <mf-input-container class="mf-inline section-element">
+              <label class="label label-large" for="name">Name</label>
+              <input id="name" name="name" type="text" placeholder="Given name" ng-model="$ctrl.m_name">
+            </mf-input-container>
+            
+            <div>            
+                <mf-input-container class="mf-inline section-element">
+                  <label class="label label-large" for="famName"> </label>
+                  <input id="famName" name="famName" type="text" placeholder="Family name" ng-model="$ctrl.m_famName">
+                </mf-input-container>
+            </div>
+        </div>
+        
+        <div class="section-element">
+            <mf-input-container class="mf-inline section-element">
+              <label class="label label-large" for="title">Job Title</label>
+              <input id="title" name="title" type="text" placeholder="Title" ng-model="$ctrl.m_title">
+            </mf-input-container>
+        </div>
+        
+        <div class="section-element">
+            <mf-input-container class="mf-inline section-element">
+              <label class="label label-large" for="email">Email</label>
+              <input id="email" name="email" type="text" placeholder="Email" ng-model="$ctrl.m_email">
+            </mf-input-container>
+        </div>
+                
+        <div class="section-element">
+            <span class="label label-large">Birth date</span>
+            <span class="birth-date"><input placeholder="DD" ng-model="$ctrl.m_bDay"><input placeholder="MM" ng-model="$ctrl.m_bMonth"><input placeholder="YYYY" ng-model="$ctrl.m_bYear"></span>
+        </div>
+        
+        <div class="section-element">
+            <mf-input-container class="mf-inline section-element">
+              <label class="label label-large" for="zip">Zip code</label>
+              <input id="zip" name="zip" type="text" placeholder="Zip Code">
+            </mf-input-container>
+        </div>
+        
+        <div class="section-element">
+            <span class="label label-large">Office</span>
+            <span class="location-attr">
+                <select name="office" data-ng-options="office as office.name for office in $ctrl.m_officeOptions"
+                        data-ng-model="$ctrl.m_office">
+                </select>
+            </span>
+        </div>
+        
+    </div>
+    
+    <div class="closure-but signin-div">
+        <mf-button ui-sref="page3" ng-click="$ctrl.showNext()" id="self-reg-but2" class="action-but">Next</mf-button>
+    </div>
+</div>
