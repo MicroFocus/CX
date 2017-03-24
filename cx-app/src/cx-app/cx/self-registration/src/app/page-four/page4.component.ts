@@ -1,13 +1,12 @@
-import {Component} from 'ng-metadata/core';
+import { Component } from 'ng-metadata/core';
 
-@Component({
+@Component( {
     selector: 'app-page4',
-    styles: [require('./page4.component.scss')],
-    template: require('./page4.component.html')
-})
+    styles: [require( './page4.component.scss' )],
+    template: require( './page4.component.html' )
+} )
 export class PageFourComponent {
-    public Reg(): void
-        {
-            console.log('Hello from page 4');
-        }
+    public Reg(): void {
+        console.log( 'Hello from page 4' );
+    }
 }
