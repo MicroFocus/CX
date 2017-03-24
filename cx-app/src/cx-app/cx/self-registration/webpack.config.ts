@@ -79,6 +79,7 @@ const commonConfig: webpack.Configuration = {
 
         // Dynamically add references to libraries from CDN and the assets folder
         new HtmlWebpackExternalsPlugin([
+            {name: 'ux_access.css',  url: 'assets/css/ux_access.css'},
             {name: 'ng-mfux.css',  url: 'assets/mfux/ng-mfux.css'},
             {name: 'ng-mfux.js',   url: 'assets/mfux/ng-mfux.js'}
         ]),
