@@ -1,2 +1,62 @@
-body {
+.app-page {
+    display: block;
+    margin: 15px 15px 15px 45px;
+
+    .fields-title {
+        color: black;
+        font-size: 16px;
+
+        .mf-icon {
+            display: inline;
+        }
+    }
+
+    .fields-list {
+        > mf-input-container {
+            display: block;
+
+            &:first-of-type {
+                margin-top: 20px;
+            }
+
+            > label {
+                min-width: 100px;
+            }
+
+            > input {
+                min-width: 250px;
+                padding: 5px;
+            }
+        }
+    }
+
+    mf-tile.mf-small.social-tile {
+        height: 40px;
+        padding: 5px;
+        text-align: center;
+        width: 110px;
+
+        .mf-tile-content {
+            display: block;
+            height: 100%;
+            width: 100%;
+
+            img {
+                max-height: 100%;
+                max-width: 100%;
+            }
+        }
+    }
+
+    .button-bar {
+        margin-top: 25px;
+
+        > mf-button {
+            margin-left: 15px;
+
+            &:first-child {
+                margin-left: 0;
+            }
+        }
+    }
 }

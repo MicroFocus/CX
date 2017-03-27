@@ -16,7 +16,8 @@
             "node_modules/@types"
         ],
         "types": ["node", "mocha", "core-js"],
-        "outDir": ".ts-output"
+        "outDir": "target/js",
+        "sourceRoot": "workspace:self-registration/"
     },
     "exclude": [
         "node_modules"

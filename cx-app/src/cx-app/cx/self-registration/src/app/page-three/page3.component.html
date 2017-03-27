@@ -1,41 +1,43 @@
-<div class="sign-in-fields">
-    <div class="fields-title">
-        Enter your sign in information
+<div class="app-page">
+    <div class="fields-list">
+        <div class="fields-title">
+            Enter your sign in information <span class="mf-icon mf-icon-question_mark"></span>
+        </div>
+
+        <mf-input-container class="mf-inline">
+            <label for="username4">UserID</label>
+            <input id="username4" name="username" type="text" placeholder="UserID">
+        </mf-input-container>
+        <mf-input-container class="mf-inline">
+            <label for="password3">Password</label>
+            <input id="password3" name="password3" type="password" placeholder="Password">
+        </mf-input-container>
+        <mf-input-container class="mf-inline">
+            <label for="password3">Confirm</label>
+            <input id="password3" name="password3" type="password" placeholder="Confirm">
+        </mf-input-container>
     </div>
 
-    <mf-input-container class="mf-inline">
-        <label for="username4">UserID</label>
-        <input id="username4" name="username" type="text" placeholder="UserID">
-    </mf-input-container>
-    <mf-input-container class="mf-inline">
-        <label for="password3">Password</label>
-        <input id="password3" name="password3" type="password" placeholder="Password">
-    </mf-input-container>
-    <mf-input-container class="mf-inline">
-        <label for="password3">Confirm</label>
-        <input id="password3" name="password3" type="password" placeholder="Confirm">
-    </mf-input-container>
-</div>
+    <div class="social-options">
+        <div class="fields-title">
+            Or sign in using secure social account <span class="mf-icon mf-icon-question_mark"></span>
+        </div>
 
-<div class="social-options">
-    <div class="fields-title">
-        Or sign in using secure social account
+        <mf-tile-grid>
+            <mf-tile class="mf-small social-tile" ng-attr-title="">
+                <img src="/assets/images/facebook.png"></img>
+            </mf-tile>
+            <mf-tile class="mf-small social-tile" ng-attr-title="">
+                <img src="/assets/images/google_200.png"></img>
+            </mf-tile>
+            <mf-tile class="mf-small social-tile" ng-attr-title="">
+                <img src="/assets/images/linkedin_200.png"></img>
+            </mf-tile>
+        </mf-tile-grid>
     </div>
 
-    <mf-tile-grid>
-        <mf-tile class="mf-small" ng-attr-title="">
-            <img src="/assets/images/facebook.png"></img>
-        </mf-tile>
-        <mf-tile class="mf-small" ng-attr-title="">
-            <img src="/assets/images/google_200.png"></img>
-        </mf-tile>
-        <mf-tile class="mf-small" ng-attr-title="">
-            <img src="/assets/images/linkedin_200.png"></img>
-        </mf-tile>
-    </mf-tile-grid>
-</div>
-
-<div class="button-bar">
-    <mf-button ui-sref="page4">Next</mf-button>
-    <mf-button ui-sref="page1">Cancel</mf-button>
+    <div class="button-bar">
+        <mf-button ui-sref="page4">Next</mf-button>
+        <mf-button ui-sref="page1">Cancel</mf-button>
+    </div>
 </div>
