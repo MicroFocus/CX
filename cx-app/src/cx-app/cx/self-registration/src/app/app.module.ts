@@ -3,6 +3,7 @@ import { NgModule } from 'ng-metadata/core';
 import { RouterModule } from './shared/router.module';
 import { STATES } from './app.routing';
 import { AppComponent, PageOneComponent, PageTwoComponent, PageThreeComponent, PageFourComponent } from "./all.components";
+import { RegistrationService } from './shared/registration.service';
 
 @NgModule( {
     imports: [
@@ -17,8 +18,8 @@ import { AppComponent, PageOneComponent, PageTwoComponent, PageThreeComponent, P
         PageFourComponent
     ],
     providers: [
-        // angular 1 config functions are registered here
-        RouterModule.forRoot( STATES )
+        RouterModule.forRoot( STATES ),
+        RegistrationService
     ]
 } )
 export class AppModule {

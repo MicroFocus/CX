@@ -9,23 +9,23 @@
 
         <mf-input-container class="mf-inline">
             <label for="name">Name</label>
-            <div id="name" class="field-summary">Mr Jonathan Smithsonian</div>
+            <div id="name" class="field-summary">{{$ctrl.registrationInfo.name}}</div>
         </mf-input-container>
         <mf-input-container class="mf-inline">
             <label for="jobTitle">Job Title</label>
-            <div id="jobTitle" class="field-summary">Marketing Development Specialist</div>
+            <div id="jobTitle" class="field-summary">{{$ctrl.registrationInfo.jobTitle}}</div>
         </mf-input-container>
         <mf-input-container class="mf-inline">
             <label for="email">Email</label>
-            <div id="email" class="field-summary">jon.smithsonian@companyxyz.com</div>
+            <div id="email" class="field-summary">{{$ctrl.registrationInfo.email}}</div>
         </mf-input-container>
         <mf-input-container class="mf-inline">
             <label for="birthDate">Birth date</label>
-            <div id="birthDate" class="field-summary">March 17, 1990</div>
+            <div id="birthDate" class="field-summary">{{$ctrl.registrationInfo.birthDate}}</div>
         </mf-input-container>
         <mf-input-container class="mf-inline">
             <label for="location">Location</label>
-            <div id="location" class="field-summary">Cambridge</div>
+            <div id="location" class="field-summary">{{$ctrl.registrationInfo.location}}</div>
         </mf-input-container>
         <mf-input-container class="mf-inline">
             <label for="signInType">Sign in type</label>

@@ -7,12 +7,9 @@ import {Component, OnInit, Inject} from 'ng-metadata/core';
 })
 export class AppComponent implements OnInit {
 
-    private planet = 'Jupiter';
-
     constructor(@Inject('$log') private _$log: ng.ILogService) {
     }
 
     public ngOnInit() {
-        this._$log.log(`hello from ${this.planet} during OnInit`);
     }
 }
