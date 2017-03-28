@@ -64,6 +64,14 @@ You can run the web server against the dist folder as you did with the productio
 $ npm run server:dev
 ```
 
+#### Running in a Docker Container
+
+You can also run this application in a Docker container.  Change to the cx-app/docker folder and run the following command:
+
+```
+docker-compose -f docker-compose-self.yml up --force-recreate --build
+```
+
 #### Other Commands
 
 There are other commands available in the scripts section of the package.json file.  Below is a table listing the commands and their descriptions:
