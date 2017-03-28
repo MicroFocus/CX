@@ -14,17 +14,8 @@
        - "6001:6001"
      depends_on:
        - db
-   boilerplate:
-     build: ../src/cx-app/cx/boilerplate
+   self-registration:
+     build: ../src/cx-app/cx/self-registration
      ports:
-       - "8080:8080"
-   nginx:
-     build: nginx
-     ports:
-       - "80:80"
-     command: /bin/bash -c "nginx -g 'daemon off;'"
-     depends_on:
-       - web
-       - boilerplate
-
+       - "9080:8080"
 
