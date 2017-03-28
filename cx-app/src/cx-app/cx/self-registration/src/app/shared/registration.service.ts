@@ -13,8 +13,11 @@ export class RegistrationService {
         this.registrationInfo.name = 'Mr Jonathan Smithsonian';
         this.registrationInfo.jobTitle = 'Marketing Development Specialist';
         this.registrationInfo.email = 'jon.smithsonian@companyxyz.com';
-        this.registrationInfo.birthDate = 'March 17, 1990';
-        this.registrationInfo.location = 'Cambridge';
+        this.registrationInfo.birthDate = new Date('March 17, 1990');
+        this.registrationInfo.location = {
+            name: 'Cambridge',
+            id: 'cambridge'
+        };
     }
 
     getRegistrationInfo() {

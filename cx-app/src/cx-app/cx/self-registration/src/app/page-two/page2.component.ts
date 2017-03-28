@@ -1,4 +1,6 @@
-import {Component} from 'ng-metadata/core';
+import { RegistrationInfo } from '../shared/registration-info';
+import { RegistrationService } from '../shared/registration.service';
+import { Component, Inject, OnInit } from 'ng-metadata/core';
 
 @Component({
     selector: 'app-page2',
@@ -6,20 +8,21 @@ import {Component} from 'ng-metadata/core';
     template: require('./page2.component.html')
 })
 export class PageTwoComponent {
-    public m_name;
-    public m_famName;
-    public m_title;
-    public m_email;
-    public m_bDay;
-    public m_bMonth;
-    public m_bYear;
-    public m_zip;
-    public m_birth;
+    public m_name: string;
+    public m_famName: string;
+    public m_title: string;
+    public m_email: string;
+    public m_bDay: string;
+    public m_bMonth: string;
+    public m_bYear: string;
+    public m_zip: string;
     
     public m_officeOptions = [];
-    public m_office;
+    public m_office: Object;
 
-    constructor() {
+    private registrationInfo: RegistrationInfo;
+
+    constructor(private registrationService: RegistrationService) {
         this.m_officeOptions.push({
             name: 'Bangalore',
             id: 'bangalore'
@@ -43,10 +46,16 @@ export class PageTwoComponent {
         this.m_office = this.m_officeOptions[1];
     }
 
-    public showNext(): void {
-        console.log('m_name: ' + this.m_name);
-        this.m_birth = new Date(parseInt(this.m_bYear, 10), parseInt(this.m_bMonth, 10) - 1, parseInt(this.m_bDay, 10));
+    ngOnInit() {
+        this.registrationInfo = this.registrationService.getRegistrationInfo();
+    }
 
-        console.log('m_birth: ' + this.m_birth);
+    public showNext(): void {
+        this.registrationInfo.birthDate = new Date(parseInt(this.m_bYear, 10), parseInt(this.m_bMonth, 10) - 1, parseInt(this.m_bDay, 10));
+        this.registrationInfo.name = this.m_name;
+        this.registrationInfo.famName = this.m_famName;
+        this.registrationInfo.jobTitle = this.m_title;
+        this.registrationInfo.email = this.m_email;
+        this.registrationInfo.location = this.m_office;
     }
 }

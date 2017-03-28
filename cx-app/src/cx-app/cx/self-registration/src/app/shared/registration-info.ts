@@ -1,7 +1,9 @@
 export class RegistrationInfo {
     name: string;
+    famName: string;
     jobTitle: string;
     email: string;
-    birthDate: string;
-    location: string;
+    birthDate: Date;
+    location: Object;
+    zip: string;
 }
