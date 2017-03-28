@@ -6,8 +6,8 @@
         color: black;
         font-size: 16px;
 
-        .mf-icon {
-            display: inline;
+        > mf-button {
+            margin-left: 15px;
         }
     }
 
@@ -57,6 +57,24 @@
             &:first-child {
                 margin-left: 0;
             }
+        }
+    }
+
+    mf-button.mf-icon-button {
+        color: #808080;
+
+        &:hover {
+            color: #007cd0;
+        }
+    }
+
+    i.mf-icon {
+        position: relative;
+
+        &::before {
+            left: 3px;
+            position: absolute;
+            top: -2px;
         }
     }
 }
