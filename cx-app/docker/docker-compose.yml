@@ -18,6 +18,10 @@
      build: ../src/cx-app/cx/boilerplate
      ports:
        - "8080:8080"
+   self-registration:
+     build: ../src/cx-app/cx/self-registration
+     ports:
+       - "9080:8080"
    nginx:
      build: nginx
      ports:
@@ -26,4 +30,5 @@
      depends_on:
        - web
        - boilerplate
+       - self-registration
 
