@@ -72,6 +72,8 @@ You can also run this application in a Docker container.  Change to the cx-app/d
 docker-compose -f docker-compose-self.yml up --force-recreate --build
 ```
 
+Once the Docker container starts it will be running at http://localhost:9080.
+
 #### Other Commands
 
 There are other commands available in the scripts section of the package.json file.  Below is a table listing the commands and their descriptions:
