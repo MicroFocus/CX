@@ -1,10 +1,12 @@
-<div ng-If="!$ctrl.m_showCode" class="signin-div">
+<div ng-If="!$ctrl.m_showCode" class="signin-div app-page">
     <span class="first">Self register by requesting a registration code</span>
-    <span class="icon_m_help image-but"></span>
+    <mf-button class="mf-icon-button" title="More information">
+        <mf-icon icon="help_thick"></mf-icon>
+    </mf-button>
 </div>
 
-<div class="closure-but signin-div" ng-If="!$ctrl.m_showCode">
-    <mf-button ng-click="$ctrl.showReg()" id="self-reg-but0" class="action-but">Request Code</mf-button>
+<div class="signin-div" ng-If="!$ctrl.m_showCode">
+    <mf-button ng-click="$ctrl.showReg()" id="self-reg-but0">Request Code</mf-button>
 </div>
 
 <div id="self-reg-page1" class="content" style="display: block;" ng-If="$ctrl.m_showCode">
@@ -13,12 +15,12 @@
         <span class="first">Enter registration code sent to you</span>
         <span class="icon_m_help image-but"></span>
     </div>
-    
+
     <div class="signin-div">
         <div class="input-signin-username"><input placeholder="Enter Code"></div>
     </div>
-    
-    <div class="closure-but signin-div">
-        <mf-button ui-sref="page2" ng-click="$ctrl.showInfo()" id="self-reg-but1" class="action-but">Next</mf-button>
+
+    <div class="signin-div">
+        <mf-button ui-sref="page2" ng-click="$ctrl.showInfo()" id="self-reg-but1">Next</mf-button>
     </div>
 </div>

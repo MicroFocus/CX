@@ -11,6 +11,10 @@
         }
     }
 
+    input[type="radio"] {
+        min-width: initial;
+    }
+
     .fields-list {
         > mf-input-container {
             display: block;
