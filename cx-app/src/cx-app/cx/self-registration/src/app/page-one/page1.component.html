@@ -9,11 +9,12 @@
     <mf-button ng-click="$ctrl.showReg()" id="self-reg-but0">Request Code</mf-button>
 </div>
 
-<div id="self-reg-page1" class="content" style="display: block;" ng-If="$ctrl.m_showCode">
+<div id="self-reg-page1" class="signin-div app-page" ng-If="$ctrl.m_showCode">
     <div class="signin-div">
-        <span class="num1"></span>
         <span class="first">Enter registration code sent to you</span>
-        <span class="icon_m_help image-but"></span>
+        <mf-button class="mf-icon-button" title="More information">
+            <mf-icon icon="help_thick"></mf-icon>
+        </mf-button>
     </div>
 
     <div class="signin-div">

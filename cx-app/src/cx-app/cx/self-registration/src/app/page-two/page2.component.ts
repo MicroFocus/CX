@@ -8,17 +8,19 @@ import { Component, Inject, OnInit } from 'ng-metadata/core';
     template: require('./page2.component.html')
 })
 export class PageTwoComponent {
-    public m_name: string;
-    public m_famName: string;
-    public m_title: string;
-    public m_email: string;
-    public m_bDay: string;
-    public m_bMonth: string;
-    public m_bYear: string;
-    public m_zip: string;
+    private m_name: string;
+    private m_famName: string;
+    private m_title: string;
+    private m_email: string;
+    private m_bDay: string;
+    private m_bMonth: string;
+    private m_bYear: string;
+    private m_zip: string;
     
-    public m_officeOptions = [];
-    public m_office: Object;
+    private m_officeOptions = [];
+    private m_office: Object;
+
+    private m_salut: string = 'Ms.';
 
     private registrationInfo: RegistrationInfo;
 
@@ -57,5 +59,6 @@ export class PageTwoComponent {
         this.registrationInfo.jobTitle = this.m_title;
         this.registrationInfo.email = this.m_email;
         this.registrationInfo.location = this.m_office;
+        this.registrationInfo.salut = this.m_salut;
     }
 }

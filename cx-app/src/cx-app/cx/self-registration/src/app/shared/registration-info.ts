@@ -6,4 +6,5 @@ export class RegistrationInfo {
     birthDate: Date;
     location: Object;
     zip: string;
+    salut: string;
 }
