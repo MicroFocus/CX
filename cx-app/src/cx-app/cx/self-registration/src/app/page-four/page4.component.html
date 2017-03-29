@@ -21,11 +21,11 @@
         </mf-input-container>
         <mf-input-container class="mf-inline">
             <label for="birthDate">Birth date</label>
-            <div id="birthDate" class="field-summary">{{$ctrl.registrationInfo.birthDate}}</div>
+            <div id="birthDate" class="field-summary">{{$ctrl.registrationInfo.birthDate | date}}</div>
         </mf-input-container>
         <mf-input-container class="mf-inline">
             <label for="location">Location</label>
-            <div id="location" class="field-summary">{{$ctrl.registrationInfo.location}}</div>
+            <div id="location" class="field-summary">{{$ctrl.registrationInfo.location.name}}</div>
         </mf-input-container>
         <mf-input-container class="mf-inline">
             <label for="signInType">Sign in type</label>
