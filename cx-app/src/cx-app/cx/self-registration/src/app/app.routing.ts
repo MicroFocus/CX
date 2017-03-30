@@ -23,5 +23,10 @@ export const STATES: Ng1StateDeclaration[] = [
         name: 'page4',
         url: '/page4',
         template: '<app-page4/>'
+    },
+    {
+        name: 'portal',
+        url: '/portal',
+        template: '<app-user-portal/>'
     }
 ];
