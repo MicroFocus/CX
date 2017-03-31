@@ -17,4 +17,8 @@ export class PageFourComponent implements OnInit {
     ngOnInit() {
         this.registrationInfo = this.registrationService.getRegistrationInfo();
     }
+
+    createAccount() {
+        window.location.href = '/portal.html';
+    }
 }

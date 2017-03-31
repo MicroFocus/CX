@@ -24,7 +24,8 @@ const commonConfig: webpack.Configuration = {
     entry: {
         polyfills: path.resolve(__dirname, 'src/polyfills'),
         vendor: path.resolve(__dirname, 'src/vendor'),
-        main: path.resolve(__dirname, 'src/main')
+        main: path.resolve(__dirname, 'src/main'),
+        portal: path.resolve(__dirname, 'src/portal')
     },
     output: {
         path: path.resolve(__dirname, 'dist'),
@@ -57,7 +58,7 @@ const commonConfig: webpack.Configuration = {
             {
                 test: /\.html$/,
                 loader: 'html-loader',
-                exclude: /index\.html$/
+                exclude: /(index|portal)\.html$/
             },
             {   // All output '.js' files will have any sourcemaps re-processed by 'source-map-loader'.
                 test: /\.js$/,
@@ -77,7 +78,7 @@ const commonConfig: webpack.Configuration = {
             {context: 'node_modules/ng-mfux/dist', from: '*.js', to: './assets/mfux'}
         ]),
 
-        // Dynamically add references to libraries from CDN and the assets folder
+        // Dynamically add references to libraries from the assets folder
         new HtmlWebpackExternalsPlugin([
             {name: 'ux_access.css',  url: 'assets/css/ux_access.css'},
             {name: 'ng-mfux.css',  url: 'assets/mfux/ng-mfux.css'},
@@ -108,7 +109,17 @@ export const devConfig: webpack.Configuration = webpackMerge(commonConfig, {
             template: 'src/index.html',
             chunksSortMode: 'dependency',
             inject: true,
-            excludeChunks: ['tests'], // tests are only for tests.html
+            excludeChunks: ['tests', 'portal'],
+            livereload: true
+        }),
+
+        // Update the HTML file to inject a reference to our bundled JS
+        new HtmlWebpackPlugin({
+            filename: 'portal.html',
+            template: 'src/portal.html',
+            chunksSortMode: 'dependency',
+            inject: true,
+            excludeChunks: ['tests', 'main'],
             livereload: true
         }),
 
@@ -157,7 +168,29 @@ export const prodConfig: webpack.Configuration = webpackMerge(commonConfig, {
                 minifyCSS: true,
                 minifyURLs: true
             },
-            inject: true
+            inject: true,
+            excludeChunks: ['tests', 'portal']
+        }),
+
+        // Create HTML file that includes reference to bundled JS
+        new HtmlWebpackPlugin({
+            filename: 'portal.html',
+            template: 'src/portal.html',
+            chunksSortMode: 'dependency',
+            minify: {
+                removeComments: true,
+                collapseWhitespace: true,
+                removeRedundantAttributes: true,
+                useShortDoctype: true,
+                removeEmptyAttributes: true,
+                removeStyleLinkTypeAttributes: true,
+                keepClosingSlash: true,
+                minifyJS: true,
+                minifyCSS: true,
+                minifyURLs: true
+            },
+            inject: true,
+            excludeChunks: ['tests', 'main']
         }),
 
         // Eliminate duplicate packages when generating bundle

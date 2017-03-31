@@ -7,7 +7,7 @@ import {Component} from 'ng-metadata/core';
 })
 export class PageOneComponent {
     public m_showCode = false;
-    
+
     public showReg(): void {
         this.m_showCode = true;
     }

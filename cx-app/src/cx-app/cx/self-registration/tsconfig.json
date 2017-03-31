@@ -20,6 +20,7 @@
         "sourceRoot": "workspace:self-registration/"
     },
     "exclude": [
-        "node_modules"
+        "node_modules",
+        "dist"
     ]
 }
