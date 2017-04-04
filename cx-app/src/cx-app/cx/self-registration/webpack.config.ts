@@ -33,8 +33,6 @@ const commonConfig: webpack.Configuration = {
         filename: '[name].js'
     },
     externals: {
-        'angular': true,
-        'angular-ui-router': 'window["angular-ui-router"]'
     },
     resolve: {
         // Added '.ts' and '.tsx' as resolvable extensions.
@@ -74,15 +72,12 @@ const commonConfig: webpack.Configuration = {
     plugins: [
         new CopyWebpackPlugin([
             {from: 'src/assets', to: './assets'},
-            {context: 'node_modules/ng-mfux/dist', from: '*.css', to: './assets/mfux'},
-            {context: 'node_modules/ng-mfux/dist', from: '*.js', to: './assets/mfux'}
+            {context: 'node_modules/ng-mfux/dist', from: '*.css', to: './assets/mfux'}
         ]),
 
         // Dynamically add references to libraries from the assets folder
         new HtmlWebpackExternalsPlugin([
-            {name: 'ux_access.css',  url: 'assets/css/ux_access.css'},
-            {name: 'ng-mfux.css',  url: 'assets/mfux/ng-mfux.css'},
-            {name: 'ng-mfux.js',   url: 'assets/mfux/ng-mfux.js'}
+            {name: 'ng-mfux.css',  url: 'assets/mfux/ng-mfux.css'}
         ]),
 
         // Use CommonsChunkPlugin to create a separate bundle

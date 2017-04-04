@@ -1,8 +1,8 @@
 {
     "compileOnSave": true,
     "compilerOptions": {
-        "module": "commonjs",
-        "target": "es5",
+        "module": "CommonJS",
+        "target": "ES5",
         "noImplicitAny": false,
         "sourceMap": true,
         "experimentalDecorators": true,
@@ -15,12 +15,17 @@
         "typeRoots": [
             "node_modules/@types"
         ],
-        "types": ["node", "mocha", "core-js"],
+        "types": [
+            "node",
+            "mocha",
+            "core-js"
+        ],
         "outDir": "target/js",
         "sourceRoot": "workspace:self-registration/"
     },
     "exclude": [
         "node_modules",
-        "dist"
+        "dist",
+        "dist/**/*.js"
     ]
 }

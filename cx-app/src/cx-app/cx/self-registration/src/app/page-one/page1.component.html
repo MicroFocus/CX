@@ -1,27 +1,29 @@
 <div ng-If="!$ctrl.m_showCode" class="signin-div app-page">
-    <span class="first">Self register by requesting a registration code</span>
-    <mf-button class="mf-icon-button" title="More information">
-        <mf-icon icon="help_thick"></mf-icon>
-    </mf-button>
-</div>
-
-<div class="signin-div" ng-If="!$ctrl.m_showCode">
-    <mf-button ng-click="$ctrl.showReg()" id="self-reg-but0">Request Code</mf-button>
-</div>
-
-<div id="self-reg-page1" class="signin-div app-page" ng-If="$ctrl.m_showCode">
-    <div class="signin-div">
-        <span class="first">Enter registration code sent to you</span>
+    <div class="fields-title">
+        Self register by requesting a registration code
         <mf-button class="mf-icon-button" title="More information">
             <mf-icon icon="help_thick"></mf-icon>
         </mf-button>
     </div>
 
-    <div class="signin-div">
-        <div class="input-signin-username"><input placeholder="Enter Code"></div>
+    <div class="button-bar">
+        <mf-button ng-click="$ctrl.showReg()" id="self-reg-but0">Request Code</mf-button>
+    </div>
+</div>
+
+<div id="self-reg-page1" class="signin-div app-page" ng-If="$ctrl.m_showCode">
+    <div class="fields-title">
+        Enter registration code sent to you
+        <mf-button class="mf-icon-button" title="More information">
+            <mf-icon icon="help_thick"></mf-icon>
+        </mf-button>
     </div>
 
-    <div class="signin-div">
-        <mf-button ui-sref="page2" ng-click="$ctrl.showInfo()" id="self-reg-but1">Next</mf-button>
+    <mf-input-container class="registration-fields">
+        <input id="regCode" name="regCode" type="text" placeholder="Enter Code" />
+    </mf-input-container>
+
+    <div class="button-bar">
+        <mf-button ui-sref="page2">Next</mf-button>
     </div>
 </div>

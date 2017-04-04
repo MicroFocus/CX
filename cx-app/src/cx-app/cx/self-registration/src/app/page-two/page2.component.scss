@@ -2,4 +2,11 @@ app-page2 {
     .section-element {
         margin-top: 0;
     }
+
+    #birth-date {
+        input {
+            width: 50px;
+            min-width: 50px;
+        }
+    }
 }

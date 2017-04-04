@@ -4,5 +4,8 @@ import 'ng-metadata/platform-browser-dynamic';
 import 'ng-metadata/core';
 import 'ng-metadata/common';
 
-// For some reason, this doesn't work.  You have to use it in a script tag, otherwise you get an "Uncaught TypeError"
-// import 'ng-mfux/dist/ng-mfux';
+// Import Micro Focus UI library and icons
+// Importing this way "undefines" Reflect, since ng-mfux isn't currently compatible with reflect-metadata
+import 'imports-loader?Reflect=>{}!ng-mfux/dist/ng-mfux';
+import 'mf-icons/dist/mf-icons.css';
+// End Micro Focus UI library and icons

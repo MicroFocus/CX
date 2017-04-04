@@ -16,11 +16,11 @@ export class PageTwoComponent {
     private m_bMonth: string;
     private m_bYear: string;
     private m_zip: string;
-    
+
     private m_officeOptions = [];
     private m_office: Object;
 
-    private m_salut: string = 'Ms.';
+    private m_salut: string;
 
     private registrationInfo: RegistrationInfo;
 
