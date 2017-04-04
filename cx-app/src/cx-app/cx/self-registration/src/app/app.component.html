@@ -1,6 +1,15 @@
 <header>
     <mf-app-bar class="mf-large">
         <h3 class="mf-title">User Self Registration</h3>
+        <span class="mf-fill"></span>
+        <mf-button mf-toggle="accountMenu" title="Descriptive Title">
+            Theme
+            <mf-icon icon="down_thick"></mf-icon>
+        </mf-button>
+        <mf-menu name="accountMenu">
+            <mf-button ng-click="$ctrl.setTheme('standard')">Standard</mf-button>
+            <mf-button ng-click="$ctrl.setTheme('dark')">Dark</mf-button>
+        </mf-menu>
     </mf-app-bar>
     <mf-nav>
         <a ui-sref="page1" ui-sref-active="mf-active">Page 1</a>

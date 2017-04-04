@@ -2,7 +2,6 @@ import * as webpack from 'webpack';
 import * as webpackMerge from 'webpack-merge';
 import * as WebpackMd5Hash from 'webpack-md5-hash';
 import * as HtmlWebpackPlugin from 'html-webpack-plugin';
-import * as HtmlWebpackExternalsPlugin from 'html-webpack-externals-plugin';
 import * as LiveReloadPlugin from 'webpack-livereload-plugin';
 import * as CopyWebpackPlugin from 'copy-webpack-plugin';
 import * as DefinePlugin from 'webpack/lib/DefinePlugin';
@@ -73,11 +72,6 @@ const commonConfig: webpack.Configuration = {
         new CopyWebpackPlugin([
             {from: 'src/assets', to: './assets'},
             {context: 'node_modules/ng-mfux/dist', from: '*.css', to: './assets/mfux'}
-        ]),
-
-        // Dynamically add references to libraries from the assets folder
-        new HtmlWebpackExternalsPlugin([
-            {name: 'ng-mfux.css',  url: 'assets/mfux/ng-mfux.css'}
         ]),
 
         // Use CommonsChunkPlugin to create a separate bundle
