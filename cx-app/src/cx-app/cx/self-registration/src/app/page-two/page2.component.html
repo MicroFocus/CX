@@ -39,9 +39,15 @@
         <mf-input-container class="mf-inline section-element">
             <label class="label label-large">Birth date</label>
             <span id="birth-date">
-                <input placeholder="DD" ng-model="$ctrl.m_bDay">
-                <input placeholder="MM" ng-model="$ctrl.m_bMonth">
-                <input placeholder="YYYY" ng-model="$ctrl.m_bYear">
+                <select name="month" data-ng-options="month as month.name for month in $ctrl.m_months"
+                        data-ng-model="$ctrl.m_bMonth">
+                </select>
+                <select name="day" data-ng-options="day as day.name for day in $ctrl.m_days"
+                        data-ng-model="$ctrl.m_bDay">
+                </select>
+                <select name="year" data-ng-options="year as year.name for year in $ctrl.m_years"
+                        data-ng-model="$ctrl.m_bYear">
+                </select>
             </span>
         </mf-input-container>
 
@@ -62,7 +68,7 @@
     </div>
 
     <div class="button-bar">
-        <mf-button ui-sref="page4">Next</mf-button>
+        <mf-button ui-sref="page3">Next</mf-button>
         <mf-button ui-sref="page1">Cancel</mf-button>
     </div>
 </div>
