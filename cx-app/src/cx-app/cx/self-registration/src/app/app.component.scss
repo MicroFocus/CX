@@ -75,9 +75,9 @@
         position: relative;
 
         &::before {
-            left: 3px;
+            left: -1px;
             position: absolute;
-            top: -2px;
+            top: -1px;
         }
     }
 }

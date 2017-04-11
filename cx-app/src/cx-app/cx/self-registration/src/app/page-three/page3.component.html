@@ -13,7 +13,12 @@
         </mf-input-container>
         <mf-input-container class="mf-inline">
             <label for="password3">Password</label>
-            <input id="password3" name="password3" type="password" placeholder="Password">
+            <input id="password3" ng-model="$ctrl.password" ng-change="$ctrl.onPasswordChange()" name="password3" type="password" placeholder="Password">
+            <div class="strength-meter">
+                <div class="password-strength-base mf-icon mf-icon-strength5"></div>
+                <div class="password-strength-status mf-icon" ng-class="$ctrl.pwStrengthClass"></div>
+                <div class="password-strength-status-text">{{$ctrl.pwStrengthText}}</div>
+            </div>
         </mf-input-container>
         <mf-input-container class="mf-inline">
             <label for="password3">Confirm</label>
