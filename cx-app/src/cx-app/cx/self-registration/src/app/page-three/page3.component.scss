@@ -7,6 +7,23 @@ app-page3 {
         }
     }
 
+    .password-container {
+        margin-bottom: 20px;
+
+        .password-input-wrapper {
+            display: inline-block;
+            position: relative;
+
+            a {
+                bottom: -14px;
+                cursor: pointer;
+                font-size: 10px;
+                position: absolute;
+                right: 0;
+            }
+        }
+    }
+
     .strength-meter {
         display: inline-block;
         margin-left: 10px;

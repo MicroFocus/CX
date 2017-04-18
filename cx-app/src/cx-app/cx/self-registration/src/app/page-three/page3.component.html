@@ -11,9 +11,12 @@
             <label for="username4">UserID</label>
             <input id="username4" name="username" type="text" placeholder="UserID">
         </mf-input-container>
-        <mf-input-container class="mf-inline">
+        <mf-input-container class="mf-inline password-container">
             <label for="password3">Password</label>
-            <input id="password3" ng-model="$ctrl.password" ng-change="$ctrl.onPasswordChange()" name="password3" type="password" placeholder="Password">
+            <div class="password-input-wrapper">
+                <input id="password3" ng-model="$ctrl.password" ng-change="$ctrl.onPasswordChange()" ng-attr-type="{{$ctrl.showPassword ? 'text' : 'password'}}" name="password3" placeholder="Password">
+                <a ng-click="$ctrl.toggleShowHidePassword()">{{$ctrl.showPassword ? 'Hide' : 'Show'}}</a>
+            </div>
             <mf-button class="mf-icon-button" title="Generate Random Password" ng-click="$ctrl.openGeneratedPasswordsDialog()">
                 <mf-icon icon="configure_thin"></mf-icon>
             </mf-button>
@@ -25,7 +28,7 @@
         </mf-input-container>
         <mf-input-container class="mf-inline">
             <label for="password3">Confirm</label>
-            <input id="password3" name="password3" type="password" placeholder="Confirm">
+            <input id="password3" name="password3" ng-attr-type="{{$ctrl.showPassword ? 'text' : 'password'}}" placeholder="Confirm">
         </mf-input-container>
     </div>
 

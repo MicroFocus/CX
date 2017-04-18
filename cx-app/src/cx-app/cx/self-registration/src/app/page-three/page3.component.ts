@@ -10,6 +10,7 @@ export class PageThreeComponent {
     private pwStrengthText: string;
     private pwStrengthClass: string;
     private generatedPasswords: string[];
+    private showPassword: boolean = false;
 
     constructor(@Inject('MfDialogService') private mfDialogService) {
     }
@@ -80,5 +81,9 @@ export class PageThreeComponent {
     selectPassword(password: string, closeFn: any) {
         this.password = password;
         closeFn();
+    }
+
+    toggleShowHidePassword() {
+        this.showPassword = !this.showPassword;
     }
 }
