@@ -56,3 +56,16 @@ app-page3 {
         }
     }
 }
+
+.password-list {
+    display: flex;
+    flex-wrap: wrap;
+    padding-top: 5px;
+    width: 275px;
+
+    > a {
+        cursor: pointer;
+        margin-left: 0;
+        width: 130px;
+    }
+}

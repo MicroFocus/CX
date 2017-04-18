@@ -1,4 +1,4 @@
-import { Component } from 'ng-metadata/core';
+import { Component, Inject } from 'ng-metadata/core';
 
 @Component( {
     selector: 'app-page3',
@@ -9,6 +9,10 @@ export class PageThreeComponent {
     private password: string;
     private pwStrengthText: string;
     private pwStrengthClass: string;
+    private generatedPasswords: string[];
+
+    constructor(@Inject('MfDialogService') private mfDialogService) {
+    }
 
     onPasswordChange(): void {
         switch (this.password.length) {
@@ -42,5 +46,39 @@ export class PageThreeComponent {
                 this.pwStrengthText = 'Stronger';
                 break;
         }
+    }
+
+    openGeneratedPasswordsDialog() {
+        this.generatedPasswords = [
+            "sucti9on",
+            "compi\ler",
+            "benef-its",
+            "fibhl5re",
+            "p2unyrent",
+            "pers7oiN",
+            "infuriatwes",
+            "mark!ers",
+            "refun.d",
+            "epl7thic",
+            "cam+els",
+            "debati)ng",
+            "coliwa!kE",
+            "scl,5osEt",
+            "cNfde7ration",
+            "moratOriu9m",
+            "Numeri=c",
+            "d3oubter",
+            "f7reksth",
+            "di7sputed"
+        ];
+
+        this.mfDialogService.open({
+            controller: this
+        }, require('./password-suggestions.html'));
+    }
+
+    selectPassword(password: string, closeFn: any) {
+        this.password = password;
+        closeFn();
     }
 }

@@ -14,6 +14,9 @@
         <mf-input-container class="mf-inline">
             <label for="password3">Password</label>
             <input id="password3" ng-model="$ctrl.password" ng-change="$ctrl.onPasswordChange()" name="password3" type="password" placeholder="Password">
+            <mf-button class="mf-icon-button" title="Generate Random Password" ng-click="$ctrl.openGeneratedPasswordsDialog()">
+                <mf-icon icon="configure_thin"></mf-icon>
+            </mf-button>
             <div class="strength-meter">
                 <div class="password-strength-base mf-icon mf-icon-strength5"></div>
                 <div class="password-strength-status mf-icon" ng-class="$ctrl.pwStrengthClass"></div>
