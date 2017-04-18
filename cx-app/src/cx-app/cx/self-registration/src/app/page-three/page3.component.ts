@@ -7,6 +7,7 @@ import { Component, Inject } from 'ng-metadata/core';
 } )
 export class PageThreeComponent {
     private password: string;
+    private password2: string;
     private pwStrengthText: string;
     private pwStrengthClass: string;
     private generatedPasswords: string[];
@@ -80,6 +81,7 @@ export class PageThreeComponent {
 
     selectPassword(password: string, closeFn: any) {
         this.password = password;
+        this.password2 = password;
         closeFn();
     }
 
