@@ -82,6 +82,7 @@ export class PageThreeComponent {
     selectPassword(password: string, closeFn: any) {
         this.password = password;
         this.password2 = password;
+        this.onPasswordChange();
         closeFn();
     }
 

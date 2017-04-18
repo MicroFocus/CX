@@ -17,10 +17,10 @@
                 <input id="password3" ng-model="$ctrl.password" ng-change="$ctrl.onPasswordChange()" ng-attr-type="{{$ctrl.showPassword ? 'text' : 'password'}}" name="password3" placeholder="Password">
                 <a ng-click="$ctrl.toggleShowHidePassword()">{{$ctrl.showPassword ? 'Hide' : 'Show'}}</a>
             </div>
-            <mf-button class="mf-icon-button" title="Generate Random Password" ng-click="$ctrl.openGeneratedPasswordsDialog()">
+            <mf-button class="mf-icon-button" ng-if="!$ctrl.password" title="Generate Random Password" ng-click="$ctrl.openGeneratedPasswordsDialog()">
                 <mf-icon icon="configure_thin"></mf-icon>
             </mf-button>
-            <div class="strength-meter">
+            <div class="strength-meter" ng-if="$ctrl.password.length > 0">
                 <div class="password-strength-base mf-icon mf-icon-strength5"></div>
                 <div class="password-strength-status mf-icon" ng-class="$ctrl.pwStrengthClass"></div>
                 <div class="password-strength-status-text">{{$ctrl.pwStrengthText}}</div>
