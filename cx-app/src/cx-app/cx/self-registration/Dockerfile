@@ -1,6 +1,5 @@
 FROM ubuntu
 
-
 # Install Node.js and other dependencies
 RUN apt-get update && \
     apt-get -y install curl && \
@@ -15,7 +14,6 @@ RUN npm set progress=false
 
 RUN npm install -g webpack
 
-
 # NOTE: MUST UPDATE USERNAME/PASSWORD in /boilerplate/bower.json file.
 RUN echo -n | export GIT_SSL_NO_VERIFY=1
 RUN git config --global http.sslverify false
@@ -23,10 +21,8 @@ RUN echo -N | git config --global http.sslverify false
 RUN echo -n | openssl s_client -showcerts -connect https://secmgmtgit.provo.novell.com:8443 2>/dev/null  | sed -ne '/-BEGIN CERTIFICATE-/,/-END CERTIFICATE-/p'
 
 RUN npm install
-COPY . /usr/src/app/
-RUN npm run build:dev
 
 # Expose port
 EXPOSE 8080
-CMD ["npm", "run", "server:dev"]
+CMD npm run server:dev
 

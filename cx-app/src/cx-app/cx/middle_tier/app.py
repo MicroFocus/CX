@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import logging
 from flask import Flask, jsonify
 from flask import json
 
@@ -11,6 +12,12 @@ from flask import stream_with_context
 from flask import request
 import requests
 
+@application.before_first_request
+def setup_logging():
+    if not application.debug:
+        # In production mode, add log handler to sys.stderr.
+        application.logger.addHandler(logging.StreamHandler())
+        application.logger.setLevel(logging.INFO)
 
 @application.route('/<service_name>/<path:sub_url>', methods=['GET', 'POST', 'PUT', 'DELETE', 'PATCH'])
 def home(service_name, sub_url):

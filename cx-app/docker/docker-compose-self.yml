@@ -8,8 +8,12 @@
        - "6001:6001"
    self-registration:
      build: ../src/cx-app/cx/self-registration
+     volumes:
+       - ../src/cx-app/cx/self-registration:/usr/src/app
+       - /usr/src/app/node_modules
      ports:
        - "9080:8080"
+       - "35729:35729"
 
    nginx:
      build: nginx-self
@@ -18,4 +22,5 @@
      command: /bin/bash -c "nginx -g 'daemon off;'"
      depends_on:
        - web
+       - self-registration
 
