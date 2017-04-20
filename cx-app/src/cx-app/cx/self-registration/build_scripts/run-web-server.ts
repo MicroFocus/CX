@@ -35,7 +35,10 @@ if (argv.useWebpack) {
         // Use webpack-dev-middleware to serve up whatever webpack produces
         app.use(webpackDevMiddleware(webpackCompiler, {
             publicPath: webpackCompiler.options.output.publicPath,
-            stats: outputOptions
+            stats: outputOptions,
+            watchOptions: {
+                poll: true
+            }
         }));
     } catch (e) {
         console.log(chalk.red("An error has occurred while running Webpack:\n"));
