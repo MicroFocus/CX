@@ -20,6 +20,7 @@ def setup_logging():
         application.logger.setLevel(logging.INFO)
 
 @application.route('/<service_name>/<path:sub_url>', methods=['GET', 'POST', 'PUT', 'DELETE', 'PATCH'])
+@application.route('/<service_name>/', defaults={'sub_url': ''}, methods=['GET', 'POST', 'PUT', 'DELETE', 'PATCH'])
 def home(service_name, sub_url):
     with open("services.json") as services_file:
         services = json.load(services_file)
@@ -32,14 +33,14 @@ def home(service_name, sub_url):
 
     headers = {key: value for (key, value) in request.headers if key != 'Host'}
     if request.method == "GET":
-        req = requests.get(url, headers=headers, stream=True)
+        req = requests.get(url, headers=headers, stream=True, verify=False)
     elif request.method == "POST":
-        req = requests.post(url, data=request.data, headers=headers, stream=True)
+        req = requests.post(url, data=request.data, headers=headers, stream=True, verify=False)
     elif request.method == "DELETE":
-        req = requests.delete(url, data=request.data, headers=headers, stream=True)
+        req = requests.delete(url, data=request.data, headers=headers, stream=True, verify=False)
     elif request.method == "PUT":
-        req = requests.put(url, data=request.data, headers=headers, stream=True)
+        req = requests.put(url, data=request.data, headers=headers, stream=True, verify=False)
     elif request.method == "PATCH":
-        req = requests.patch(url, data=request.data, headers=headers, stream=True)
+        req = requests.patch(url, data=request.data, headers=headers, stream=True, verify=False)
     return Response(stream_with_context(req.iter_content()), content_type=req.headers['content-type'])
 
