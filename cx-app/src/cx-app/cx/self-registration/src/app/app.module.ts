@@ -4,6 +4,7 @@ import { RouterModule } from './shared/router.module';
 import { STATES } from './app.routing';
 import { AppComponent, PageOneComponent, PageTwoComponent, PageThreeComponent, PageFourComponent } from "./all.components";
 import { RegistrationService } from './shared/registration.service';
+import { SsprService } from './shared/sspr.service';
 
 @NgModule( {
     imports: [
@@ -19,7 +20,8 @@ import { RegistrationService } from './shared/registration.service';
     ],
     providers: [
         RouterModule.forRoot( STATES ),
-        RegistrationService
+        RegistrationService,
+        SsprService
     ]
 } )
 export class AppModule {

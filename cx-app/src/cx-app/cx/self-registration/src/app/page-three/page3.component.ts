@@ -1,3 +1,4 @@
+import { SsprService } from '../shared/sspr.service';
 import { Component, Inject } from 'ng-metadata/core';
 
 @Component( {
@@ -13,10 +14,15 @@ export class PageThreeComponent {
     private generatedPasswords: string[];
     private showPassword: boolean = false;
 
-    constructor(@Inject('MfDialogService') private mfDialogService) {
+    constructor(@Inject('MfDialogService') private mfDialogService, private ssprService: SsprService) {
     }
 
     onPasswordChange(): void {
+        this.updatePasswordStrengthMeter();
+    }
+
+    updatePasswordStrengthMeter() {
+        // For now, the strength only depends on how many characters are typed:
         switch (this.password.length) {
             case 0:
                 this.pwStrengthClass = '';
@@ -51,28 +57,10 @@ export class PageThreeComponent {
     }
 
     openGeneratedPasswordsDialog() {
-        this.generatedPasswords = [
-            "sucti9on",
-            "compi\ler",
-            "benef-its",
-            "fibhl5re",
-            "p2unyrent",
-            "pers7oiN",
-            "infuriatwes",
-            "mark!ers",
-            "refun.d",
-            "epl7thic",
-            "cam+els",
-            "debati)ng",
-            "coliwa!kE",
-            "scl,5osEt",
-            "cNfde7ration",
-            "moratOriu9m",
-            "Numeri=c",
-            "d3oubter",
-            "f7reksth",
-            "di7sputed"
-        ];
+        this.ssprService.getGeneratedPasswords()
+            .then((passwords: string[]) => {
+                this.generatedPasswords = passwords;
+            });
 
         this.mfDialogService.open({
             controller: this
