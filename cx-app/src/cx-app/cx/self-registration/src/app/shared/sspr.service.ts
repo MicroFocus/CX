@@ -11,7 +11,7 @@ export class SsprService {
         @Inject("$http") private $http: IHttpService,
         @Inject("$location") private $location: ILocationService
     ) {
-        let tmpUrl: url.Url = url.parse(url.resolve($location.absUrl(), "/api/sspr/public/rest/randompassword"));
+        let tmpUrl: url.Url = url.parse(url.resolve($location.absUrl(), "/api/registration/randompassword"));
         tmpUrl.port = '80';
         tmpUrl.host = undefined;
         this.randomPasswordUrl = url.format(tmpUrl);
