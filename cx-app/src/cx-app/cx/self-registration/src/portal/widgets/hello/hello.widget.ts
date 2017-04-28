@@ -1,5 +1,17 @@
 import * as angular from 'angular';
-import { NgModule, Inject } from 'ng-metadata/core';
+import { NgModule, Inject, Injectable, Optional } from 'ng-metadata/core';
+
+widgetsProvider.$inject = ['dashboardProvider'];
+export function widgetsProvider(dashboardProvider) {
+    dashboardProvider.widget('hello-widget', {
+        title : 'My Hello Widget',
+        description : 'This is my first ADF widget',
+        template : require('./hello.widget.html'),
+        edit : {
+            template : require('./hello.widget.edit.html')
+        }
+    });
+}
 
 @NgModule( {
     imports: [
@@ -8,34 +20,8 @@ import { NgModule, Inject } from 'ng-metadata/core';
     declarations: [
     ],
     providers: [
-        'dashboardProvider'
+        widgetsProvider
     ]
 } )
-export class HelloWidget {
-    constructor(@Inject('dashboardProvider') dashboardProvider) {
-        console.log('dashboardPrivider: ' + dashboardProvider);
-
-        dashboardProvider
-            .widget('hello-widget', {
-                title: 'My Hello Widget',
-                description: 'This is my first ADF widget',
-                templateUrl: '{widgetsPath}/hello-widget/src/hello.widget.html',
-                edit: {
-                    templateUrl: '{widgetsPath}/hello-widget/src/hello.widget.edit.html'
-                }
-            });
-    }
+export class WidgetsModule {
 }
-
-//angular.module('adf.widget.hello-widget', ['adf.provider'])
-//    .config(function(dashboardProvider) {
-//        dashboardProvider
-//            .widget('hello-widget', {
-//                title: 'My Hello Widget',
-//                description: 'This is my first ADF widget',
-//                templateUrl: '{widgetsPath}/hello-widget/src/hello.widget.html',
-//                edit: {
-//                    templateUrl: '{widgetsPath}/hello-widget/src/hello.widget.edit.html'
-//                }
-//            });
-//    });
