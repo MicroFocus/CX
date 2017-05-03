@@ -2,7 +2,7 @@ import UiRouter from 'angular-ui-router';
 import { NgModule } from 'ng-metadata/core';
 import { PortalComponent } from "./all.components";
 
-import { WidgetsModule } from './widgets/hello/hello.widget';
+import { HelloWidget } from './widgets/hello';
 
 @NgModule( {
     imports: [
@@ -11,7 +11,8 @@ import { WidgetsModule } from './widgets/hello/hello.widget';
         'adf',
         'adf.structures.base',
         'adf.widget.clock',
-        WidgetsModule
+        'adf.provider',
+        HelloWidget
     ],
     declarations: [
         PortalComponent
