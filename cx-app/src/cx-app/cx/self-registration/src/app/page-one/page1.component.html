@@ -1,29 +1,29 @@
 <div ng-If="!$ctrl.m_showCode" class="signin-div app-page">
     <div class="fields-title">
         Self register by requesting a registration code
-        <mf-button class="mf-icon-button" title="More information">
-            <mf-icon icon="help_thick"></mf-icon>
-        </mf-button>
+        <ias-button class="ias-icon-button" title="More information">
+            <ias-icon icon="help_thick"></ias-icon>
+        </ias-button>
     </div>
 
     <div class="button-bar">
-        <mf-button ng-click="$ctrl.showReg()" id="self-reg-but0">Request Code</mf-button>
+        <ias-button ng-click="$ctrl.showReg()" id="self-reg-but0">Request Code</ias-button>
     </div>
 </div>
 
 <div id="self-reg-page1" class="signin-div app-page" ng-If="$ctrl.m_showCode">
     <div class="fields-title">
         Enter registration code sent to you
-        <mf-button class="mf-icon-button" title="More information">
-            <mf-icon icon="help_thick"></mf-icon>
-        </mf-button>
+        <ias-button class="ias-icon-button" title="More information">
+            <ias-icon icon="help_thick"></ias-icon>
+        </ias-button>
     </div>
 
-    <mf-input-container class="registration-fields">
+    <ias-input-container class="registration-fields">
         <input id="regCode" name="regCode" type="text" placeholder="Enter Code" />
-    </mf-input-container>
+    </ias-input-container>
 
     <div class="button-bar">
-        <mf-button ui-sref="page2">Next</mf-button>
+        <ias-button ui-sref="page2">Next</ias-button>
     </div>
 </div>

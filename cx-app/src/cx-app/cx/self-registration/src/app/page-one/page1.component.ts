@@ -9,6 +9,7 @@ export class PageOneComponent {
     public m_showCode = false;
 
     public showReg(): void {
+        console.log('hey there...');
         this.m_showCode = true;
     }
 

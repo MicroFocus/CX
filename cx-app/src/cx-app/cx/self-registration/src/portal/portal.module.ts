@@ -7,7 +7,7 @@ import { HelloWidget } from './widgets/hello';
 @NgModule( {
     imports: [
         UiRouter,
-        'ng-mfux',
+        'ng-ias',
         'adf',
         'adf.structures.base',
         'adf.widget.clock',

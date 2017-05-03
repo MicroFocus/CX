@@ -2,7 +2,7 @@ app-page3 {
     .social-options {
         margin-top: 20px;
 
-        mf-tile-grid {
+        ias-tile-grid {
             margin-top: 20px;
         }
     }
@@ -30,7 +30,7 @@ app-page3 {
         position: relative;
         vertical-align: middle;
 
-        .mf-icon {
+        .ias-icon {
             left: 0;
             position: absolute;
             top: -21px;
@@ -44,25 +44,25 @@ app-page3 {
             color: #dae1e1;
         }
 
-        .password-strength-status.mf-icon-strength1::before,
-        .password-strength-status.mf-icon-strength2::before,
-        .mf-icon-strength1 + .password-strength-status-text,
-        .mf-icon-strength2 + .password-strength-status-text {
+        .password-strength-status.ias-icon-strength1::before,
+        .password-strength-status.ias-icon-strength2::before,
+        .ias-icon-strength1 + .password-strength-status-text,
+        .ias-icon-strength2 + .password-strength-status-text {
             color: #e50000;
         }
 
-        .password-strength-status.mf-icon-strength3::before,
-        .mf-icon-strength3 + .password-strength-status-text {
+        .password-strength-status.ias-icon-strength3::before,
+        .ias-icon-strength3 + .password-strength-status-text {
             color: #f17e12;
         }
 
-        .password-strength-status.mf-icon-strength4::before,
-        .mf-icon-strength4 + .password-strength-status-text {
+        .password-strength-status.ias-icon-strength4::before,
+        .ias-icon-strength4 + .password-strength-status-text {
             color: #01a9e7;
         }
 
-        .password-strength-status.mf-icon-strength5::before,
-        .mf-icon-strength5 + .password-strength-status-text {
+        .password-strength-status.ias-icon-strength5::before,
+        .ias-icon-strength5 + .password-strength-status-text {
             color: #0061bd;
         }
 

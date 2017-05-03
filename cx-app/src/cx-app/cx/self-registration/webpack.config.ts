@@ -71,7 +71,7 @@ const commonConfig: webpack.Configuration = {
     plugins: [
         new CopyWebpackPlugin([
             {from: 'src/assets', to: './assets'},
-            {context: 'node_modules/ng-mfux/dist', from: '*.css', to: './assets/mfux'}
+            {context: 'node_modules/ng-ias/dist', from: '*.css', to: './assets/ng-ias'}
         ]),
 
         // Use CommonsChunkPlugin to create a separate bundle

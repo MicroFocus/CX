@@ -14,7 +14,7 @@ import { platformBrowserDynamic } from 'ng-metadata/platform-browser-dynamic';
 import { enableProdMode } from 'ng-metadata/core';
 import { PortalModule } from './portal/index';
 import './main.css';
-import 'mf-icons/dist/mf-icons.css';
+import 'ias-icons/dist/ias-icons.css';
 
 if ( ENV === 'production' ) {
     enableProdMode();
