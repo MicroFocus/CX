@@ -27,6 +27,7 @@
         "adf-structures-base": "git+https://github.com/angular-dashboard-framework/adf-structures-base.git",
         "adf-widget-clock": "git+https://github.com/angular-dashboard-framework/adf-widget-clock.git",
         "angular": "1.6.3",
+        "angular-local-storage": "0.5.2",
         "angular-ui-bootstrap": "2.5.0",
         "angular-ui-router": "1.0.0-rc.1",
         "bootstrap": "3.3.7",
@@ -41,6 +42,7 @@
     },
     "devDependencies": {
         "@types/angular": "1.6.9",
+        "@types/angular-local-storage": "0.1.34",
         "@types/angular-mocks": "1.5.9",
         "@types/angular-ui-router": "1.1.36",
         "@types/chalk": "0.4.31",
