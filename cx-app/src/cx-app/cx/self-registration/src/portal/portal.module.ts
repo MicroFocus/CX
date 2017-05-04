@@ -3,10 +3,9 @@ import { NgModule } from 'ng-metadata/core';
 import { PortalComponent } from "./all.components";
 
 import { HelloWidget } from './widgets/hello';
-import {  } from 'angular-local-storage';
 
 portalModuleConfig.$inject = ['localStorageServiceProvider'];
-function portalModuleConfig(localStorageServiceProvider) {
+function portalModuleConfig(localStorageServiceProvider: ng.local.storage.ILocalStorageServiceProvider) {
     localStorageServiceProvider.setPrefix('adf.portal');
 }
 
