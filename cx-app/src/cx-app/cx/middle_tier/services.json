@@ -1,5 +1,8 @@
 {
   "mockable": {
     "url": "http://demo4115683.mockable.io"
+  },
+  "registration": {
+    "url": "https://prvdvnam203.namdom033.lab/sspr/public/rest"
   }
 }

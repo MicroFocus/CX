@@ -12,7 +12,7 @@ function portalModuleConfig(localStorageServiceProvider: ng.local.storage.ILocal
 @NgModule( {
     imports: [
         UiRouter,
-        'ng-mfux',
+        'ng-ias',
         'adf',
         'adf.structures.base',
         'adf.widget.clock',

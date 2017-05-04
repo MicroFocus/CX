@@ -20,7 +20,7 @@ export class AppComponent implements OnInit {
     }
 
     setTheme(name: string) {
-        let theme = 'ng-mfux';
+        let theme = 'ng-ias';
 
         if (name === 'dark') {
             theme += '_dark';

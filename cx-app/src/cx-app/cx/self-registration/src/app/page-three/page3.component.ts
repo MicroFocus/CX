@@ -14,7 +14,7 @@ export class PageThreeComponent {
     private generatedPasswords: string[];
     private showPassword: boolean = false;
 
-    constructor(@Inject('MfDialogService') private mfDialogService, private ssprService: SsprService) {
+    constructor(@Inject('IasDialogService') private IasDialogService, private ssprService: SsprService) {
     }
 
     onPasswordChange(): void {
@@ -30,27 +30,27 @@ export class PageThreeComponent {
                 break;
 
             case 1:
-                this.pwStrengthClass = 'mf-icon-strength1';
+                this.pwStrengthClass = 'ias-icon-strength1';
                 this.pwStrengthText = 'Dangerous';
                 break;
 
             case 2:
-                this.pwStrengthClass = 'mf-icon-strength2';
+                this.pwStrengthClass = 'ias-icon-strength2';
                 this.pwStrengthText = 'Weak';
                 break;
 
             case 3:
-                this.pwStrengthClass = 'mf-icon-strength3';
+                this.pwStrengthClass = 'ias-icon-strength3';
                 this.pwStrengthText = 'Normal';
                 break;
 
             case 4:
-                this.pwStrengthClass = 'mf-icon-strength4';
+                this.pwStrengthClass = 'ias-icon-strength4';
                 this.pwStrengthText = 'Strong';
                 break;
 
             default:
-                this.pwStrengthClass = 'mf-icon-strength5';
+                this.pwStrengthClass = 'ias-icon-strength5';
                 this.pwStrengthText = 'Stronger';
                 break;
         }
@@ -62,7 +62,7 @@ export class PageThreeComponent {
                 this.generatedPasswords = passwords;
             });
 
-        this.mfDialogService.open({
+        this.IasDialogService.open({
             controller: this
         }, require('./password-suggestions.html'));
     }

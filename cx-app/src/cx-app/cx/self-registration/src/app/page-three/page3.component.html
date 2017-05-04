@@ -2,59 +2,59 @@
     <div class="fields-list">
         <div class="fields-title">
             Enter your sign in information
-            <mf-button class="mf-icon-button" title="More information">
-                <mf-icon icon="help_thick"></mf-icon>
-            </mf-button>
+            <ias-button class="ias-icon-button" title="More information">
+                <ias-icon icon="help_thick"></ias-icon>
+            </ias-button>
         </div>
 
-        <mf-input-container class="mf-inline">
+        <ias-input-container class="ias-inline">
             <label for="username4">UserID</label>
             <input id="username4" name="username" type="text" placeholder="UserID">
-        </mf-input-container>
-        <mf-input-container class="mf-inline password-container">
+        </ias-input-container>
+        <ias-input-container class="ias-inline password-container">
             <label for="password3">Password</label>
             <div class="password-input-wrapper">
                 <input id="password3" ng-model="$ctrl.password" ng-change="$ctrl.onPasswordChange()" ng-attr-type="{{$ctrl.showPassword ? 'text' : 'password'}}" name="password3" placeholder="Password">
                 <a ng-click="$ctrl.toggleShowHidePassword()">{{$ctrl.showPassword ? 'Hide' : 'Show'}}</a>
             </div>
-            <mf-button class="mf-icon-button" ng-if="!$ctrl.password" title="Generate Random Password" ng-click="$ctrl.openGeneratedPasswordsDialog()">
-                <mf-icon icon="configure_thin"></mf-icon>
-            </mf-button>
+            <ias-button class="ias-icon-button" ng-if="!$ctrl.password" title="Generate Random Password" ng-click="$ctrl.openGeneratedPasswordsDialog()">
+                <ias-icon icon="configure_thin"></ias-icon>
+            </ias-button>
             <div class="strength-meter" ng-if="$ctrl.password.length > 0">
-                <div class="password-strength-base mf-icon mf-icon-strength5"></div>
-                <div class="password-strength-status mf-icon" ng-class="$ctrl.pwStrengthClass"></div>
+                <div class="password-strength-base ias-icon ias-icon-strength5"></div>
+                <div class="password-strength-status ias-icon" ng-class="$ctrl.pwStrengthClass"></div>
                 <div class="password-strength-status-text">{{$ctrl.pwStrengthText}}</div>
             </div>
-        </mf-input-container>
-        <mf-input-container class="mf-inline">
+        </ias-input-container>
+        <ias-input-container class="ias-inline">
             <label for="password3">Confirm</label>
             <input id="password3" name="password3" ng-model="$ctrl.password2" ng-attr-type="{{$ctrl.showPassword ? 'text' : 'password'}}" placeholder="Confirm">
-        </mf-input-container>
+        </ias-input-container>
     </div>
 
     <div class="social-options">
         <div class="fields-title">
             Or sign in using secure social account
-            <mf-button class="mf-icon-button" title="More information">
-                <mf-icon icon="help_thick"></mf-icon>
-            </mf-button>
+            <ias-button class="ias-icon-button" title="More information">
+                <ias-icon icon="help_thick"></ias-icon>
+            </ias-button>
         </div>
 
-        <mf-tile-grid>
-            <mf-tile class="mf-small social-tile" ng-attr-title="">
+        <ias-tile-grid>
+            <ias-tile class="ias-small social-tile" ng-attr-title="">
                 <img src="/assets/images/facebook.png" />
-            </mf-tile>
-            <mf-tile class="mf-small social-tile" ng-attr-title="">
+            </ias-tile>
+            <ias-tile class="ias-small social-tile" ng-attr-title="">
                 <img src="/assets/images/google_200.png" />
-            </mf-tile>
-            <mf-tile class="mf-small social-tile" ng-attr-title="">
+            </ias-tile>
+            <ias-tile class="ias-small social-tile" ng-attr-title="">
                 <img src="/assets/images/linkedin_200.png" />
-            </mf-tile>
-        </mf-tile-grid>
+            </ias-tile>
+        </ias-tile-grid>
     </div>
 
     <div class="button-bar">
-        <mf-button ui-sref="page4">Next</mf-button>
-        <mf-button ui-sref="page1">Cancel</mf-button>
+        <ias-button ui-sref="page4">Next</ias-button>
+        <ias-button ui-sref="page1">Cancel</ias-button>
     </div>
 </div>

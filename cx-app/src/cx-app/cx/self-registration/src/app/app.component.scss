@@ -5,7 +5,7 @@
     .fields-title {
         font-size: 16px;
 
-        > mf-button {
+        > ias-button {
             margin-left: 15px;
         }
     }
@@ -15,7 +15,7 @@
     }
 
     .fields-list {
-        > mf-input-container {
+        > ias-input-container {
             display: block;
 
             &:first-of-type {
@@ -33,13 +33,13 @@
         }
     }
 
-    mf-tile.mf-small.social-tile {
+    ias-tile.ias-small.social-tile {
         height: 40px;
         padding: 5px;
         text-align: center;
         width: 110px;
 
-        .mf-tile-content {
+        .ias-tile-content {
             display: block;
             height: 100%;
             width: 100%;
@@ -54,7 +54,7 @@
     .button-bar {
         margin-top: 25px;
 
-        > mf-button {
+        > ias-button {
             margin-left: 15px;
 
             &:first-child {
@@ -63,7 +63,7 @@
         }
     }
 
-    mf-button.mf-icon-button {
+    ias-button.ias-icon-button {
         color: #808080;
 
         &:hover {
@@ -71,7 +71,7 @@
         }
     }
 
-    i.mf-icon {
+    i.ias-icon {
         position: relative;
 
         &::before {

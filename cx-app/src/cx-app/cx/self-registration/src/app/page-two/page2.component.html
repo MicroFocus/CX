@@ -2,41 +2,41 @@
     <div class="fields-list">
         <div class="fields-title">
             Enter your information 
-            <mf-button class="mf-icon-button" title="More information">
-                <mf-icon icon="help_thick"></mf-icon>
-            </mf-button>
+            <ias-button class="ias-icon-button" title="More information">
+                <ias-icon icon="help_thick"></ias-icon>
+            </ias-button>
         </div>
 
-        <mf-input-container class="mf-inline section-element">
+        <ias-input-container class="ias-inline section-element">
             <label class="label label-large">Title</label>
             <span class="location-attr">
                 <span class="title-pre"><input type="radio" name="salut" ng-model="$ctrl.m_salut" value="Ms."><span class="label-large-dark">Ms</span></span>
                 <span class="title-pre"><input type="radio" name="salut" ng-model="$ctrl.m_salut" value="Mr."><span class="label-large-dark">Mr</span></span>
                 <span class="title-pre"><input type="radio" name="salut" ng-model="$ctrl.m_salut" value="Dr."><span class="label-large-dark">Dr</span></span>
             </span>
-        </mf-input-container>
+        </ias-input-container>
 
-        <mf-input-container class="mf-inline section-element">
+        <ias-input-container class="ias-inline section-element">
             <label class="label label-large" for="name">Name</label>
             <input id="name" name="name" type="text" placeholder="Given name" ng-model="$ctrl.m_name">
-        </mf-input-container>
+        </ias-input-container>
 
-        <mf-input-container class="mf-inline section-element">
+        <ias-input-container class="ias-inline section-element">
             <label class="label label-large" for="famName"> </label>
             <input id="famName" name="famName" type="text" placeholder="Family name" ng-model="$ctrl.m_famName">
-        </mf-input-container>
+        </ias-input-container>
 
-        <mf-input-container class="mf-inline section-element">
+        <ias-input-container class="ias-inline section-element">
             <label class="label label-large" for="title">Job Title</label>
             <input id="title" name="title" type="text" placeholder="Title" ng-model="$ctrl.m_title">
-        </mf-input-container>
+        </ias-input-container>
 
-        <mf-input-container class="mf-inline section-element">
+        <ias-input-container class="ias-inline section-element">
             <label class="label label-large" for="email">Email</label>
             <input id="email" name="email" type="text" placeholder="Email" ng-model="$ctrl.m_email">
-        </mf-input-container>
+        </ias-input-container>
 
-        <mf-input-container class="mf-inline section-element">
+        <ias-input-container class="ias-inline section-element">
             <label class="label label-large">Birth date</label>
             <span id="birth-date">
                 <select name="month" data-ng-options="month as month.name for month in $ctrl.m_months"
@@ -49,26 +49,26 @@
                         data-ng-model="$ctrl.m_bYear">
                 </select>
             </span>
-        </mf-input-container>
+        </ias-input-container>
 
-        <mf-input-container class="mf-inline section-element">
+        <ias-input-container class="ias-inline section-element">
             <label class="label label-large" for="zip">Zip code</label>
             <input id="zip" name="zip" type="text" placeholder="Zip Code">
-        </mf-input-container>
+        </ias-input-container>
 
-        <mf-input-container class="mf-inline section-element">
+        <ias-input-container class="ias-inline section-element">
             <label class="label label-large">Office</label>
             <span class="location-attr">
                 <select name="office" data-ng-options="office as office.name for office in $ctrl.m_officeOptions"
                         data-ng-model="$ctrl.m_office">
                 </select>
             </span>
-        </mf-input-container>
+        </ias-input-container>
 
     </div>
 
     <div class="button-bar">
-        <mf-button ui-sref="page3">Next</mf-button>
-        <mf-button ui-sref="page1">Cancel</mf-button>
+        <ias-button ui-sref="page3">Next</ias-button>
+        <ias-button ui-sref="page1">Cancel</ias-button>
     </div>
 </div>

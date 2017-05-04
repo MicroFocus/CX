@@ -2,43 +2,43 @@
     <div class="fields-list">
         <div class="fields-title">
             Review and confirm your information
-            <mf-button class="mf-icon-button" title="More information">
-                <mf-icon icon="help_thick"></mf-icon>
-            </mf-button>
+            <ias-button class="ias-icon-button" title="More information">
+                <ias-icon icon="help_thick"></ias-icon>
+            </ias-button>
         </div>
 
-        <mf-input-container class="mf-inline">
+        <ias-input-container class="ias-inline">
             <label for="name">Name</label>
             <div id="name" class="field-summary">{{$ctrl.registrationInfo.salut}} {{$ctrl.registrationInfo.name}} {{$ctrl.registrationInfo.famName}}</div>
-        </mf-input-container>
-        <mf-input-container class="mf-inline">
+        </ias-input-container>
+        <ias-input-container class="ias-inline">
             <label for="jobTitle">Job Title</label>
             <div id="jobTitle" class="field-summary">{{$ctrl.registrationInfo.jobTitle}}</div>
-        </mf-input-container>
-        <mf-input-container class="mf-inline">
+        </ias-input-container>
+        <ias-input-container class="ias-inline">
             <label for="email">Email</label>
             <div id="email" class="field-summary">{{$ctrl.registrationInfo.email}}</div>
-        </mf-input-container>
-        <mf-input-container class="mf-inline">
+        </ias-input-container>
+        <ias-input-container class="ias-inline">
             <label for="birthDate">Birth date</label>
             <div id="birthDate" class="field-summary">{{$ctrl.registrationInfo.birthDate | date}}</div>
-        </mf-input-container>
-        <mf-input-container class="mf-inline">
+        </ias-input-container>
+        <ias-input-container class="ias-inline">
             <label for="location">Location</label>
             <div id="location" class="field-summary">{{$ctrl.registrationInfo.location.name}}</div>
-        </mf-input-container>
-        <mf-input-container class="mf-inline">
+        </ias-input-container>
+        <ias-input-container class="ias-inline">
             <label for="signInType">Sign in type</label>
             <div id="signInType" class="field-summary">
-                <mf-tile class="mf-small social-tile" ng-attr-title="">
+                <ias-tile class="ias-small social-tile" ng-attr-title="">
                     <img src="/assets/images/facebook.png"></img>
-                </mf-tile>
+                </ias-tile>
             </div>
-        </mf-input-container>
+        </ias-input-container>
     </div>
 
     <div class="button-bar">
-        <mf-button ng-click="$ctrl.createAccount()">Create Account</mf-button>
-        <mf-button ui-sref="page1">Cancel</mf-button>
+        <ias-button ng-click="$ctrl.createAccount()">Create Account</ias-button>
+        <ias-button ui-sref="page1">Cancel</ias-button>
     </div>
 </div>
