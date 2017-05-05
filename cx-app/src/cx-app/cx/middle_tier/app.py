@@ -80,11 +80,22 @@ def home(service_name, sub_url):
     return Response(stream_with_context(req.iter_content()), content_type=req.headers['content-type'])
 
 
-@application.route('/registration/randompassword10', methods=['GET'])
-def sspr_random_password_10():
+@application.route('/registration/randompassword', methods=['GET'])
+def sspr_random_password():
     url = get_base_url("registration") + "/randompassword"
     passwords = []
-    for i in range(0, 10):
+    
+    num = request.args.get('num')
+    if num is not None and num != '':
+        num = int(num)
+    else:
+        num = 10
+        
+    if num < 1 or num > 50:
+        num = 10
+    
+    for i in range(0, num):
         r = send_request(url, request.method, request.headers, stream=False)
         passwords.append(r.text)
+    
     return jsonify({"passwords": passwords})
