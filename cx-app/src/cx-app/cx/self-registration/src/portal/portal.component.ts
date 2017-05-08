@@ -6,8 +6,17 @@ import { Component, Inject, OnInit } from 'ng-metadata/core';
     template: require( './portal.component.html' )
 } )
 export class PortalComponent implements OnInit {
+    private dashboardModel: any;
 
-    constructor() {
+    constructor(
+        @Inject('localStorageService') private localStorageService: ng.local.storage.ILocalStorageService,
+        @Inject('$scope') private $scope: ng.IScope
+    ) {
+        this.dashboardModel = localStorageService.get('portalDashboard');
+
+        $scope.$on('adfDashboardChanged', function(event, name, model) {
+            localStorageService.set(name, model);
+        });
     }
 
     ngOnInit() {

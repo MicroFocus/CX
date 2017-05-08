@@ -1,5 +1,4 @@
-import * as angular from 'angular';
-import { NgModule, Inject, Injectable, Optional } from 'ng-metadata/core';
+import { NgModule } from 'ng-metadata/core';
 
 import { HelloViewComponent } from './hello-view.component';
 import { HelloConfigComponent } from './hello-config.component';
