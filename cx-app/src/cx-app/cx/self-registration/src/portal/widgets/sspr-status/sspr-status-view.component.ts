@@ -10,6 +10,7 @@ export class SsprStatusViewComponent implements OnInit {
     @Input('=') private widgetScope: ng.IScope;
 
     private userConfig: UserConfig;
+    private userCardClass: string;
 
     constructor(private ssprService: SsprService) {
     }
@@ -20,12 +21,17 @@ export class SsprStatusViewComponent implements OnInit {
     }
 
     readUserConfig() {
+        this.userCardClass = 'wait';
+
         this.ssprService.readUserConfig('jalbright', 'novell')
             .then((userConfig: UserConfig) => {
                 this.userConfig = userConfig;
             })
             .catch((error) => {
                 console.error(error);
+            })
+            .finally(() => {
+                this.userCardClass = '';
             });
     }
 

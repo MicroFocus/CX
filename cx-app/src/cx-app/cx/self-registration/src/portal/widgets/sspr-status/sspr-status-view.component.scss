@@ -6,6 +6,10 @@ sspr-status-view {
         padding: 5px;
         width: 450px;
 
+        &.wait {
+            opacity: .4;
+        }
+
         .field-name {
             color: #808080;
             font-size: 13px;
@@ -16,6 +20,27 @@ sspr-status-view {
 
         .field-value {
             font-size: 16px;
+        }
+
+        .personal-info {
+            margin-bottom: 20px;
+            position: relative;
+
+            img {
+                height: 85px;
+            }
+
+            .user-id {
+                position: absolute;
+                top: 16px;
+                left: 126px;
+            }
+
+            .user-email {
+                position: absolute;
+                top: 48px;
+                left: 126px;
+            }
         }
     }
 
