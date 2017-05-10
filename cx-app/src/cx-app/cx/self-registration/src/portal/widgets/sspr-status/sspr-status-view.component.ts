@@ -15,6 +15,11 @@ export class SsprStatusViewComponent implements OnInit {
     }
 
     ngOnInit() {
+        console.log('ngOnInit');
+        this.readUserConfig();
+    }
+
+    readUserConfig() {
         this.ssprService.readUserConfig('jalbright', 'novell')
             .then((userConfig: UserConfig) => {
                 this.userConfig = userConfig;
@@ -22,5 +27,9 @@ export class SsprStatusViewComponent implements OnInit {
             .catch((error) => {
                 console.error(error);
             });
+    }
+
+    refreshData() {
+        this.readUserConfig();
     }
 }
