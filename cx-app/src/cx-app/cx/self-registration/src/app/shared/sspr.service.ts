@@ -2,21 +2,33 @@ import { Inject, Injectable } from 'ng-metadata/core';
 import { IPromise, IQService, IDeferred, IHttpService, ILocationService } from 'angular';
 import * as url from 'url';
 
+export interface UserConfig {
+    userDN: string;
+    ldapProfile: string;
+    userID: string;
+    userEmailAddress: string;
+    passwordLastModifiedTime: string;
+}
+
 @Injectable()
 export class SsprService {
     private randomPasswordUrl: string;
+    private userConfigUrl: string;
 
     constructor(
-        @Inject("$q") private $q: IQService, 
+        @Inject("$q") private $q: IQService,
         @Inject("$http") private $http: IHttpService,
+        @Inject('$base64') private $base64,
         @Inject("$location") private $location: ILocationService
     ) {
-        let tmpUrl: url.Url = url.parse(url.resolve($location.absUrl(), "/api/registration/randompassword"));
+        // Modify the host and port portions of the current URL
+        let tmpUrl: url.Url = url.parse(url.resolve($location.absUrl(), "/api/registration"));
         tmpUrl.port = '80';
         tmpUrl.host = undefined;
-        this.randomPasswordUrl = url.format(tmpUrl);
+        let baseUrl: string = url.format(tmpUrl);
 
-        console.log('Random passsword URL: ' + this.randomPasswordUrl);
+        this.randomPasswordUrl = baseUrl + '/randompassword';
+        this.userConfigUrl = baseUrl + '/status';
     }
 
     public getGeneratedPasswords(): IPromise<string[]> {
@@ -24,7 +36,7 @@ export class SsprService {
 
         let generatedPasswords: string[] = [];
 
-        for (let i=0; i<20; i++) {
+        for (let i = 0; i < 20; i++) {
             this.$http.get(this.randomPasswordUrl)
             .then((response) => {
                 generatedPasswords.push(response.data.toString());
@@ -34,6 +46,26 @@ export class SsprService {
         }
 
         deferred.resolve(generatedPasswords);
+        return deferred.promise;
+    }
+
+    public readUserConfig(username: string, password: string): IPromise<UserConfig> {
+        let deferred: IDeferred<UserConfig> = this.$q.defer<UserConfig>();
+        console.log('Reading user config from: %O', this.userConfigUrl);
+
+        this.$http.get(this.userConfigUrl, {
+            headers: {
+                'Accept': 'application/json',
+                'Authorization': 'Basic ' + this.$base64.encode(username + ':' + password)
+            }
+        })
+        .then((response) => {
+            let userConfig: UserConfig = response.data['data'];
+            deferred.resolve(userConfig);
+        }).catch((error) => {
+            console.error(error);
+        });
+
         return deferred.promise;
     }
 }

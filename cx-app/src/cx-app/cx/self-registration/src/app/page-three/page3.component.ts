@@ -1,5 +1,5 @@
 import { SsprService } from '../shared/sspr.service';
-import { Component, Inject } from 'ng-metadata/core';
+import {Component, Inject} from 'ng-metadata/core';
 
 @Component( {
     selector: 'app-page3',
@@ -14,7 +14,13 @@ export class PageThreeComponent {
     private generatedPasswords: string[];
     private showPassword: boolean = false;
 
-    constructor(@Inject('IasDialogService') private IasDialogService, private ssprService: SsprService) {
+    private message: string;
+
+    constructor(
+        @Inject('$scope') private $scope,
+        @Inject('IasDialogService') private iasDialogService,
+        private ssprService: SsprService
+    ) {
     }
 
     onPasswordChange(): void {
@@ -62,9 +68,10 @@ export class PageThreeComponent {
                 this.generatedPasswords = passwords;
             });
 
-        this.IasDialogService.open({
-            controller: this
-        }, require('./password-suggestions.html'));
+        this.iasDialogService.open({
+            scope: this.$scope,
+            template: require('./password-suggestions.html')
+        });
     }
 
     selectPassword(password: string, closeFn: any) {

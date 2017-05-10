@@ -3,6 +3,7 @@ import { NgModule } from 'ng-metadata/core';
 import { PortalComponent } from "./all.components";
 
 import { HelloWidget } from './widgets/hello';
+import { SsprStatusWidget } from './widgets/sspr-status';
 
 portalModuleConfig.$inject = ['localStorageServiceProvider'];
 function portalModuleConfig(localStorageServiceProvider: ng.local.storage.ILocalStorageServiceProvider) {
@@ -18,7 +19,9 @@ function portalModuleConfig(localStorageServiceProvider: ng.local.storage.ILocal
         'adf.widget.clock',
         'adf.provider',
         'LocalStorageModule',
-        HelloWidget
+        'base64',
+        HelloWidget,
+        SsprStatusWidget
     ],
     declarations: [
         PortalComponent

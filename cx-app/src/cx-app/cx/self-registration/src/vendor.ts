@@ -1,5 +1,6 @@
 import 'angular';
 import 'angular-ui-router';
+import 'angular-base64';
 import 'ng-metadata/platform-browser-dynamic';
 import 'ng-metadata/core';
 import 'ng-metadata/common';
