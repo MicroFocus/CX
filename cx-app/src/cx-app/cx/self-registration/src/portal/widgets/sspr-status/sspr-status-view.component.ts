@@ -3,7 +3,7 @@ import { SsprService, UserConfig } from "../../../app/shared/sspr.service";
 
 @Component({
     selector: 'sspr-status-view',
-//    styles: [require('./sspr-status-view.component.scss')],
+    styles: [require('./sspr-status-view.component.scss')],
     template: require('./sspr-status-view.component.html')
 })
 export class SsprStatusViewComponent implements OnInit {
