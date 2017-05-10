@@ -11,12 +11,10 @@ export class SsprService {
         @Inject("$http") private $http: IHttpService,
         @Inject("$location") private $location: ILocationService
     ) {
-        let tmpUrl: url.Url = url.parse(url.resolve($location.absUrl(), "/api/registration/randompassword"));
+        let tmpUrl: url.Url = url.parse(url.resolve($location.absUrl(), "/api/registration/randompassword_n?num=3"));
         tmpUrl.port = '80';
         tmpUrl.host = undefined;
         this.randomPasswordUrl = url.format(tmpUrl);
-
-        console.log('Random passsword URL: ' + this.randomPasswordUrl);
     }
 
     public getGeneratedPasswords(): IPromise<string[]> {
@@ -24,14 +22,14 @@ export class SsprService {
 
         let generatedPasswords: string[] = [];
 
-        for (let i=0; i<20; i++) {
-            this.$http.get(this.randomPasswordUrl)
-            .then((response) => {
-                generatedPasswords.push(response.data.toString());
-            }).catch((error) => {
-                generatedPasswords.push("error");
-            });
-        }
+        
+        this.$http.get(this.randomPasswordUrl)
+        .then((response) => {
+            generatedPasswords.push(response.data.toString());
+        }).catch((error) => {
+            generatedPasswords.push("error");
+        });
+        
 
         deferred.resolve(generatedPasswords);
         return deferred.promise;
