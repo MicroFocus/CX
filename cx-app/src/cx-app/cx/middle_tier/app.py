@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import logging
+from logging.handlers import RotatingFileHandler
 
 from flask import Flask, jsonify
 from flask import json
@@ -16,6 +17,9 @@ import requests
 
 @application.before_first_request
 def setup_logging():
+    handler = RotatingFileHandler('/opt/logs/middle_tier.log', maxBytes=1024 * 1024 * 20, backupCount=10)
+    handler.setLevel(logging.INFO)
+    application.logger.addHandler(handler)
     if not application.debug:
         # In production mode, add log handler to sys.stderr.
         application.logger.addHandler(logging.StreamHandler())
@@ -80,22 +84,26 @@ def home(service_name, sub_url):
     return Response(stream_with_context(req.iter_content()), content_type=req.headers['content-type'])
 
 
-@application.route('/registration/randompassword', methods=['GET'])
+@application.route('/registration/randompassword_n', methods=['GET'])
 def sspr_random_password():
     url = get_base_url("registration") + "/randompassword"
     passwords = []
-    
+
     num = request.args.get('num')
     if num is not None and num != '':
         num = int(num)
     else:
         num = 10
-        
+
     if num < 1 or num > 50:
         num = 10
-    
+
     for i in range(0, num):
         r = send_request(url, request.method, request.headers, stream=False)
         passwords.append(r.text)
-    
+
     return jsonify({"passwords": passwords})
+
+
+if __name__ == '__main__':
+    application.run(debug=True, host='0.0.0.0')

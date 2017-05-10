@@ -1,11 +1,14 @@
  version: '2'
  services:
    web:
-     build: ../src/cx-app
+     build:
+       context: ../src/cx-app/cx/middle_tier
+       dockerfile: Dockerfile.development
      volumes:
        - ./logs:/opt/logs
+       - ../src/cx-app/cx/middle_tier:/opt/middle_tier
      ports:
-       - "6001:6001"
+       - "5000:5000"
    self-registration:
      build: ../src/cx-app/cx/self-registration
      volumes:
