@@ -1,1 +1,1 @@
-export * from './hello.module';
+export * from './hello-widget.module';

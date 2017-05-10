@@ -7,7 +7,7 @@ import { HelloService } from './hello.service';
     template: require('./hello-view.component.html')
 })
 export class HelloViewComponent implements OnInit {
-    @Input('=') widgetScope: ng.IScope;
+    @Input('=') private widgetScope: ng.IScope;
 
     private helloMessage: string;
 

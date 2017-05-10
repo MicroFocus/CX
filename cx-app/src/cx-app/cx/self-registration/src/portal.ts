@@ -10,6 +10,9 @@ import 'adf-structures-base/dist/adf-structures-base';
 import 'imports-loader?moment!adf-widget-clock/dist/adf-widget-clock';
 // End Angular Dashboard Framework
 
+import 'angular-local-storage';
+import 'angular-base64';
+
 import { platformBrowserDynamic } from 'ng-metadata/platform-browser-dynamic';
 import { enableProdMode } from 'ng-metadata/core';
 import { PortalModule } from './portal/index';

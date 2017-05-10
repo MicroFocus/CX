@@ -9,7 +9,8 @@ import { SsprService } from './shared/sspr.service';
 @NgModule( {
     imports: [
         UiRouter,
-        'ng-ias'
+        'ng-ias',
+        'base64'
     ],
     declarations: [
         AppComponent,
