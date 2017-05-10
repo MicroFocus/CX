@@ -65,19 +65,13 @@ export class PageThreeComponent {
     openGeneratedPasswordsDialog() {
         this.ssprService.getGeneratedPasswords()
             .then((passwords: string[]) => {
-                console.log('generatedPasswords: ' + angular.toJson(passwords));
                 this.generatedPasswords = passwords;
-                this.$scope.generatedPasswords = passwords;
-
-                
             });
 
         this.iasDialogService.open({
             scope: this.$scope,
             template: require('./password-suggestions.html')
         });
-
-        
     }
 
     selectPassword(password: string, closeFn: any) {

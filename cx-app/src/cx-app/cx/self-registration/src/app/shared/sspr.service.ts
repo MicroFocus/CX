@@ -27,7 +27,7 @@ export class SsprService {
         tmpUrl.host = undefined;
         let baseUrl: string = url.format(tmpUrl);
 
-        this.randomPasswordUrl = baseUrl + '/randompassword_n?num=6';
+        this.randomPasswordUrl = baseUrl + '/randompassword_n?num=20';
         this.userConfigUrl = baseUrl + '/status';
     }
 
@@ -36,18 +36,14 @@ export class SsprService {
 
         let generatedPasswords: string[] = [];
 
-        
         this.$http.get(this.randomPasswordUrl)
         .then((response: any) => {
-            for (var password of response.data.passwords) {
+            for (let password of response.data.passwords) {
                 generatedPasswords.push(password);
             }
-            
-            
         }).catch((error) => {
             generatedPasswords.push("error");
         });
-        
 
         deferred.resolve(generatedPasswords);
         return deferred.promise;
