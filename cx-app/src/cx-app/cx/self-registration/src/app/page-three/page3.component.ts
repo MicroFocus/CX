@@ -17,6 +17,7 @@ export class PageThreeComponent {
     private message: string;
 
     constructor(
+        @Inject('$state') private $state,
         @Inject('$scope') private $scope,
         @Inject('IasDialogService') private iasDialogService,
         private ssprService: SsprService
@@ -83,5 +84,9 @@ export class PageThreeComponent {
 
     toggleShowHidePassword() {
         this.showPassword = !this.showPassword;
+    }
+
+    public showNext(): void {
+        this.$state.go('page4');
     }
 }

@@ -29,7 +29,10 @@ export class PageTwoComponent {
 
     private registrationInfo: RegistrationInfo;
 
-    constructor(private registrationService: RegistrationService) {
+    constructor(
+        @Inject('$state') private $state,
+        private registrationService: RegistrationService
+    ) {
         this.m_officeOptions.push({
             name: 'Bangalore',
             id: 'bangalore'
@@ -145,7 +148,6 @@ export class PageTwoComponent {
             });
         }
         this.m_bYear = this.m_years[0];
-        
     }
 
     ngOnInit() {
@@ -160,5 +162,7 @@ export class PageTwoComponent {
         this.registrationInfo.email = this.m_email;
         this.registrationInfo.location = this.m_office;
         this.registrationInfo.salut = this.m_salut;
+
+        this.$state.go('page3');
     }
 }

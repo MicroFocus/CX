@@ -14,6 +14,6 @@ export class RouterModule {
             $urlRouterProvider.otherwise('page1');
         }
 
-        return stateConfig
+        return stateConfig;
     }
 }

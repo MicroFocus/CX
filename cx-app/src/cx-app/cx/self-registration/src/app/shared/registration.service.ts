@@ -23,5 +23,4 @@ export class RegistrationService {
     getRegistrationInfo() {
         return this.registrationInfo;
     }
-
 }
