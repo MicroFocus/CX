@@ -1,8 +1,21 @@
-<div>
-  <h1>Status for user: {{$ctrl.userConfig.userID}}</h1>
-  <p>User DN: {{$ctrl.userConfig.userDN}}</p>
-  <p>Email: {{$ctrl.userConfig.userEmailAddress}}</p>
-  <p>LDAP Profile: {{$ctrl.userConfig.ldapProfile}}</p>
-  <p>User ID: {{$ctrl.userConfig.userID}}</p>
-  <p>Password last modified: {{$ctrl.userConfig.passwordLastModifiedTime}}</p>
+<div class="user-card" ng-class="$ctrl.userCardClass">
+    <div class="personal-info">
+        <img src="/assets/images/user-photo.png" />
+        <div class="user-id field-value">{{$ctrl.userConfig.userID}}</div>
+        <div class="user-email field-value">{{$ctrl.userConfig.userEmailAddress}}</div>
+    </div>
+    <div>
+        <span class="field-name">User DN</span><span class="field-value">{{$ctrl.userConfig.userDN}}</span>
+    </div>
+    <div>
+        <span class="field-name">LDAP Profile</span><span class="field-value">{{$ctrl.userConfig.ldapProfile}}</span>
+    </div>
+    <div>
+        <span class="field-name">User ID</span><span class="field-value">{{$ctrl.userConfig.userID}}</span>
+    </div>
+    <div>
+        <span class="field-name">Password last modified</span><span class="field-value">{{$ctrl.userConfig.passwordLastModifiedTime}}</span>
+    </div>
 </div>
+
+<ias-button ng-click="$ctrl.refreshData()">Refresh</ias-button>

@@ -1,0 +1,50 @@
+sspr-status-view {
+    .user-card {
+        background-color: #eef2f2;
+        border-radius: 3px;
+        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+        padding: 5px;
+        width: 450px;
+
+        &.wait {
+            opacity: .4;
+        }
+
+        .field-name {
+            color: #808080;
+            font-size: 13px;
+            display: inline-block;
+            min-width: 125px;
+            padding: 5px 10px 5px 5px;
+        }
+
+        .field-value {
+            font-size: 16px;
+        }
+
+        .personal-info {
+            margin-bottom: 20px;
+            position: relative;
+
+            img {
+                height: 85px;
+            }
+
+            .user-id {
+                position: absolute;
+                top: 16px;
+                left: 126px;
+            }
+
+            .user-email {
+                position: absolute;
+                top: 48px;
+                left: 126px;
+            }
+        }
+    }
+
+    .ias-button {
+        margin-top: 15px;
+    }
+}

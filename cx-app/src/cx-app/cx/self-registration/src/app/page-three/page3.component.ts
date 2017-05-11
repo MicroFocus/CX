@@ -17,6 +17,7 @@ export class PageThreeComponent {
     private message: string;
 
     constructor(
+        @Inject('$state') private $state,
         @Inject('$scope') private $scope,
         @Inject('IasDialogService') private iasDialogService,
         private ssprService: SsprService
@@ -66,17 +67,12 @@ export class PageThreeComponent {
         this.ssprService.getGeneratedPasswords()
             .then((passwords: string[]) => {
                 this.generatedPasswords = passwords;
-                this.$scope.generatedPasswords = passwords;
-
-                
             });
 
         this.iasDialogService.open({
             scope: this.$scope,
             template: require('./password-suggestions.html')
         });
-
-        
     }
 
     selectPassword(password: string, closeFn: any) {
@@ -88,5 +84,9 @@ export class PageThreeComponent {
 
     toggleShowHidePassword() {
         this.showPassword = !this.showPassword;
+    }
+
+    public showNext(): void {
+        this.$state.go('page4');
     }
 }

@@ -10,6 +10,12 @@ import 'adf-structures-base/dist/adf-structures-base';
 import 'imports-loader?moment!adf-widget-clock/dist/adf-widget-clock';
 // End Angular Dashboard Framework
 
+// Import Micro Focus UI library and icons
+// Importing this way "undefines" Reflect, since ng-ias isn't currently compatible with reflect-metadata
+import 'imports-loader?Reflect=>{}!ng-ias/dist/ng-ias';
+import 'ias-icons/dist/ias-icons.css';
+// End Micro Focus UI library and icons
+
 import 'angular-local-storage';
 import 'angular-base64';
 
