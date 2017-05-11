@@ -65,7 +65,6 @@ export class PageThreeComponent {
     openGeneratedPasswordsDialog() {
         this.ssprService.getGeneratedPasswords()
             .then((passwords: string[]) => {
-                console.log('generatedPasswords: ' + angular.toJson(passwords));
                 this.generatedPasswords = passwords;
                 this.$scope.generatedPasswords = passwords;
 
