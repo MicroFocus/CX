@@ -11,8 +11,7 @@ import * as webpackGlobEntry from 'webpack-glob-entry';
 
 export const outputOptions = {
     "chunks": false,
-    "colors": true,
-    "warnings": false  // setting this to false right now because of too many "Cannot find source file '*.ts'" warnings
+    "colors": true
 };
 
 /**
@@ -60,7 +59,11 @@ const commonConfig: webpack.Configuration = {
             {   // All output '.js' files will have any sourcemaps re-processed by 'source-map-loader'.
                 test: /\.js$/,
                 use: "source-map-loader",
-                enforce: "pre"
+                enforce: "pre",
+                "exclude": [
+                    /\/node_modules\//,
+                    /\\node_modules\\/
+                ]
             },
             {
                 test: /\.(eot|svg|ttf|woff|woff2)$/,
