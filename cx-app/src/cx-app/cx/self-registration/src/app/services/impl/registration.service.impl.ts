@@ -1,8 +1,8 @@
-import { RegistrationInfo } from './registration-info';
-import { Inject, Injectable } from 'ng-metadata/core';
+import { Injectable } from 'ng-metadata/core';
+import { RegistrationInfo, RegistrationService } from '../registration.service';
 
 @Injectable()
-export class RegistrationService {
+export class RegistrationServiceImpl implements RegistrationService {
 
     private registrationInfo: RegistrationInfo;
 

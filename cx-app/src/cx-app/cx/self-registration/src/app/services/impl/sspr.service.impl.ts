@@ -1,17 +1,9 @@
 import { Inject, Injectable } from 'ng-metadata/core';
-import { IPromise, IQService, IDeferred, IHttpService, ILocationService } from 'angular';
-import * as url from 'url';
-
-export interface UserConfig {
-    userDN: string;
-    ldapProfile: string;
-    userID: string;
-    userEmailAddress: string;
-    passwordLastModifiedTime: string;
-}
+import { IDeferred, IHttpService, ILocationService, IPromise, IQService } from 'angular';
+import { SsprService, UserConfig } from '../sspr.service';
 
 @Injectable()
-export class SsprService {
+export class SsprServiceImpl implements SsprService {
     private randomPasswordUrl: string;
     private userConfigUrl: string;
 
@@ -31,11 +23,11 @@ export class SsprService {
         let generatedPasswords: string[] = [];
 
         this.$http.get(this.randomPasswordUrl)
-        .then((response: any) => {
-            for (let password of response.data.passwords) {
-                generatedPasswords.push(password);
-            }
-        }).catch((error) => {
+            .then((response: any) => {
+                for (let password of response.data.passwords) {
+                    generatedPasswords.push(password);
+                }
+            }).catch((error) => {
             generatedPasswords.push("error");
         });
 
@@ -53,10 +45,10 @@ export class SsprService {
                 'Authorization': 'Basic ' + this.$base64.encode(username + ':' + password)
             }
         })
-        .then((response) => {
-            let userConfig: UserConfig = response.data['data'];
-            deferred.resolve(userConfig);
-        }).catch((error) => {
+            .then((response) => {
+                let userConfig: UserConfig = response.data['data'];
+                deferred.resolve(userConfig);
+            }).catch((error) => {
             console.error(error);
         });
 

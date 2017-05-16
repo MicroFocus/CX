@@ -8,3 +8,7 @@ export class RegistrationInfo {
     zip: string;
     salut: string;
 }
+
+export interface RegistrationService {
+    getRegistrationInfo(): RegistrationInfo;
+}

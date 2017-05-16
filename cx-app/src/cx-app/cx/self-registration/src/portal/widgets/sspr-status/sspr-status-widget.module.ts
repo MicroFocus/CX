@@ -2,7 +2,8 @@ import { NgModule } from 'ng-metadata/core';
 
 import { SsprStatusViewComponent } from './sspr-status-view.component';
 import { SsprStatusConfigComponent } from './sspr-status-config.component';
-import { SsprService } from "../../../app/shared/sspr.service";
+import { SsprService } from "../../../app/services/sspr.service";
+import { SsprServiceImpl } from '../../../app/services/impl/sspr.service.impl';
 
 widgetDefinitionProvider.$inject = ['dashboardProvider'];
 function widgetDefinitionProvider(dashboard) {
@@ -26,8 +27,7 @@ function widgetDefinitionProvider(dashboard) {
         SsprStatusConfigComponent
     ],
     providers: [
-        widgetDefinitionProvider,
-        SsprService
+        widgetDefinitionProvider
     ]
 })
 export class SsprStatusWidget {

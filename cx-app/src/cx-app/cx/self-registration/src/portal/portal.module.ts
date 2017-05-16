@@ -4,6 +4,7 @@ import { PortalComponent } from "./all.components";
 
 import { HelloWidget } from './widgets/hello';
 import { SsprStatusWidget } from './widgets/sspr-status';
+import { SsprServiceImpl } from '../app/services/impl/sspr.service.impl';
 
 portalModuleConfig.$inject = ['localStorageServiceProvider'];
 function portalModuleConfig(localStorageServiceProvider: ng.local.storage.ILocalStorageServiceProvider) {
@@ -27,7 +28,8 @@ function portalModuleConfig(localStorageServiceProvider: ng.local.storage.ILocal
         PortalComponent
     ],
     providers: [
-        portalModuleConfig
+        portalModuleConfig,
+        { provide: 'SsprService', useClass: SsprServiceImpl }
     ]
 } )
 export class PortalModule {

@@ -1,5 +1,5 @@
 import { Component, Inject, Input, OnInit } from 'ng-metadata/core';
-import { SsprService, UserConfig } from "../../../app/shared/sspr.service";
+import { SsprService, UserConfig } from "../../../app/services/sspr.service";
 
 @Component({
     selector: 'sspr-status-view',
@@ -12,7 +12,9 @@ export class SsprStatusViewComponent implements OnInit {
     private userConfig: UserConfig;
     private userCardClass: string;
 
-    constructor(private ssprService: SsprService) {
+    constructor(
+        @Inject('SsprService') private ssprService: SsprService
+    ) {
     }
 
     ngOnInit() {

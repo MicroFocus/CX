@@ -1,5 +1,4 @@
-import { RegistrationInfo } from '../shared/registration-info';
-import { RegistrationService } from '../shared/registration.service';
+import { RegistrationInfo, RegistrationService } from '../services/registration.service';
 import { Component, Inject, OnInit } from 'ng-metadata/core';
 
 @Component( {
@@ -11,7 +10,9 @@ export class PageFourComponent implements OnInit {
     private registrationInfo: RegistrationInfo;
     private message: string;
 
-    constructor(private registrationService: RegistrationService) {
+    constructor(
+        @Inject('RegistrationService') private registrationService: RegistrationService
+    ) {
     }
 
     ngOnInit() {

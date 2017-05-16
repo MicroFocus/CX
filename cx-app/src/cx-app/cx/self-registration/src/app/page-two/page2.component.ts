@@ -1,5 +1,4 @@
-import { RegistrationInfo } from '../shared/registration-info';
-import { RegistrationService } from '../shared/registration.service';
+import { RegistrationInfo, RegistrationService } from '../services/registration.service';
 import { Component, Inject, OnInit } from 'ng-metadata/core';
 
 @Component({
@@ -31,7 +30,7 @@ export class PageTwoComponent {
 
     constructor(
         @Inject('$state') private $state,
-        private registrationService: RegistrationService
+        @Inject('RegistrationService') private registrationService: RegistrationService
     ) {
         this.m_officeOptions.push({
             name: 'Bangalore',

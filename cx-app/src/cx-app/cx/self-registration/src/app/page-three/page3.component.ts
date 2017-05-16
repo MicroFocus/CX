@@ -1,4 +1,4 @@
-import { SsprService } from '../shared/sspr.service';
+import { SsprService } from '../services/sspr.service';
 import {Component, Inject} from 'ng-metadata/core';
 
 @Component( {
@@ -20,7 +20,7 @@ export class PageThreeComponent {
         @Inject('$state') private $state,
         @Inject('$scope') private $scope,
         @Inject('IasDialogService') private iasDialogService,
-        private ssprService: SsprService
+        @Inject('SsprService') private ssprService: SsprService
     ) {
     }
 
