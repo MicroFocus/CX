@@ -11,12 +11,15 @@ import * as express from 'express';
 import * as chalk from 'chalk';
 import * as WebpackOptionsValidationError from 'webpack/lib/WebpackOptionsValidationError';
 
-import {argv} from 'yargs';
-import {Express} from 'express';
-import {devConfig, outputOptions} from '../webpack.config';
+import { argv } from 'yargs';
+import { configureMockMiddleware } from './mock-middleware';
+import { Express, Request, Response } from 'express';
+import { devConfig, outputOptions } from '../webpack.config';
 
 const port = 8080;
 const app: Express = express();
+
+configureMockMiddleware(app);
 
 // Dynamically serve assets using Webpack if --use-webpack flag is set
 if (argv.useWebpack) {

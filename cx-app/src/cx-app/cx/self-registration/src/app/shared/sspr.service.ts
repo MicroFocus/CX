@@ -21,14 +21,8 @@ export class SsprService {
         @Inject('$base64') private $base64,
         @Inject("$location") private $location: ILocationService
     ) {
-        // Modify the host and port portions of the current URL
-        let tmpUrl: url.Url = url.parse(url.resolve($location.absUrl(), "/api/registration"));
-        tmpUrl.port = '80';
-        tmpUrl.host = undefined;
-        let baseUrl: string = url.format(tmpUrl);
-
-        this.randomPasswordUrl = baseUrl + '/randompassword_n?num=20';
-        this.userConfigUrl = baseUrl + '/status';
+        this.randomPasswordUrl = "/api/registration/randompassword_n?num=20";
+        this.userConfigUrl = "/api/registration/status";
     }
 
     public getGeneratedPasswords(): IPromise<string[]> {
