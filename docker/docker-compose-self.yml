@@ -2,17 +2,17 @@
  services:
    web:
      build:
-       context: ../src/cx-app/cx/middle_tier
+       context: ../middle_tier
        dockerfile: Dockerfile.development
      volumes:
        - ./logs:/opt/logs
-       - ../src/cx-app/cx/middle_tier:/opt/middle_tier
+       - ../src/middle_tier:/opt/middle_tier
      ports:
        - "5000:5000"
    self-registration:
-     build: ../src/cx-app/cx/self-registration
+     build: ../self-registration
      volumes:
-       - ../src/cx-app/cx/self-registration:/usr/src/app
+       - ../self-registration:/usr/src/app
        - /usr/src/app/node_modules
      ports:
        - "9080:8080"

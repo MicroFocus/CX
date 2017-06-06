@@ -30,6 +30,17 @@ You should now be able to download all dependencies by running:
 $ npm install
 ```
 
+#### Running in a Docker Container
+
+You can also run this application in a Docker container.  Change to the cx-app/docker folder and run the following command:
+
+```
+docker-compose -f docker-compose-self.yml up --force-recreate --build
+```
+
+Once the Docker container starts it will be running at http://localhost:9080.
+
+
 #### Running Production Builds
 
 Production builds get minified, obfuscated, and cache busted, and are output to the ./dist folder.
@@ -63,16 +74,6 @@ You can run the web server against the dist folder as you did with the productio
 ```
 $ npm run server:dev
 ```
-
-#### Running in a Docker Container
-
-You can also run this application in a Docker container.  Change to the cx-app/docker folder and run the following command:
-
-```
-docker-compose -f docker-compose-self.yml up --force-recreate --build
-```
-
-Once the Docker container starts it will be running at http://localhost:9080.
 
 #### Other Commands
 
