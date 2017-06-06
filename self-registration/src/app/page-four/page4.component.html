@@ -1,0 +1,44 @@
+<div class="app-page">
+    <div class="fields-list">
+        <div class="fields-title">
+            Review and confirm your information
+            <ias-button class="ias-icon-button" title="More information">
+                <ias-icon icon="help_thick"></ias-icon>
+            </ias-button>
+        </div>
+
+        <ias-input-container class="ias-inline">
+            <label for="name">Name</label>
+            <div id="name" class="field-summary">{{$ctrl.registrationInfo.salut}} {{$ctrl.registrationInfo.name}} {{$ctrl.registrationInfo.famName}}</div>
+        </ias-input-container>
+        <ias-input-container class="ias-inline">
+            <label for="jobTitle">Job Title</label>
+            <div id="jobTitle" class="field-summary">{{$ctrl.registrationInfo.jobTitle}}</div>
+        </ias-input-container>
+        <ias-input-container class="ias-inline">
+            <label for="email">Email</label>
+            <div id="email" class="field-summary">{{$ctrl.registrationInfo.email}}</div>
+        </ias-input-container>
+        <ias-input-container class="ias-inline">
+            <label for="birthDate">Birth date</label>
+            <div id="birthDate" class="field-summary">{{$ctrl.registrationInfo.birthDate | date}}</div>
+        </ias-input-container>
+        <ias-input-container class="ias-inline">
+            <label for="location">Location</label>
+            <div id="location" class="field-summary">{{$ctrl.registrationInfo.location.name}}</div>
+        </ias-input-container>
+        <ias-input-container class="ias-inline">
+            <label for="signInType">Sign in type</label>
+            <div id="signInType" class="field-summary">
+                <ias-tile class="ias-small social-tile" ng-attr-title="">
+                    <img src="/assets/images/facebook.png"></img>
+                </ias-tile>
+            </div>
+        </ias-input-container>
+    </div>
+
+    <div class="button-bar">
+        <ias-button ng-click="$ctrl.createAccount()">Create Account</ias-button>
+        <ias-button ui-sref="page1">Cancel</ias-button>
+    </div>
+</div>

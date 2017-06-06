@@ -1,0 +1,83 @@
+.app-page {
+    display: block;
+    margin: 15px 15px 15px 45px;
+
+    .fields-title {
+        font-size: 16px;
+
+        > ias-button {
+            margin-left: 15px;
+        }
+    }
+
+    input[type="radio"] {
+        min-width: initial;
+    }
+
+    .fields-list {
+        > ias-input-container {
+            display: block;
+
+            &:first-of-type {
+                margin-top: 20px;
+            }
+
+            > label {
+                min-width: 100px;
+            }
+
+            input {
+                min-width: 250px;
+                padding: 5px;
+            }
+        }
+    }
+
+    ias-tile.ias-small.social-tile {
+        height: 40px;
+        padding: 5px;
+        text-align: center;
+        width: 110px;
+
+        .ias-tile-content {
+            display: block;
+            height: 100%;
+            width: 100%;
+
+            img {
+                max-height: 100%;
+                max-width: 100%;
+            }
+        }
+    }
+
+    .button-bar {
+        margin-top: 25px;
+
+        > ias-button {
+            margin-left: 15px;
+
+            &:first-child {
+                margin-left: 0;
+            }
+        }
+    }
+
+    ias-button.ias-icon-button {
+        color: #808080;
+
+        &:hover {
+            color: #007cd0;
+        }
+    }
+
+    i.ias-icon {
+        position: relative;
+
+        &::before {
+            left: -1px;
+            position: absolute;
+            top: -1px;
+        }
+    }
+}

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+
+    <title>Angular Starter</title>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Angular starter project">
+
+    <!-- base url -->
+    <base href="/">
+
+    <link rel="stylesheet" href="./assets/test/mocha.css">
+</head>
+
+<body>
+
+    <div id="mocha"></div>
+
+    <script src="http://localhost:35729/livereload.js"></script>
+
+    <script src="./assets/test/mocha.js"></script>
+
+    <script src="./polyfills.js"></script>
+    <script src="./vendor.js"></script>
+
+    <script>mocha.setup('bdd');</script>
+    <script src="./tests.js"></script>
+    <script>mocha.run();</script>
+
+</body>
+</html>

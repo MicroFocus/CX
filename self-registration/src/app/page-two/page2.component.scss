@@ -1,0 +1,18 @@
+app-page2 {
+    .section-element {
+        margin-top: 0;
+
+        .salutation {
+            input[type=radio] {
+                min-width: initial;
+            }
+        }
+    }
+
+    #birth-date {
+        select {
+            width: 85px;
+            min-width: 85px;
+        }
+    }
+}

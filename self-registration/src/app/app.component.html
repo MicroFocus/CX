@@ -1,0 +1,24 @@
+<header>
+    <ias-app-bar>
+        <h3 class="ias-heading">User Self Registration</h3>
+        <span class="ias-fill"></span>
+        <ias-button ias-toggle="accountMenu" title="Descriptive Title">
+            Theme
+            <ias-icon icon="down_thick"></ias-icon>
+        </ias-button>
+        <ias-menu name="accountMenu">
+            <ias-button ng-click="$ctrl.setTheme('standard')">Standard</ias-button>
+            <ias-button ng-click="$ctrl.setTheme('dark')">Dark</ias-button>
+        </ias-menu>
+    </ias-app-bar>
+    <ias-nav>
+        <a ui-sref="page1" ui-sref-active="ias-active">Page 1</a>
+        <a ui-sref="page2" ui-sref-active="ias-active">Page 2</a>
+        <a ui-sref="page3" ui-sref-active="ias-active">Page 3</a>
+        <a ui-sref="page4" ui-sref-active="ias-active">Page 4</a>
+    </ias-nav>
+</header>
+
+<main>
+    <ui-view></ui-view>
+</main>
