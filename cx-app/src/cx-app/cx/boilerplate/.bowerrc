@@ -1,6 +1,0 @@
-{
-    "directory": "app/_assets/bower/",
-    "resolvers": [
-        "bower-shrinkwrap-resolver"
-    ]
-}

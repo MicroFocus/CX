@@ -6,7 +6,7 @@
        dockerfile: Dockerfile.development
      volumes:
        - ./logs:/opt/logs
-       - ../src/middle_tier:/opt/middle_tier
+       - ../middle_tier:/opt/middle_tier
      ports:
        - "5000:5000"
    self-registration:

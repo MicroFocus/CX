@@ -24,22 +24,25 @@ You can verify it was set correctly by running the following command:
 $ git config http.https://secmgmtgit.provo.novell.com:8443/.sslcainfo
 ```
 
-You should now be able to download all dependencies by running:
+### Running in a Docker Container
 
-```
-$ npm install
-```
-
-#### Running in a Docker Container
-
-You can also run this application in a Docker container.  Change to the cx-app/docker folder and run the following command:
+The easiest way to run this application is with the Docker container.  Change to the docker folder and run the following command:
 
 ```
 docker-compose -f docker-compose-self.yml up --force-recreate --build
 ```
 
-Once the Docker container starts it will be running at http://localhost:9080.
+Once the Docker container starts the self-registration app will be running at http://localhost.
 
+
+### Running the client separately
+
+
+Running the Docker container should work for most cases, but if you want to run the client separately you can use the following commands.  Start by installing all of the dependencies like this:
+
+```
+$ npm install
+```
 
 #### Running Production Builds
 

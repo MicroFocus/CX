@@ -1,5 +1,0 @@
-div.linklist
-    ul
-        li(ng-repeat="link in config.links | orderBy:'title'")
-            a(target="_blank", ng-href="{{ link.url }}")
-                | {{ link.title }}
