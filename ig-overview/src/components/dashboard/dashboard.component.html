@@ -1,1 +1,16 @@
-Dashboard Content
+<div class="dashboard-component">
+    <ias-input-container>
+        <label for="clientid">Your client ID</label>
+        <input id="clientid" name="clientid" type="text" ng-model="$ctrl.clientid">
+    </ias-input-container>
+    <ias-input-container>
+        <label for="arserver">The location of your Access Review server</label>
+        <input id="arserver" name="arserver" type="text" ng-model="$ctrl.arserver">
+    </ias-input-container>
+    <ias-input-container>
+        <label for="ospserver">The location of your OSP server</label>
+        <input id="ospserver" name="ospserver" type="text" ng-model="$ctrl.ospserver">
+    </ias-input-container>
+
+    <ias-button ng-click="$ctrl.getSomeData()">Get some data</ias-button>
+</div>

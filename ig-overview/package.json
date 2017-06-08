@@ -10,6 +10,14 @@
   "author": "Joe Hawkins <jedwardhawkins@gmail.com>",
   "license": "ISC",
   "repository": "https://github.com/jedwardhawkins/ng-gulp-template",
+  "scripts": {
+    "start": "gulp",
+    "test": "gulp test"
+  },
+  "dependencies": {
+    "ias-icons": "git+https://secmgmtgit.provo.novell.com:8443/scm/~jhawkins/ias-icons.git#development",
+    "ng-ias": "git+https://secmgmtgit.provo.novell.com:8443/scm/~jhawkins/ng-ias.git#development"
+  },
   "devDependencies": {
     "@types/angular": "1.5.8",
     "@types/angular-material": "1.1.45",
@@ -23,6 +31,7 @@
     "angular-mocks": "1.5.8",
     "angular-ui-router": "1.0.0-beta.3",
     "gulp": "3.9.1",
+    "jasmine-ts": "0.1.3",
     "ng-gulp": "jedwardhawkins/ng-gulp.git#v0.7.2"
   }
 }
