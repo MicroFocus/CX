@@ -1,8 +1,16 @@
 declare const gromit: any;
 
 export default class GromitService {
-    static $inject = ['$http'];
+    static $inject = ['$http', '$rootScope', '$window'];
     constructor(private $http) {
+    }
+
+    init() {
+        gromit.init();
+
+        // gromit.addCSSLink('css/lib/bootstrap.min.css');
+        // gromit.addCSSLink('css/lib/rainbow.css');
+        // gromit.addCSSLink('css/gromitsample.css');
     }
 
     fetchUsers(clientid, authserver, apiserver) {

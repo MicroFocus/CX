@@ -3,3 +3,4 @@
 docker/logs/middle_tier.log
 middle_tier/__pycache__
 self-registration/ts-node-*
+/self-registration/.idea

@@ -11,6 +11,9 @@ module('app', [
     .config(routes)
     .component('applicationComponent', ApplicationComponent)
     .component('dashboardComponent', DashboardComponent)
-    .service('gromitService', GromitService);
+    .service('gromitService', GromitService)
+    .run((gromitService) => {
+        gromitService.init();
+    });
 
 bootstrap(document, ['app', 'ngAnimate', 'ngAria', 'ngMaterial']);
