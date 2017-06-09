@@ -5,7 +5,7 @@ var path = require('path');
 
 var cwd = process.cwd();
 ngGulp(gulp, {
-    devServerPort: 8082,
+    devServerPort: 8081,
     externals: {
         'angular-material': 'window["angular-material"]',
         'angular-ui-router': 'window["angular-ui-router"]',
@@ -55,13 +55,23 @@ ngGulp(gulp, {
     }
 });
 
+//
 // Define some of our own additional tasks
-gulp.task('copy:extras', function() {
+//
+
+gulp.task('copy:oauth.html', function() {
+    return gulp
+        .src(path.resolve(cwd, 'vendor/gromit/html/oauth.html'))
+        .pipe(gulp.dest(path.resolve(cwd, 'dist')));
+});
+
+gulp.task('copy:gromit', function() {
     return gulp
         .src(path.resolve(cwd, 'vendor/gromit/**/*'))
-        .pipe(gulpConnect.reload())
         .pipe(gulp.dest(path.resolve(cwd, 'dist/gromit')));
 });
+
+gulp.task('copy:extras', ['copy:oauth.html', 'copy:gromit']);
 
 // Ensure copy:extras is a part of the copy:development & copy:production base tasks:
 gulp.tasks['copy:development'].dep.push('copy:extras');
