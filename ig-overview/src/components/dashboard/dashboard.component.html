@@ -14,3 +14,11 @@
 
     <ias-button ng-click="$ctrl.getSomeData()">Get some data</ias-button>
 </div>
+
+<div class="dashboard-component">
+    Username: {{$ctrl.userName}}
+</div>
+
+<div class="dashboard-component">
+    Total users: {{$ctrl.totals.getTotal('USER')}}
+</div>
