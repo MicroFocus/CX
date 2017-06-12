@@ -26,12 +26,6 @@ export default class DashboardComponent {
             gromitService.getTotals(function(totals: Totals) {
                 dc.totals = totals;
             });
-
-            gromitService.fetchUsers(function(users: any) {
-                console.log('number of users', users.arraySize);
-
-            });
-
         });
     }
 }

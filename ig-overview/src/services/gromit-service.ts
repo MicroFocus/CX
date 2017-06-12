@@ -11,18 +11,33 @@ export class UserData {
     }
 }
 
+export class Total {
+    type: string;
+    count: Number;
+
+    constructor(type: string, count: Number) {
+        this.type = type;
+        this.count = count;
+    }
+}
+
 export class Totals {
-    private totals: Object;
+    private totalsMap: Object = {};
+    private totals: Array<Total> = new Array<Total>();
 
     constructor(totals: any) {
-        this.totals = {};
         for (let total of totals.entities) {
-            this.totals[total.entityType] = total.entityCount;
+            this.totalsMap[total.entityType] = total.entityCount;
+            this.totals.push(new Total(total.entityType, Number(total.entityCount)));
         }
     }
 
     getTotal(type: string): Number {
-        return Number(this.totals[type]);
+        return Number(this.totalsMap[type]);
+    }
+
+    getTotals(): Array<Total> {
+        return this.totals;
     }
 }
 

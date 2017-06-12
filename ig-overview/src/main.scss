@@ -4,3 +4,7 @@
 // Component styles
 @import 'components/application/application.component';
 @import 'components/dashboard/dashboard.component';
+
+h2.dashboard-header {
+    margin-bottom: 15px;
+}
