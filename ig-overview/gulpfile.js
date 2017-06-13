@@ -61,13 +61,13 @@ ngGulp(gulp, {
 
 gulp.task('copy:oauth.html', function() {
     return gulp
-        .src(path.resolve(cwd, 'vendor/gromit/html/oauth.html'))
+        .src(path.resolve(cwd, 'node_modules/unjar-from-url/node_modules/gromit/html/oauth.html'))
         .pipe(gulp.dest(path.resolve(cwd, 'dist')));
 });
 
 gulp.task('copy:gromit', function() {
     return gulp
-        .src(path.resolve(cwd, 'vendor/gromit/**/*'))
+        .src(path.resolve(cwd, 'node_modules/unjar-from-url/node_modules/gromit/**/*'))
         .pipe(gulp.dest(path.resolve(cwd, 'dist/gromit')));
 });
 
