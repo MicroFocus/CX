@@ -1,0 +1,13 @@
+body, html {
+  background-color: #e8e8e8 !important;
+  color: #333;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  font-size: 14px;
+  line-height: 1.42857143;
+  margin: 0;
+  padding: 0;
+
+  > ui-view {
+    height: 100%;
+  }
+}

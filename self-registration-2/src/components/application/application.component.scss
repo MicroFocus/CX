@@ -1,0 +1,47 @@
+application-component {
+  display: flex;
+  flex-flow: column nowrap;
+  height: 100%;
+
+  header {
+    min-height: 140px;
+    width: 100%;
+    max-width: 1486px;
+    margin-left: auto;
+    margin-right: auto;
+
+    .navbar-fixed-top {
+      padding: inherit;
+      background-color: #e8e8e8 !important;
+      margin-left: 20px;
+      margin-right: 20px;
+
+      .container {
+        width: 100%;
+        max-width: 1486px;
+        padding-left: 0px;
+        padding-right: 0px;
+
+        .header-top {
+          height: 90px;
+
+          .width-fixer {
+            max-width: 1100px;
+            margin-left: auto;
+            margin-right: auto;
+            width: 90%;
+          }
+
+          .left-brand-logo {
+            padding-top: 21px;
+            padding-bottom: 21px;
+          }
+        }
+
+        .cl-bg-red {
+          background-color: #cc0000;
+        }
+      }
+    }
+  }
+}
