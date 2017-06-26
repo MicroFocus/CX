@@ -1,5 +1,8 @@
 declare const gromit: any;
 
+/**
+ * The user data struct contains information about the currently logged in user.
+ */
 export class UserData {
     userName: string;
     userId: Number;
@@ -11,6 +14,9 @@ export class UserData {
     }
 }
 
+/**
+ * A total is a struct containing the type and count of an object on the IG server.
+ */
 export class Total {
     type: string;
     count: Number;
@@ -21,6 +27,9 @@ export class Total {
     }
 }
 
+/**
+ * The Totals class handles parsing and returning data about the totals on the IG server
+ */
 export class Totals {
     private totalsMap: Object = {};
     private totals: Array<Total> = new Array<Total>();
@@ -32,15 +41,26 @@ export class Totals {
         }
     }
 
+    /**
+     * Gets the total for a specific type.
+     * 
+     * @param type The type you want the total for
+     */
     getTotal(type: string): Number {
         return Number(this.totalsMap[type]);
     }
 
+    /**
+     * Get all of the totals as an array of Total objects
+     */
     getTotals(): Array<Total> {
         return this.totals;
     }
 }
 
+/**
+ * The Gromit service provides access to data from the IG server.
+ */
 export default class GromitService {
     static $inject = ['$http', '$rootScope', '$window'];
     private apiserver: string;
@@ -50,12 +70,17 @@ export default class GromitService {
 
     init() {
         gromit.init();
-
-        // gromit.addCSSLink('css/lib/bootstrap.min.css');
-        // gromit.addCSSLink('css/lib/rainbow.css');
-        // gromit.addCSSLink('css/gromitsample.css');
     }
 
+    /**
+     * Get data about the current logged in user.  This will prompt the user to log in
+     * if they haven't already done so.
+     * 
+     * @param clientid The client ID of this app
+     * @param authserver The authentication server UDL
+     * @param apiserver The API server URL
+     * @param callback The callback function to get the data.
+     */
     whoAmI(clientid, authserver, apiserver, callback) {
         let http = this.$http;
         gromit.ClientId = clientid;
@@ -69,6 +94,11 @@ export default class GromitService {
         });
     }
 
+    /**
+     * Get a list of the first 50 users from the IG server
+     * 
+     * @param callback The callback for the user data
+     */
     fetchUsers(callback) {
         if (gromit.ClientId == null) {
             throw new Error('You must call who am I before making other calls.');
@@ -82,15 +112,17 @@ export default class GromitService {
         });
     }
 
+    /**
+     * Get the information about total object counts from the IG server
+     * 
+     * @param callback The callback for the Totals object
+     */
     getTotals(callback) {
         if (gromit.ClientId == null) {
             throw new Error('You must call who am I before making other calls.');
         }
-        let http = this.$http;
 
-        let url = this.apiserver + '/api/data/totals/';
-
-        gromit.get(url, http, function(data) {
+        gromit.get(this.apiserver + '/api/data/totals/', this.$http, function(data) {
             callback(new Totals(data));
         });
     }
