@@ -11,6 +11,7 @@
   "license": "ISC",
   "repository": "https://github.com/jedwardhawkins/ng-gulp-template",
   "scripts": {
+    "postinstall": "unjar-from-url",
     "start": "gulp",
     "test": "gulp test"
   },
@@ -36,9 +37,6 @@
     "ng-gulp": "jedwardhawkins/ng-gulp.git#v0.7.2",
     "ng-ias": "git+https://secmgmtgit.provo.novell.com:8443/scm/~jhawkins/ng-ias.git#development",
     "unjar-from-url": "1.1.1"
-  },
-  "scripts": {
-      "postinstall": "unjar-from-url"
   },
   "unjar-from-url-config": [
       {
