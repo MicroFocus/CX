@@ -4,6 +4,7 @@
             <div class="header-top">
                 <section class="width-fixer">
                     <div class="col-xs-6 column nopadding"><a class="navbar-brand-logo" href="http://www.canadalife.co.uk" target="_blank"><img src="images/cl_logo.png" class="left-brand-logo"></a></div>
+
                 </section>
             </div>
 
@@ -18,12 +19,16 @@
                         </button>
 
                         <span class="left-brand">
-                            <a class="navbar-brand" href="http://www.canadalife.co.uk" target="_blank"><i class="fa fa-home fa-lg text-white"></i></a>
-                        </span>
+                                <a class="navbar-brand" href="http://www.canadalife.co.uk" target="_blank"><i class="fa fa-home fa-lg text-white"></i></a>
+                                <a href="http://www.canadalife.co.uk" target="_blank"><img src="images/cl_logo_whiteout_small.png" class="small_logo"></a>
+                            </span>
                     </div>
 
                     <div class="collapse navbar-collapse">
                         <ul class="nav navbar-nav">
+                            <li class="website-home"><a href="http://www.canadalife.co.uk">Canada Life Home</a></li>
+                            <li><a href="/idpgo/IdpSelfservice/Account/PortalLogin" id="loginLink">Login</a></li>
+                            <!-- On login page, show registration option-->
                         </ul>
                     </div>
                     <!--/.nav-collapse -->
@@ -35,3 +40,33 @@
 </header>
 
 <ui-view></ui-view>
+
+<!-- legal footer -->
+<footer class="Site-footer">
+    <div class="container">
+        <section class="width-fixer cl-bg-red footer-info">
+            <div class="row">
+                <div class="col-xs-12">Can't see what you're looking for?</div>
+            </div>
+            <div class="row">
+                <div class="row">
+                    <div class="col-sm-6"><img src="images/telephone_icon.png"><br>ONSHORE<BR /><span class='noTelLink'>0345 606 0708</span><a class='telLink' href='tel:0345 606 0708'>0345 606 0708</a><br /><span class="openingTimes">Monday to Friday 9am to 5pm</span></div>
+                    <div class="col-sm-6"><img src="images/contacting_icon.png"><br /><a href="https://www.canadalife.co.uk/contact-us" target="_blank"><span class="text-uppercase">Ways to get in touch</span></a></div>
+                </div>
+            </div>
+        </section>
+        <div class="col-xs-12 bottom-red-bar"></div>
+        <div class="footer-legal cl-bg-grey">
+            <div class="row">
+                <div class="col-xs-12">
+                    <img src="images/cl_logo_whiteout_small.png" class="center-block">
+                    <br />
+                    <p>Canada Life Limited is authorised by the Prudential Regulation Authority and regulated by the Financial Conduct Authority and the Prudential Regulation Authority.</p>
+                    <p>Canada Life International Limited and CLI Institutional Limited are Isle of Man registered companies authorised and regulated by the Isle of Man Financial Services Authority.</p>
+                    <p>Canada Life International Assurance (Ireland) DAC is authorised and regulated by the Central Bank of Ireland.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+

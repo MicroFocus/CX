@@ -1,8 +1,11 @@
 var gulp = require('gulp');
 var ngGulp = require('ng-gulp');
+var path = require('path');
+
+var cwd = process.cwd();
 
 ngGulp(gulp, {
-    devServerPort: 8082,
+    devServerPort: 8080,
     externals: {
         'angular-ui-router': 'window["angular-ui-router"]'
     },
@@ -16,7 +19,9 @@ ngGulp(gulp, {
             'node_modules/jquery/dist/jquery.js',
             'node_modules/bootstrap/dist/js/bootstrap.js',
             'node_modules/bootstrap/dist/css/bootstrap.css',
-            'node_modules/bootstrap/dist/css/bootstrap-theme.css'
+            'node_modules/bootstrap-datepicker/dist/js/bootstrap-datepicker.js',
+            'node_modules/bootstrap-datepicker/dist/css/bootstrap-datepicker3.css',
+            'node_modules/font-awesome/css/font-awesome.css'
         ],
         vendorProduction: [
             'node_modules/angular/angular.js',
@@ -26,7 +31,9 @@ ngGulp(gulp, {
             'node_modules/jquery/dist/jquery.js',
             'node_modules/bootstrap/dist/js/bootstrap.js',
             'node_modules/bootstrap/dist/css/bootstrap.css',
-            'node_modules/bootstrap/dist/css/bootstrap-theme.css'
+            'node_modules/bootstrap-datepicker/dist/js/bootstrap-datepicker.js',
+            'node_modules/bootstrap-datepicker/dist/css/bootstrap-datepicker3.css',
+            'node_modules/font-awesome/css/font-awesome.css'
         ],
         vendorTest: [
             'node_modules/angular/angular.js',
@@ -38,3 +45,19 @@ ngGulp(gulp, {
         ]
     }
 });
+
+//
+// Define some of our own additional tasks
+//
+
+gulp.task('copy:font-awesome', function() {
+    return gulp
+        .src(path.resolve(cwd, 'node_modules/font-awesome/fonts/**/*'))
+        .pipe(gulp.dest(path.resolve(cwd, 'dist/fonts')));
+});
+
+gulp.task('copy:extras', ['copy:font-awesome']);
+
+// Ensure copy:extras is a part of the copy:development & copy:production base tasks:
+gulp.tasks['copy:development'].dep.push('copy:extras');
+gulp.tasks['copy:production'].dep.push('copy:extras');
