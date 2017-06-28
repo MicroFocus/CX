@@ -13,7 +13,6 @@
     ],
     "types": [
       "angular",
-      "angular-material",
       "angular-mocks",
       "angular-ui-router",
       "jasmine",
