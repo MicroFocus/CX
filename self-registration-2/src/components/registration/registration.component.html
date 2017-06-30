@@ -45,7 +45,7 @@
                                 <label class="" for="FirstName">First name</label>
                                 <div class="input-group input-group-md">
                                     <span class="input-group-addon"><i class="fa fa-user"></i></span>
-                                    <input class="form-control" data-val="true" data-val-length="First name is invalid." data-val-length-max="100" data-val-length-min="1" data-val-regex="First name includes invalid characters." data-val-regex-pattern="([a-zA-ZàáâãäåæçèéêëìíîïðñòóôõöÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖ&#39;-]+)" data-val-required="First name is required." id="FirstName" maxlength="100" name="FirstName" placeholder="First name" type="text" value="" />
+                                    <input class="form-control" data-val="true" data-val-length="First name is invalid." data-val-length-max="100" data-val-length-min="1" data-val-regex="First name includes invalid characters." data-val-regex-pattern="([a-zA-ZàáâãäåæçèéêëìíîïðñòóôõöÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖ&#39;-]+)" data-val-required="First name is required." id="FirstName" maxlength="100" name="FirstName" placeholder="First name" type="text" value="" ng-model="$ctrl.m_fName" />
                                 </div>
                                 <span class="field-validation-valid text-danger" data-valmsg-for="FirstName" data-valmsg-replace="true"></span>
                             </div>
@@ -56,7 +56,7 @@
                                 <label class="" for="SurName">Surname</label>
                                 <div class="input-group input-group-md">
                                     <span class="input-group-addon"><i class="fa fa-user"></i></span>
-                                    <input class="form-control" data-val="true" data-val-length="Surname is invalid." data-val-length-max="100" data-val-length-min="1" data-val-regex="Surname includes invalid characters." data-val-regex-pattern="([a-zA-Z àáâãäåæçèéêëìíîïðñòóôõöÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖ&#39;-]+)" data-val-required="Surname is required." id="SurName" maxlength="100" name="SurName" placeholder="Surname" type="text" value="" />
+                                    <input class="form-control" data-val="true" data-val-length="Surname is invalid." data-val-length-max="100" data-val-length-min="1" data-val-regex="Surname includes invalid characters." data-val-regex-pattern="([a-zA-Z àáâãäåæçèéêëìíîïðñòóôõöÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖ&#39;-]+)" data-val-required="Surname is required." id="SurName" maxlength="100" name="SurName" placeholder="Surname" type="text" value="" ng-model="$ctrl.m_sName" />
                                 </div>
                                 <span class="field-validation-valid text-danger" data-valmsg-for="SurName" data-valmsg-replace="true"></span>
                             </div>
@@ -286,7 +286,7 @@
 
                         </div>
                         <div class="form-group col-sm-6 col-xs-12">
-                            <a href="#" onclick="if (validateDateOfBirth()) $(this).closest('form').submit(); return false;" class="btn continue">Register</a>
+                            <a href="#" ng-click="$ctrl.createUser()" class="btn continue">Register</a>
                         </div>
                     </div>
                 </form>

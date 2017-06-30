@@ -44,3 +44,13 @@ files to `dist/` by default
 
 ## Testing
 Coming soon
+
+### Running in a Docker Container
+
+The easiest way to run this application is with the Docker container.  Change to the docker folder and run the following command:
+
+```
+docker-compose -f docker-compose-self-v2.yml up --force-recreate --build
+```
+
+Once the Docker container starts the self-registration app will be running at http://localhost.

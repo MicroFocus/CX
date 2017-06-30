@@ -15,9 +15,7 @@ class EDirUsersResource(Resource):
 
     def create_user(self, request):
         log.info("Create user body:{}".format(request.data))
-        data = json.loads(request.data)
-        username = data["name"]
-        print('username: ' + username)
+        data = json.loads(request.data)        
         
         server = Server('10.120.46.80')
         conn = Connection(server, "cn=zgrossbart,ou=services,o=corp", "N0v3ll123")
@@ -25,12 +23,9 @@ class EDirUsersResource(Resource):
         attrs = {}
         attrs['cn'] = 'zacktest'
         attrs['sn'] = 'Zack\'s test user'
-#        attrs['userPassword'] = 'aDifferentSecret'
-        attrs['fullName'] = 'A test user from Zack'
+        attrs['fullName'] = data["fName"] + ' ' + data["lName"]
         attrs['givenName'] = 'Zack'
-#        attrs['Language'] = 'ENGLISH'
-        attrs['description'] = 'This is a user Zack created from Python'
-#        attrs['passwordAllowChange'] = 'TRUE'
+        attrs['description'] = data["description"]
         dn = "cn=zacktest,ou=SA,ou=CanadaLife,o=corp"
         result = conn.add(dn, ','.join(['inetOrgPerson']), attrs)
         
