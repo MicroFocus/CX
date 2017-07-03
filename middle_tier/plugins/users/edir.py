@@ -24,6 +24,7 @@ class EDirUsersResource(Resource):
         attrs['cn'] = 'zacktest'
         attrs['sn'] = data["sName"]
         attrs['userPassword'] = data["password"]
+        attrs['mail'] = data["email"]
         attrs['fullName'] = data["fName"] + ' ' + data["sName"]
         attrs['givenName'] = data["fName"]
         attrs['description'] = data["description"]

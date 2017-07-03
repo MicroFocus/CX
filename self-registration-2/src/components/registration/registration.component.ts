@@ -10,6 +10,7 @@ export default class RegistrationComponent {
     private m_fName: string;
     private m_sName: string;
     private m_password: string;
+    private m_email: string;
 
     constructor(private userService: UserService) {}
 
@@ -19,6 +20,7 @@ export default class RegistrationComponent {
         user.fName = this.m_fName;
         user.sName = this.m_sName;
         user.password = this.m_password;
+        user.email = this.m_email;
         user.description = 'This is a user created from our Angular app';
 
         this.userService.createUser(user).then((result: string[]) => {
