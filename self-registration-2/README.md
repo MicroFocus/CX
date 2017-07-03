@@ -12,7 +12,8 @@ docker-compose -f docker-compose-self-v2.yml up --force-recreate --build
 Once the Docker container starts the application will be running at http://localhost.
 
 
-## Setup
+## Building the Client Side Separately
+You can build the client-side of this application separately.  You don't have to, but it can sometimes be useful to see better build errors.
 
 ### Node Package Manager
 This sample requires the [Node Package Manager](https://www.npmjs.com).  The best way to get the Node Package Manager is to install [Node.js](https://nodejs.org/en).  
