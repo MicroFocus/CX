@@ -10,7 +10,7 @@ export class User {
     password: string;
     email: string;
     postalCode: string;
-    description: string = 'This is a user created from our Angular app';
+    description = 'This is a user created from our Angular app';
 
     constructor() {
 
@@ -31,7 +31,7 @@ export default class UserService {
 
     /**
      * Call the server and create a user.
-     * 
+     *
      * @param user The user object to create
      */
     public createUser(user: User): IPromise<string[]> {
