@@ -11,6 +11,7 @@ export default class RegistrationComponent {
     private m_sName: string;
     private m_password: string;
     private m_email: string;
+    private m_postalCode: string;
 
     constructor(private userService: UserService) {}
 
@@ -21,6 +22,8 @@ export default class RegistrationComponent {
         user.sName = this.m_sName;
         user.password = this.m_password;
         user.email = this.m_email;
+        user.postalCode = this.m_postalCode;
+        
         user.description = 'This is a user created from our Angular app';
 
         this.userService.createUser(user).then((result: string[]) => {
