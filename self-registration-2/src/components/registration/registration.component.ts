@@ -7,8 +7,9 @@ import UserService from '../../services/user.service';
 export default class RegistrationComponent {
     static $inject = ['userService'];
 
-    private m_fName: string = 'Zack';
-    private m_sName: string = 'Zack Test From Angular';
+    private m_fName: string;
+    private m_sName: string;
+    private m_password: string;
 
     constructor(private userService: UserService) {}
 
@@ -16,7 +17,8 @@ export default class RegistrationComponent {
         var user: any  = {};
 
         user.fName = this.m_fName;
-        user.lName = this.m_sName;
+        user.sName = this.m_sName;
+        user.password = this.m_password;
         user.description = 'This is a user created from our Angular app';
 
         this.userService.createUser(user).then((result: string[]) => {

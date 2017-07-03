@@ -22,9 +22,10 @@ class EDirUsersResource(Resource):
         conn.bind()
         attrs = {}
         attrs['cn'] = 'zacktest'
-        attrs['sn'] = 'Zack\'s test user'
-        attrs['fullName'] = data["fName"] + ' ' + data["lName"]
-        attrs['givenName'] = 'Zack'
+        attrs['sn'] = data["sName"]
+        attrs['userPassword'] = data["password"]
+        attrs['fullName'] = data["fName"] + ' ' + data["sName"]
+        attrs['givenName'] = data["fName"]
         attrs['description'] = data["description"]
         dn = "cn=zacktest,ou=SA,ou=CanadaLife,o=corp"
         result = conn.add(dn, ','.join(['inetOrgPerson']), attrs)
