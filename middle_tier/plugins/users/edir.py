@@ -9,6 +9,11 @@ from resources.base import Resource
 
 log = logging.getLogger(__name__)
 
+"""
+This service is a temporary stop gap for creating users in eDirectory.  It
+connects to one specific eDirectory and creates a single user.  This service
+is just a proof of concept and shouldn't be used in production.
+"""
 class EDirUsersResource(Resource):
     def __init__(self, service):
         super().__init__(service)

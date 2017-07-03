@@ -1,5 +1,6 @@
 import { Component } from '../../component.decorator';
 import UserService from '../../services/user.service';
+import { User } from '../../services/user.service';
 
 @Component({
     templateUrl: require('./registration.component.html')
@@ -16,15 +17,13 @@ export default class RegistrationComponent {
     constructor(private userService: UserService) {}
 
     public createUser(): void {
-        var user: any  = {};
+        var user: User  = new User();
 
         user.fName = this.m_fName;
         user.sName = this.m_sName;
         user.password = this.m_password;
         user.email = this.m_email;
         user.postalCode = this.m_postalCode;
-        
-        user.description = 'This is a user created from our Angular app';
 
         this.userService.createUser(user).then((result: string[]) => {
                 console.warn('result[0]: ' + result[0]);
