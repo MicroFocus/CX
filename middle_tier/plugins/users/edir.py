@@ -30,6 +30,7 @@ class EDirUsersResource(Resource):
         attrs['sn'] = data["sName"]
         attrs['userPassword'] = data["password"]
         attrs['clPolicyNumber'] = data["policyNumber"]
+        attrs['clDoB'] = data["birthDate"]
         attrs['mail'] = data["email"]
         attrs['postalCode'] = data["postalCode"]
         attrs['fullName'] = data["fName"] + ' ' + data["sName"]

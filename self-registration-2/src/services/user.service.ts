@@ -11,6 +11,7 @@ export class User {
     email: string;
     postalCode: string;
     policyNumber: string;
+    birthDate: Date;
     description = 'This is a user created from our Angular app';
 
     constructor() {
