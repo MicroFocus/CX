@@ -13,6 +13,7 @@ export default class RegistrationComponent {
     private m_password: string;
     private m_email: string;
     private m_postalCode: string;
+    private m_policyNumber: string;
 
     constructor(private userService: UserService) {}
 
@@ -24,6 +25,7 @@ export default class RegistrationComponent {
         user.password = this.m_password;
         user.email = this.m_email;
         user.postalCode = this.m_postalCode;
+        user.policyNumber = this.m_policyNumber;
 
         this.userService.createUser(user).then((result: string[]) => {
                 console.warn('result[0]: ' + result[0]);

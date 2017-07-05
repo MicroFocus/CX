@@ -10,6 +10,7 @@ export class User {
     password: string;
     email: string;
     postalCode: string;
+    policyNumber: string;
     description = 'This is a user created from our Angular app';
 
     constructor() {
