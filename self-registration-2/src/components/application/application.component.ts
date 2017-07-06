@@ -5,5 +5,6 @@ import { Component } from '../../component.decorator';
 })
 export default class ApplicationComponent {
     static $inject = [];
-    constructor() {}
+    constructor() {
+    }
 }
