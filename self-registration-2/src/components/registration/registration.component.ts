@@ -11,12 +11,17 @@ export default class RegistrationComponent {
 
     private m_fName: string;
     private m_sName: string;
-    private m_policyNumber: string;
     private m_password: string;
     private m_confirmPassword: string;
     private m_email: string;
     private m_confirmEmail: string;
     private m_postalCode: string;
+    private m_policyNumber: string;
+
+    private m_day: string;
+    private m_month: string;
+    private m_year: string;
+
     private m_termsConsent: boolean;
 
     static $inject = ['$state', 'userService'];
@@ -35,6 +40,10 @@ export default class RegistrationComponent {
             user.password = this.m_password;
             user.email = this.m_email;
             user.postalCode = this.m_postalCode;
+            user.policyNumber = this.m_policyNumber;
+            user.birthDate = new Date(parseInt(this.m_year, 10),
+                    parseInt(this.m_month, 10) - 1,
+                    parseInt(this.m_day, 10));
 
             this.userService.createUser(user)
                     .then((result: string[]) => {
