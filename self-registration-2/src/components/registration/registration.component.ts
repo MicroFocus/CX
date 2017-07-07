@@ -30,8 +30,8 @@ export default class RegistrationComponent {
         user.email = this.m_email;
         user.postalCode = this.m_postalCode;
         user.policyNumber = this.m_policyNumber;
-        user.birthDate = new Date(parseInt(this.m_year, 10), 
-                                  parseInt(this.m_month, 10) - 1, 
+        user.birthDate = new Date(parseInt(this.m_year, 10),
+                                  parseInt(this.m_month, 10) - 1,
                                   parseInt(this.m_day, 10));
 
         this.userService.createUser(user).then((result: string[]) => {
