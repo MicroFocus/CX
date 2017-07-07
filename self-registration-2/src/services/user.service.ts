@@ -15,7 +15,6 @@ export class User {
     description = 'This is a user created from our Angular app';
 
     constructor() {
-
     }
 }
 
@@ -39,17 +38,15 @@ export default class UserService {
     public createUser(user: User): IPromise<string[]> {
         let deferred: IDeferred<string[]> = this.$q.defer<string[]>();
 
-        let result: string[] = [];
-
         this.$http.post(this.userCreateUrl, user)
             .then((response: any) => {
                 console.warn('response.data.result: ' + response.data.result);
-                result.push(response.data.result);
+                deferred.resolve(response.data.result);
             }).catch((error) => {
-            result.push(error);
-        });
+                console.warn('response error: ' + error);
+                deferred.reject(error);
+            });
 
-        deferred.resolve(result);
         return deferred.promise;
     }
 }

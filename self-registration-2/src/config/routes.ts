@@ -8,5 +8,6 @@ export default [
         $urlRouterProvider.otherwise('/');
         $stateProvider.state({ name: 'app', abstract: true, component: 'applicationComponent' });
         $stateProvider.state({ name: 'app.registration', url: '/', component: 'registrationComponent' });
+        $stateProvider.state({ name: 'app.registration-success', url: '/', component: 'registrationSuccessComponent' });
     }
 ];
