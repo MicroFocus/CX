@@ -38,10 +38,23 @@ export default class UserService {
     public createUser(user: User): IPromise<string[]> {
         let deferred: IDeferred<string[]> = this.$q.defer<string[]>();
 
-        this.$http.post(this.userCreateUrl, user)
+        this.$http.get('/api/clife/' + user.policyNumber)
             .then((response: any) => {
-                console.warn('response.data.result: ' + response.data.result);
-                deferred.resolve(response.data.result);
+                if (response.data === true) {
+                    /*
+                     * This means the policy number is valid and we can move forward.
+                     */
+                    this.$http.post(this.userCreateUrl, user)
+                        .then((response: any) => {
+                            console.warn('response.data.result: ' + response.data.result);
+                            deferred.resolve(response.data.result);
+                        }).catch((error) => {
+                            console.warn('response error: ' + error);
+                            deferred.reject(error);
+                        });
+                } else {
+                    deferred.reject('InvalidPolicyNum');
+                }
             }).catch((error) => {
                 console.warn('response error: ' + error);
                 deferred.reject(error);

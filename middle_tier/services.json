@@ -1,51 +1,56 @@
-[
-  {
-    "id": "sspr",
-    "name": "SSPR service wrapper",
-    "description": "",
-    "virtual": [
-      {
-        "response_function_name": "SSPRResource.multiple_sspr_random_password",
-        "function_source_uri": "plugins.sspr.password",
-        "path": "randompassword_n",
-        "method": "GET"
-      },
-      {
-        "response_function_name": "SSPRResource.multiple_random_passwords",
-        "function_source_uri": "plugins.sspr.password",
-        "path": "common_randompassword",
-        "method": "GET"
-      }
-    ],
-    "proxy": {
-      "listen_path": "/registration/",
-      "target_url": "https://prvdvnam203.namdom033.lab/sspr/public/rest"
-    }
-  },
-  {
-    "id": "mockable",
-    "name": "Mockable wrapper",
-    "description": "",
-    "proxy": {
-      "listen_path": "/mockable/",
-      "target_url": "http://demo4115683.mockable.io"
-    }
-  },
-  {
-    "id": "users",
-    "name": "Ldap users service wrapper",
-    "description": "",
-    "virtual": [
-      {
-        "response_function_name": "EDirUsersResource.create_user",
-        "function_source_uri": "plugins.users.edir",
-        "path": "create",
-        "method": "POST"
-      }
-    ],
-    "proxy": {
-      "listen_path": "/users/",
-      "target_url": null
-    }
-  }
+[{
+		"id": "sspr",
+		"name": "SSPR service wrapper",
+		"description": "",
+		"virtual": [{
+				"response_function_name": "SSPRResource.multiple_sspr_random_password",
+				"function_source_uri": "plugins.sspr.password",
+				"path": "randompassword_n",
+				"method": "GET"
+			},
+			{
+				"response_function_name": "SSPRResource.multiple_random_passwords",
+				"function_source_uri": "plugins.sspr.password",
+				"path": "common_randompassword",
+				"method": "GET"
+			}
+		],
+		"proxy": {
+			"listen_path": "/registration/",
+			"target_url": "https://prvdvnam203.namdom033.lab/sspr/public/rest"
+		}
+	},
+	{
+		"id": "mockable",
+		"name": "Mockable wrapper",
+		"description": "",
+		"proxy": {
+			"listen_path": "/mockable/",
+			"target_url": "http://demo4115683.mockable.io"
+		}
+	},
+	{
+		"id": "users",
+		"name": "Ldap users service wrapper",
+		"description": "",
+		"virtual": [{
+			"response_function_name": "EDirUsersResource.create_user",
+			"function_source_uri": "plugins.users.edir",
+			"path": "create",
+			"method": "POST"
+		}],
+		"proxy": {
+			"listen_path": "/users/",
+			"target_url": null
+		}
+	},
+	{
+		"id": "clife",
+		"name": "Canada Life proxy",
+		"description": "",
+		"proxy": {
+			"listen_path": "/clife/",
+			"target_url": "http://identityclientsapi20170615043736.azurewebsites.net/api/Clients/Validate/Policynumber"
+		}
+	}
 ]

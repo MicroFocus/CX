@@ -51,7 +51,12 @@ export default class RegistrationComponent {
                         this.$state.go('app.registration-success');
                     })
                     .catch((error) => {
-                        this.validationErrors.push(`Status code ${error.status}: ${error.statusText}`);
+                        console.warn('error: ' + error);
+                        if (error === 'InvalidPolicyNum') {
+                            this.validationErrors.push('Your policy number is invalid.');
+                        } else {
+                            this.validationErrors.push(`Status code ${error.status}: ${error.statusText}`);
+                        }
                     });
         }
     }
