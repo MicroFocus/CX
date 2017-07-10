@@ -71,7 +71,7 @@ def home(service_name, sub_url):
         response = service.handle(service_request)
         resp = flask.Response(response.content)
         for key, value in response.headers.items():
-            if key not in ["Content-Length", "Content-Encoding"]:
+            if key not in ["Content-Length", "Content-Encoding", "Transfer-Encoding"]:
                 resp.headers[key] = value
         return resp, response.status_code
     else:
