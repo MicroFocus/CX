@@ -25,8 +25,10 @@ class EDirUsersResource(Resource):
         server = Server('10.120.46.80')
         conn = Connection(server, "cn=zgrossbart,ou=services,o=corp", "N0v3ll123")
         conn.bind()
+        
+        cn = data["fName"].replace(" ", "").lower() + data["sName"].lower()[0]
         attrs = {}
-        attrs['cn'] = 'zacktest'
+        attrs['cn'] = cn
         attrs['sn'] = data["sName"]
         attrs['userPassword'] = data["password"]
         attrs['clPolicyNumber'] = data["policyNumber"]
@@ -36,7 +38,7 @@ class EDirUsersResource(Resource):
         attrs['fullName'] = data["fName"] + ' ' + data["sName"]
         attrs['givenName'] = data["fName"]
         attrs['description'] = data["description"]
-        dn = "cn=zacktest,ou=SA,ou=CanadaLife,o=corp"
+        dn = "cn=" + cn + ",ou=SA,ou=CanadaLife,o=corp"
         result = conn.add(dn, ['User', 'clCustomer'], attrs)
         
         if result:
