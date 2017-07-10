@@ -54,8 +54,10 @@ export default class RegistrationComponent {
                         console.warn('error: ' + error);
                         if (error === 'InvalidPolicyNum') {
                             this.validationErrors.push('Your policy number is invalid.');
+                        } else if (error.data.error.result === 68) {
+                            this.validationErrors.push('The user you are trying to create already exists.');
                         } else {
-                            this.validationErrors.push(`Status code ${error.status}: ${error.statusText}`);
+                            this.validationErrors.push(`Status code ${error.status}: ${error.statusText} (${error.data.error.result})`);
                         }
                     });
         }
