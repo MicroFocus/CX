@@ -43,14 +43,5 @@
 			"listen_path": "/users/",
 			"target_url": null
 		}
-	},
-	{
-		"id": "clife",
-		"name": "Canada Life proxy",
-		"description": "",
-		"proxy": {
-			"listen_path": "/clife/",
-			"target_url": "http://identityclientsapi20170615043736.azurewebsites.net/api/Clients/Validate/Policynumber"
-		}
 	}
 ]

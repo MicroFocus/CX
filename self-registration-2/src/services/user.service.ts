@@ -10,7 +10,6 @@ export class User {
     password: string;
     email: string;
     postalCode: string;
-    policyNumber: string;
     birthDate: Date;
     description = 'This is a user created from our Angular app';
 
@@ -38,27 +37,13 @@ export default class UserService {
     public createUser(user: User): IPromise<string[]> {
         let deferred: IDeferred<string[]> = this.$q.defer<string[]>();
 
-        this.$http.get('/api/clife/' + user.policyNumber)
-            .then((response: any) => {
-                if (response.data === true) {
-                    /*
-                     * This means the policy number is valid and we can move forward.
-                     */
-                    this.$http.post(this.userCreateUrl, user)
-                        .then((response: any) => {
-                            console.warn('response.data.result: ' + response.data.result);
-                            deferred.resolve(response.data.result);
-                        }).catch((error) => {
-                            console.warn('response error: ' + error);
-                            deferred.reject(error);
-                        });
-                } else {
-                    deferred.reject('InvalidPolicyNum');
-                }
-            }).catch((error) => {
-                console.warn('response error: ' + error);
-                deferred.reject(error);
-            });
+        this.$http.post(this.userCreateUrl, user).then((response: any) => {
+            console.warn('response.data.result: ' + response.data.result);
+            deferred.resolve(response.data.result);
+        }).catch((error) => {
+            console.warn('response error: ' + error);
+            deferred.reject(error);
+        });
 
         return deferred.promise;
     }

@@ -16,13 +16,10 @@ export default class RegistrationComponent {
     private m_email: string;
     private m_confirmEmail: string;
     private m_postalCode: string;
-    private m_policyNumber: string;
 
     private m_day: string;
     private m_month: string;
     private m_year: string;
-
-    private m_termsConsent: boolean;
 
     static $inject = ['$state', 'userService'];
     constructor(private $state: angular.ui.IStateService, private userService: UserService) {
@@ -40,7 +37,6 @@ export default class RegistrationComponent {
             user.password = this.m_password;
             user.email = this.m_email;
             user.postalCode = this.m_postalCode;
-            user.policyNumber = this.m_policyNumber;
             user.birthDate = new Date(parseInt(this.m_year, 10),
                     parseInt(this.m_month, 10) - 1,
                     parseInt(this.m_day, 10));
@@ -52,12 +48,11 @@ export default class RegistrationComponent {
                     })
                     .catch((error) => {
                         console.warn('error: ' + error);
-                        if (error === 'InvalidPolicyNum') {
-                            this.validationErrors.push('Your policy number is invalid.');
-                        } else if (error.data.error.result === 68) {
+                        if (error.data.error.result === 68) {
                             this.validationErrors.push('The user you are trying to create already exists.');
                         } else {
-                            this.validationErrors.push(`Status code ${error.status}: ${error.statusText} (${error.data.error.result})`);
+                            this.validationErrors.push(`Status code ${error.status}: ${error.statusText} ` +
+                                                       `(${error.data.error.result})`);
                         }
                     });
         }
@@ -69,13 +64,10 @@ export default class RegistrationComponent {
 
         this.validateFieldHasText('firstName', this.m_fName, 'First name is required.');
         this.validateFieldHasText('surName', this.m_sName, 'Surname is required.');
-        this.validateFieldHasText('policyNumber', this.m_policyNumber, 'Policy number is required.');
         this.validateFieldHasText('email', this.m_email, 'Email is required.');
         this.validateFieldHasText('confirmEmail', this.m_confirmEmail, 'Confirmation email is required.');
         this.validateFieldHasText('password', this.m_password, 'Password is required.');
         this.validateFieldHasText('confirmPassword', this.m_confirmPassword, 'Confirmation password is required.');
-        this.validateTrue('termsConsent', this.m_termsConsent, 'You must agree to the terms and conditions before' +
-                ' you can register.');
 
         if (this.m_email && this.m_confirmEmail && this.m_email !== this.m_confirmEmail) {
             let errMsg = 'The confirmation email address does not match the email address.';
@@ -91,13 +83,6 @@ export default class RegistrationComponent {
     }
 
     private validateFieldHasText(fieldName: string, fieldValue: string, errorMsg: string) {
-        if (!fieldValue) {
-            this.fieldErrors[fieldName] = errorMsg;
-            this.validationErrors.push(errorMsg);
-        }
-    }
-
-    private validateTrue(fieldName: string, fieldValue: boolean, errorMsg: string) {
         if (!fieldValue) {
             this.fieldErrors[fieldName] = errorMsg;
             this.validationErrors.push(errorMsg);

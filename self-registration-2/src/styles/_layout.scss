@@ -1,5 +1,6 @@
 body {
   background-color : #e8e8e8 !important;
+  font-size: 16px;
 }
 
 .Site {
@@ -237,7 +238,7 @@ header.adviserTopBar {
 }
 
 .bottom-red-bar {
-  background-color : #CC0000;
+  background-color : #00aeef;
   height : 5px;
 
 }
@@ -306,7 +307,7 @@ and (max-width: 767px) {
 }
 
 .cl-bg-red {
-  background-color: #cc0000;
+  background-color: #00aeef;
 }
 
 .cl-bg-grey {
@@ -335,7 +336,7 @@ a {
 .input-group:hover i,
 .input-group:active i,
 .input-group:focus i {
-  color: #ED0000;
+  color: #00aeef;
 }
 
 .openingTimes{
@@ -343,7 +344,7 @@ a {
 }
 .warningMessage{
   font-size: 18px;
-  color: #cc0000;
+  color: #00aeef;
 }
 
 /* ----------------------------
@@ -585,7 +586,7 @@ h2 {
 }
 
 .btn:hover {
-  background-color : #CC0000;
+  background-color : #00aeef;
   color:#fff;
 }
 
@@ -602,7 +603,7 @@ h2 {
 }
 
 .input-group-addon:hover {
-  color : #CC0000;
+  color : #00aeef;
 }
 
 .text-danger {
