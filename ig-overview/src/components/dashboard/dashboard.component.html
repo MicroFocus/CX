@@ -1,0 +1,41 @@
+<div class="dashboard">
+    <div class="dashboard-component">
+        <h2 class="dashboard-header">Identity Governance Server Information</h2>
+    
+        <ias-input-container>
+            <label for="clientid">Your client ID</label>
+            <input id="clientid" name="clientid" type="text" ng-model="$ctrl.clientid">
+        </ias-input-container>
+        <ias-input-container>
+            <label for="arserver">The location of your Identity Governance server</label>
+            <input id="arserver" name="arserver" type="text" ng-model="$ctrl.arserver">
+        </ias-input-container>
+        <ias-input-container>
+            <label for="ospserver">The location of your OSP server</label>
+            <input id="ospserver" name="ospserver" type="text" ng-model="$ctrl.ospserver">
+        </ias-input-container>
+
+        <ias-button ng-click="$ctrl.getSomeData()">Get Identity Governance Totals</ias-button>
+    </div>
+
+    <div class="dashboard-component" ng-if="$ctrl.totals">
+        <h2 class="dashboard-header">Identity Governance Totals</h2>
+    
+        <p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Type</th>
+                        <th>Count</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="total in $ctrl.totals.getTotals() track by $index">
+                        <td>{{total.type}}</td>
+                        <td>{{total.count}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </p>
+    </div>
+</div>

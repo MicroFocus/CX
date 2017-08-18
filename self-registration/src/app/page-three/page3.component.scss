@@ -1,0 +1,89 @@
+app-page3 {
+    .social-options {
+        margin-top: 20px;
+
+        ias-tile-grid {
+            margin-top: 20px;
+        }
+    }
+
+    .password-container {
+        margin-bottom: 20px;
+
+        .password-input-wrapper {
+            display: inline-block;
+            position: relative;
+
+            a {
+                bottom: -14px;
+                cursor: pointer;
+                font-size: 10px;
+                position: absolute;
+                right: 0;
+            }
+        }
+    }
+
+    .strength-meter {
+        display: inline-block;
+        margin-left: 10px;
+        position: relative;
+        vertical-align: middle;
+
+        .ias-icon {
+            left: 0;
+            position: absolute;
+            top: -21px;
+
+            &::before {
+                font-size: 35px;
+            }
+        }
+
+        .password-strength-base::before {
+            color: #dae1e1;
+        }
+
+        .password-strength-status.ias-icon-strength1::before,
+        .password-strength-status.ias-icon-strength2::before,
+        .ias-icon-strength1 + .password-strength-status-text,
+        .ias-icon-strength2 + .password-strength-status-text {
+            color: #e50000;
+        }
+
+        .password-strength-status.ias-icon-strength3::before,
+        .ias-icon-strength3 + .password-strength-status-text {
+            color: #f17e12;
+        }
+
+        .password-strength-status.ias-icon-strength4::before,
+        .ias-icon-strength4 + .password-strength-status-text {
+            color: #01a9e7;
+        }
+
+        .password-strength-status.ias-icon-strength5::before,
+        .ias-icon-strength5 + .password-strength-status-text {
+            color: #0061bd;
+        }
+
+        .password-strength-status-text {
+            position: absolute;
+            top: -10px;
+            left: 45px;
+        }
+    }
+}
+
+.password-list {
+    display: flex;
+    flex-wrap: wrap;
+    height: 200px;
+    padding-top: 5px;
+    width: 275px;
+
+    > a {
+        cursor: pointer;
+        margin-left: 0;
+        width: 130px;
+    }
+}
