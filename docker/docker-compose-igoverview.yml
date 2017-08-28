@@ -9,7 +9,11 @@
        - ../middle_tier:/opt/middle_tier
      ports:
        - "5000:5000"
+<<<<<<< HEAD
    self-registration:
+=======
+   ui:
+>>>>>>> Changed docker hostname to ui for frontend project
      build: ../ig-overview
      volumes:
        - ../ig-overview:/usr/src/app
@@ -25,5 +29,5 @@
      command: /bin/bash -c "nginx -g 'daemon off;'"
      depends_on:
        - web
-       - self-registration
+       - ui
 

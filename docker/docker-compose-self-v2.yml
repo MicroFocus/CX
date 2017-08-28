@@ -9,7 +9,7 @@
        - ../middle_tier:/opt/middle_tier
      ports:
        - "5000:5000"
-   self-registration:
+   ui:
      build: ../self-registration-2
      volumes:
        - ../self-registration-2:/usr/src/app
@@ -25,5 +25,5 @@
      command: /bin/bash -c "nginx -g 'daemon off;'"
      depends_on:
        - web
-       - self-registration
+       - ui
 
