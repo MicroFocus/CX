@@ -10,15 +10,6 @@
     "target": "es5",
     "typeRoots": [
       "node_modules/@types"
-    ],
-    "types": [
-      "angular",
-      "angular-material",
-      "angular-mocks",
-      "angular-ui-router",
-      "jasmine",
-      "jquery",
-      "node"
     ]
   },
   "files": [
