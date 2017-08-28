@@ -5,7 +5,7 @@ var path = require('path');
 
 var cwd = process.cwd();
 ngGulp(gulp, {
-    devServerPort: 8081,
+    devServerPort: 8080,
     externals: {
         'angular-material': 'window["angular-material"]',
         'angular-ui-router': 'window["angular-ui-router"]',

@@ -19,8 +19,9 @@ export default class DashboardComponent {
     getSomeData() {
         let gromitService = this.gromitService;
         let dc: DashboardComponent = this;
+        console.log('apiserver: ' + this.arserver);
 
-        gromitService.whoAmI(this.clientid, this.arserver, this.ospserver, function(data: UserData) {
+        gromitService.whoAmI(this.clientid, this.ospserver, this.arserver, function(data: UserData) {
             dc.userName = data.userName;
 
             gromitService.getTotals(function(totals: Totals) {

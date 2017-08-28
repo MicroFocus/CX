@@ -43,5 +43,14 @@
 			"listen_path": "/users/",
 			"target_url": null
 		}
+	},
+	{
+		"id": "igserver",
+		"name": "IG Server",
+		"description": "",
+		"proxy": {
+			"listen_path": "/ig/",
+			"target_url": "http://192.168.0.76:8080"
+		}
 	}
 ]
