@@ -37,7 +37,7 @@ class EDirUsersResource(Resource):
         attrs['fullName'] = data["fName"] + ' ' + data["sName"]
         attrs['givenName'] = data["fName"]
         attrs['description'] = data["description"]
-        dn = "cn=" + cn + ",ou=SA,ou=CanadaLife,o=corp"
+        dn = "cn=" + cn + ",ou=SA,ou=cx,o=corp"
         result = conn.add(dn, ['User', 'clCustomer'], attrs)
         
         if result:

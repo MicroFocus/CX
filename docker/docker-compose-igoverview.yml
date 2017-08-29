@@ -10,9 +10,9 @@
      ports:
        - "5000:5000"
    ui:
-     build: ../self-registration-2
+     build: ../ig-overview
      volumes:
-       - ../self-registration-2:/usr/src/app
+       - ../ig-overview:/usr/src/app
        - /usr/src/app/node_modules
      ports:
        - "9080:8080"

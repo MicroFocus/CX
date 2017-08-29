@@ -5,9 +5,9 @@ import { UserData, Totals } from '../../services/gromit-service';
     templateUrl: require('./dashboard.component.html')
 })
 export default class DashboardComponent {
-    private clientid: string = 'iac2';
-    private arserver: string = 'http://192.168.0.76:8080';
-    private ospserver: string = 'http://192.168.0.76:8080';
+    private clientid = 'iac2';
+    private arserver = 'http://192.168.0.76:8080';
+    private ospserver = 'http://192.168.0.76:8080';
 
     private userName: string;
     private totals: Totals;
@@ -20,7 +20,7 @@ export default class DashboardComponent {
         let gromitService = this.gromitService;
         let dc: DashboardComponent = this;
 
-        gromitService.whoAmI(this.clientid, this.arserver, this.ospserver, function(data: UserData) {
+        gromitService.whoAmI(this.clientid, this.ospserver, this.arserver, function(data: UserData) {
             dc.userName = data.userName;
 
             gromitService.getTotals(function(totals: Totals) {

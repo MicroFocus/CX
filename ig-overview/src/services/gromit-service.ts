@@ -43,7 +43,7 @@ export class Totals {
 
     /**
      * Gets the total for a specific type.
-     * 
+     *
      * @param type The type you want the total for
      */
     getTotal(type: string): Number {
@@ -75,7 +75,7 @@ export default class GromitService {
     /**
      * Get data about the current logged in user.  This will prompt the user to log in
      * if they haven't already done so.
-     * 
+     *
      * @param clientid The client ID of this app
      * @param authserver The authentication server UDL
      * @param apiserver The API server URL
@@ -96,7 +96,7 @@ export default class GromitService {
 
     /**
      * Get a list of the first 50 users from the IG server
-     * 
+     *
      * @param callback The callback for the user data
      */
     fetchUsers(callback) {
@@ -114,7 +114,7 @@ export default class GromitService {
 
     /**
      * Get the information about total object counts from the IG server
-     * 
+     *
      * @param callback The callback for the Totals object
      */
     getTotals(callback) {

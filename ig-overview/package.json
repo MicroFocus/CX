@@ -15,13 +15,13 @@
     "start": "gulp",
     "test": "gulp test"
   },
-  "dependencies": {
-  },
+  "dependencies": {},
   "devDependencies": {
     "@types/angular": "1.5.8",
     "@types/angular-material": "1.1.45",
     "@types/angular-mocks": "1.5.8",
     "@types/angular-ui-router": "1.1.36",
+    "@types/jasmine": "2.5.54",
     "@types/node": "6.0.45",
     "angular": "1.5.8",
     "angular-animate": "1.5.8",
@@ -32,16 +32,17 @@
     "gulp": "3.9.1",
     "ias-icons": "git+https://secmgmtgit.provo.novell.com:8443/scm/~jhawkins/ias-icons.git#development",
     "jasmine-ts": "0.1.3",
-    "jquery": "2.1.3",
+    "jquery": "3.2.1",
     "js-cookie": "1.5.1",
     "ng-gulp": "jedwardhawkins/ng-gulp.git#v0.7.2",
     "ng-ias": "git+https://secmgmtgit.provo.novell.com:8443/scm/~jhawkins/ng-ias.git#development",
+    "typescript": "2.3.0",
     "unjar-from-url": "1.1.1"
   },
   "unjar-from-url-config": [
-      {
-          "directory": "gromit",
-          "url": "http://nexus.idmapps.nqbuild.lab/nexus/service/local/repositories/releases/content/org/gromitsoft/gromit/1.0.2/gromit-1.0.2.jar"
-      }
+    {
+      "directory": "gromit",
+      "url": "http://nexus.idmapps.nqbuild.lab/nexus/service/local/repositories/releases/content/org/gromitsoft/gromit/1.0.2/gromit-1.0.2.jar"
+    }
   ]
 }
