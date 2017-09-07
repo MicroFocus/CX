@@ -42,7 +42,7 @@
   "unjar-from-url-config": [
     {
       "directory": "gromit",
-      "url": "http://nexus.idmapps.nqbuild.lab/nexus/service/local/repositories/releases/content/org/gromitsoft/gromit/1.0.2/gromit-1.0.2.jar"
+      "url": "https://oss.sonatype.org/service/local/repositories/releases/content/org/gromitsoft/gromit/1.0.3/gromit-1.0.3.jar"
     }
   ]
 }
