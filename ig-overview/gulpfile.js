@@ -9,7 +9,7 @@ ngGulp(gulp, {
     externals: {
         'angular-material': 'window["angular-material"]',
         'angular-ui-router': 'window["angular-ui-router"]',
-        'ng-ias': 'window["ng-ias"]'
+        '@microfocus/ng-ias': 'window["ng-ias"]'
     },
     files: {
         indexProduction: 'src/index.production.html',
@@ -20,8 +20,8 @@ ngGulp(gulp, {
             'node_modules/angular-material/angular-material.js',
             'node_modules/angular-material/angular-material.css',
             'node_modules/angular-ui-router/release/angular-ui-router.js',
-            'node_modules/ng-ias/dist/ng-ias.js',
-            'node_modules/ng-ias/dist/ng-ias.css',
+            'node_modules/@microfocus/ng-ias/dist/ng-ias.js',
+            'node_modules/@microfocus/ng-ias/dist/ng-ias.css',
             'node_modules/ias-icons/dist/ias-icons.css',
             'node_modules/ias-icons/dist/**/*',
             'node_modules/jquery/dist/jquery.js',
@@ -34,8 +34,8 @@ ngGulp(gulp, {
             'node_modules/angular-material/angular-material.js',
             'node_modules/angular-material/angular-material.css',
             'node_modules/angular-ui-router/release/angular-ui-router.js',
-            'node_modules/ng-ias/dist/ng-ias.js',
-            'node_modules/ng-ias/dist/ng-ias.css',
+            'node_modules/@microfocus/ng-ias/dist/ng-ias.js',
+            'node_modules/@microfocus/ng-ias/dist/ng-ias.css',
             'node_modules/ias-icons/dist/ias-icons.css',
             'node_modules/ias-icons/dist/**/*',
             'node_modules/jquery/dist/jquery.js',
