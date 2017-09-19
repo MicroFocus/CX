@@ -74,7 +74,7 @@ const commonConfig: webpack.Configuration = {
     plugins: [
         new CopyWebpackPlugin([
             {from: 'src/assets', to: './assets'},
-            {context: 'node_modules/ng-ias/dist', from: '*.css', to: './assets/ng-ias'}
+            {context: 'node_modules/@microfocus/ng-ias/dist', from: '*.css', to: './assets/ng-ias'}
         ]),
 
         // Use CommonsChunkPlugin to create a separate bundle
@@ -186,7 +186,7 @@ export const prodConfig: webpack.Configuration = webpackMerge(commonConfig, {
         }),
 
         // Eliminate duplicate packages when generating bundle
-        new webpack.optimize.DedupePlugin(),
+        //new webpack.optimize.DedupePlugin(),
 
         // Minify JS
         new webpack.optimize.UglifyJsPlugin({ sourceMap: true }),

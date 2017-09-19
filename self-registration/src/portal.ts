@@ -12,8 +12,8 @@ import 'imports-loader?moment!adf-widget-clock/dist/adf-widget-clock';
 
 // Import Micro Focus UI library and icons
 // Importing this way "undefines" Reflect, since ng-ias isn't currently compatible with reflect-metadata
-import 'imports-loader?Reflect=>{}!ng-ias/dist/ng-ias';
-import 'ias-icons/dist/ias-icons.css';
+import 'imports-loader?Reflect=>{}!@microfocus/ng-ias/dist/ng-ias';
+import '@microfocus/ias-icons/dist/ias-icons.css';
 // End Micro Focus UI library and icons
 
 import 'angular-local-storage';
@@ -23,7 +23,7 @@ import { platformBrowserDynamic } from 'ng-metadata/platform-browser-dynamic';
 import { enableProdMode } from 'ng-metadata/core';
 import { PortalModule } from './portal/index';
 import './main.css';
-import 'ias-icons/dist/ias-icons.css';
+import '@microfocus/ias-icons/dist/ias-icons.css';
 
 if ( ENV === 'production' ) {
     enableProdMode();
