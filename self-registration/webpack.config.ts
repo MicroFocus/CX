@@ -92,7 +92,7 @@ export const devConfig: webpack.Configuration = webpackMerge(commonConfig, {
     devtool: 'inline-source-map',
 
     entry: {
-        tests: Object.values(webpackGlobEntry('./test/**/*.test.ts'))
+//        tests: Object.values(webpackGlobEntry('./test/**/*.test.ts'))
     },
 
     plugins: [
