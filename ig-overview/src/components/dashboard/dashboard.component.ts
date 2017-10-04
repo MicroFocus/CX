@@ -5,8 +5,8 @@ import { UserData, Totals } from '../../services/gromit-service';
     templateUrl: require('./dashboard.component.html')
 })
 export default class DashboardComponent {
-    private clientid = 'iac2';
-    private arserver = 'http://192.168.0.76:8080';
+    private clientid = 'cx';
+    private arserver = '/api/ig';
     private ospserver = 'http://192.168.0.76:8080';
 
     private userName: string;
