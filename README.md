@@ -16,7 +16,7 @@ CX projects have three fundamental components:
 
 For more information about the CX architecture check out this video overview:
 
-[![CX Self Registration Demo](https://raw.github.com/MicroFocus/cx/master/self-registration-2/screenshot.png)](https://vimeo.com/226010406)
+[![CX Self Registration Demo](https://raw.github.com/MicroFocus/cx/master/doc/video_screenshot.png)](https://vimeo.com/226010406)
 
 [CX Self Registration Demo Video](https://vimeo.com/226010406)
 

@@ -1,6 +1,8 @@
 # User Self Registration Proof of Concept
 This project shows how to use the CX framework to create a highly polished user experience for create users.  This sample connets to eDirectory using a REST service written in Python and creates users in eDirectory.
 
+[CX Self Registration](https://raw.github.com/MicroFocus/cx/master/self-registration-2/screenshot.png)
+
 ## Running the Application
 
 The easiest way to run this application is with the Docker container.  Change to the docker folder and run the following command:
