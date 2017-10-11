@@ -8,8 +8,6 @@ However, before you can use these APIs you need a framework.  A place to write y
 
 ## The CX architecture
 
-CX is a strongly opinionated framework where you can ignore our opinions.
-
 CX projects have three fundamental components:
 
 1. **Client**  The client runs with AngularJS.  It builds with Gulp and it works like a normal AngularJS application.
