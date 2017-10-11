@@ -1,6 +1,24 @@
 # CX-App
 
-The CX-App is a set of examples of how to use the CX methodology to create new UX applications for Micro Focus and NetIQ products.  
+The CX project bridges the gap between Micro Focus APIs and the blank page.
+
+Many Micro Focus projects have provided REST APIs that make it possible to write custom clients and create bespoke implementations.  These APIs allow you to create objects, launch reports, and so much more.
+
+However, before you can use these APIs you need a framework.  A place to write your code with a solid UI architecture that provides build services, security integration, a common look and feel, and a container to run your application.  CX provides a set of samples and reusable code that let you stop worrying about the blank page and start solving real world problems.
+
+## The CX architecture
+
+CX is a strongly opinionated framework where you can ignore our opinions.
+
+CX projects have three fundamental components:
+
+1. **Client**  The client runs with AngularJS.  It builds with Gulp and it works like a normal AngularJS application.
+1. **Middle Tier**  The middle tier in the CX server is written in Python.  The middle tier makes it possible to write custom REST endpoints and do other server-side processing in CX.
+1. **The Proxy** The client and the middle tier are held together in a single server by the proxy server running Nginx.  The proxy server works as a pass-through to call other REST endpoints and combines the client and middle tiers into a single server.
+
+For more information about the CX architecture check out this video overview:
+
+[![CX Self Registration Demo](https://raw.github.com/MicroFocus/cx/master/self-registration-2/screenshot.png)](https://vimeo.com/226010406)
 
 There are currently three CX projects:  
 
@@ -9,6 +27,8 @@ There are currently three CX projects:
 *   **ig-overview** shows you how to integrate with OAuth2 and OSP to make authenticated REST calls to [Identity Governance](https://www.netiq.com/products/identity-governance/).
 
 To use CX clone or download the repository.  Each of those projects has a separate README file with instructions.
+
+
 
 ### Current Core Project Team Members
 
