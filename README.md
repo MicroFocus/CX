@@ -6,7 +6,7 @@ Many Micro Focus projects have provided REST APIs that make it possible to write
 
 However, before you can use these APIs you need a framework.  A place to write your code with a solid UI architecture that provides build services, security integration, a common look and feel, and a container to run your application.  CX provides a set of samples and reusable code that let you stop worrying about the blank page and start solving real world problems.
 
-##The CX architecture
+## The CX architecture
 
 CX is a strongly opinionated framework where you can ignore our opinions.
 
