@@ -20,6 +20,8 @@ For more information about the CX architecture check out this video overview:
 
 [![CX Self Registration Demo](https://raw.github.com/MicroFocus/cx/master/self-registration-2/screenshot.png)](https://vimeo.com/226010406)
 
+[CX Self Registration Demo Video](https://vimeo.com/226010406)
+
 There are currently three CX projects:  
 
 *   **self-registration** shows you how to use the [ng-ias](https://github.com/MicroFocus/ng-ias) project to create a wizard for creating new users that matches the Micro Focus look and feel.
