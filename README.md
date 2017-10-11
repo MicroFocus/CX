@@ -2,14 +2,13 @@
 
 The CX-App is a set of examples of how to use the CX methodology to create new UX applications for Micro Focus and NetIQ products.  
 
-There are currently two CX projects:  self-registration and ig-overview.  Each of those projects has a separate README file with instructions.
+There are currently three CX projects:  
 
-### Project Discussions
+*   *self-registration* shows you how to use the (ng-ias)[https://github.com/MicroFocus/ng-ias] project to create a wizard for creating new users that matches the Micro Focus look and feel.
+*   *sel-registration-2* shows you how to create a single page application for registering new users.  This sample uses Bootstrap and Font Awesome to show you how to create a different look and feel with CX.
+*   *ig-overview* shows you how to integrate with OAuth2 and OSP to make authenticated REST calls to (Identity Governance) [https://www.netiq.com/products/identity-governance/].
 
-This project maintains a forum for discussions between the users and developers of this component.
-
-*   https://chat.microfocus.net/group/team-cx-app
-
+To use CX clone or download the repository.  Each of those projects has a separate README file with instructions.
 
 ### Current Core Project Team Members
 
