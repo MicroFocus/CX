@@ -1,7 +1,7 @@
 # Identity Governance Overview
 This project shows how to use the CX infrastructure to connect to Identity Governance and use OSP for single sign-on authentication with other IAS products.
 
-[Identity Governance Overview](https://raw.github.com/MicroFocus/cx/blob/master/ig-overview/screenshot.png)
+[Identity Governance Overview](https://raw.githubusercontent.com/MicroFocus/cx/master/ig-overview/screenshot.png)
 
 ## Running the Application
 
