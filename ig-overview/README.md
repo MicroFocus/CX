@@ -1,7 +1,18 @@
 # Identity Governance Overview
 This project shows how to use the CX infrastructure to connect to Identity Governance and use OSP for single sign-on authentication with other IAS products.
 
-## Setup
+## Running the Application
+
+The easiest way to run this application is with the Docker container.  Change to the docker folder and run the following command:
+
+```
+docker-compose -f docker-compose-igoverview.yml up --force-recreate --build
+```
+
+Once the Docker container starts the application will be running at http://localhost, but you must access it via the URL configured during OSP SSO client configuration.
+
+## Building the Client Side Separately
+You can build the client-side of this application separately.  You don't have to, but it can sometimes be useful to see better build errors.
 
 ### Node Package Manager
 This sample requires the [Node Package Manager](https://www.npmjs.com).  The best way to get the Node Package Manager is to install [Node.js](https://nodejs.org/en).  
