@@ -1,6 +1,8 @@
 # Identity Governance Overview
 This project shows how to use the CX infrastructure to connect to Identity Governance and use OSP for single sign-on authentication with other IAS products.
 
+[Identity Governance Overview](https://raw.github.com/MicroFocus/cx/master/ig-overview/screenshot.png)
+
 ## Running the Application
 
 The easiest way to run this application is with the Docker container.  Change to the docker folder and run the following command:
