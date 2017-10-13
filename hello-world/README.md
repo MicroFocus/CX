@@ -1,14 +1,13 @@
-# Identity Governance Overview
-This project shows how to use the CX infrastructure to connect to Identity Governance and use OSP for single sign-on authentication with other IAS products.
+# Hello World!
+This project shows how to use the CX framework to build the basic Hello World!  This sample comes with a simple starting page and the Gromit framework configured and ready to make REST calls.  This is a great started project for your new CX application.
 
-![Identity Governance Overview](https://raw.githubusercontent.com/MicroFocus/cx/master/ig-overview/screenshot.png)
 
 ## Running the Application
 
 The easiest way to run this application is with the Docker container.  Change to the docker folder and run the following command:
 
 ```
-docker-compose -f docker-compose-igoverview.yml up --force-recreate --build
+docker-compose -f docker-compose-helloworld.yml up --force-recreate --build
 ```
 
 Once the Docker container starts the application will be running at http://localhost, but you must access it via the URL configured during OSP SSO client configuration.
@@ -37,7 +36,7 @@ npm install gulp -D
 
 These are the commands to build the project:
 
-* `gulp` - Starts development environment (development build, file watchers, and server).  The server will be running at http://localhost:8081.
+* `gulp` - Starts development environment (development build, file watchers, and server).  The server will be running at http://localhost:8080.
 * `gulp build:development` - Development build. This build is optimized for speed. Writes files to `dist/` by 
 default
 * `gulp build:production` - Production build. This build is optimized for size and quality of output. Writes 
