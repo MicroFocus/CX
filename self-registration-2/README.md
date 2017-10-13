@@ -1,7 +1,7 @@
 # User Self Registration Proof of Concept
 This project shows how to use the CX framework to create a highly polished user experience for create users.  This sample connets to eDirectory using a REST service written in Python and creates users in eDirectory.
 
-[CX Self Registration](https://raw.github.com/MicroFocus/cx/master/self-registration-2/screenshot.png)
+![CX Self Registration](https://raw.github.com/MicroFocus/cx/master/self-registration-2/screenshot.png)
 
 ## Running the Application
 
