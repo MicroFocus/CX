@@ -1,6 +1,31 @@
 # Hello World!
+
+This is the barebones CX project.  It's a great place to start from and a good template for new projects.  This project contains the following items:
+
+* **Angular** and the set up to write your front end application
+* **Python** and the CX middle tier to create custom REST endpoints
+* **Nginx** to bring together the front end and middle tier and act as a proxy
+* **Gromit** OAuth2 authentication so you can make REST calls
+* A **Docker** container to bring it all together
+* **Gulp** and the basic build 
+
 This project shows how to use the CX framework to build the basic Hello World!  This sample comes with a simple starting page and the Gromit framework configured and ready to make REST calls.  This is a great started project for your new CX application.
 
+### Project Structure
+The application directory structure is layout out as follows. This structure is configurable.
+* `src/`
+  * `components/` This is where the components of your app goes.  The default component is the [application component](src/components/application/application.component.html).  It also has an accompanying [application component TypeScript file](src/components/application/application.component.ts) and a [application component SCSS file](src/components/application/application.component.scss).  You can add code to this component or add as many new components as you want.
+  * `config/`
+    * `routes.ts` Register application routes here. Angular UI Router is used to add routes in this template.
+  * `styles/` Site-wide styles go here.
+  * `index.html` This is the base HTML file for your project.  When someone first loads your front end they will go here.
+  * `main.ts` Created and initialize the angular application module here.
+  * `main.scss` Manifest for all Sass stylesheets in the project. Only use `@import`s in this file.
+* `vendor/` Third party vendor assets (fonts, JS, CSS) that are not delivered via a package manager
+* `images/` Place images here. Remove .gitkeep when this folder contains any images
+* `gulpfile.js` Invoke ngGulp here. Register any custom gulp tasks here.
+* `tsconfig.json` This configured the TypeScript compiler.
+* `tslint.json` This is the configuration file for TSLint which checks TypeScript code.
 
 ## Running the Application
 
@@ -42,23 +67,3 @@ default
 * `gulp build:production` - Production build. This build is optimized for size and quality of output. Writes 
 files to `dist/` by default
 * `gulp clean` - Cleans all built assets by removing `dist/`
-
-
-### Project Structure
-The application directory structure is layout out as follows. This structure is [configurable](#ng-gulp).
-* `images/` Place images here. Remove .gitkeep when this folder contains any images
-* `src/`
-  * `components/` Create components here. The structure does not matter. However, it can be beneficial to keep all 
-  source code, stylesheets, and tests grouped together by naming the files similarly. Remember to add the stylesheets to
-  `src/main.scss` to include them in the build output.
-  * `config/`
-    * `routes.ts` Register application routes here. Angular UI Router is used to add routes in this template.
-  * `styles/` Site-wide styles go here.
-  * `index.html` See ng-gulp options for creating separate index.html files for development and production.
-  * `main.ts` Created and bootstrap the angular application module here. See ng-gulp options for creating separate 
-  main.ts files for development and production.
-  * `main.scss` Manifest for all Sass stylesheets in the project. Only use `@import`s in this file.
-* `vendor/` Third party vendor assets (fonts, JS, CSS) that are not delivered via a package manager
-* `gulpfile.js` Invoke ngGulp here. Register any custom gulp tasks here.
-* `tsconfig.json` This configured the TypeScript compiler.
-* `tslint.json` This is the configuration file for TSLint which checks TypeScript code.
