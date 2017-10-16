@@ -21,6 +21,7 @@ The application directory structure is layout out as follows. This structure is 
   * `index.html` This is the base HTML file for your project.  When someone first loads your front end they will go here.
   * `main.ts` Created and initialize the angular application module here.
   * `main.scss` Manifest for all Sass stylesheets in the project. Only use `@import`s in this file.
+  * `oauth.config` This file contains the configuration for connecting to REST endpoints.
   * `services/` This is where you add new services for calling REST endpoints.  You can add new calls to the default [gromit-service.ts](src/services/gromit-service.ts) or you can add your own services.
 * `vendor/` Third party vendor assets (fonts, JS, CSS) that are not delivered via a package manager
 * `images/` Place images here. Remove .gitkeep when this folder contains any images
