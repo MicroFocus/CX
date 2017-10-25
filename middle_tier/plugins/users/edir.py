@@ -1,7 +1,7 @@
 import json
 
 import logging
-from ldap3 import Server, Connection
+from ldap3 import Server, Connection, ALL
 
 from proxy.response import Response
 from resources.base import Resource
@@ -46,3 +46,27 @@ class EDirUsersResource(Resource):
         log.error('Failed to add user: {}'.format(conn.result))
         return Response(json.dumps({"result": False, "error": conn.result}),
                         headers={'Content-type': 'application/json'}, status_code=500)
+                        
+    def read_users(self, request):
+        
+        log.info("Read users...")
+        
+    
+        server = Server('coalmine.qalab.cam.novell.com', get_info=ALL)
+        conn = Connection(server, "cn=admin,ou=sa,o=system", "test", auto_bind=True)
+        
+        conn.search('ou=users,o=data', '(objectClass=Person)', attributes=['dn', 'cn', 'givenName', 'sn'])
+        
+        data = []
+        for entry in conn.entries:            
+            user = {}
+            user['cn'] = '{}'.format(entry['cn'])
+            user['sn'] = '{}'.format(entry['sn'])
+            user['givenName'] = '{}'.format(entry['givenName'])
+            data.append(user)
+            
+        return Response(json.dumps(data), headers={'Content-type': 'application/json'})
+
+        
+        
+        

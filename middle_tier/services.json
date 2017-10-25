@@ -39,6 +39,12 @@
 			"path": "create",
 			"method": "POST"
 		}],
+		"virtual": [{
+			"response_function_name": "EDirUsersResource.read_users",
+			"function_source_uri": "plugins.users.edir",
+			"path": "list",
+			"method": "GET"
+		}],
 		"proxy": {
 			"listen_path": "/users/",
 			"target_url": null
