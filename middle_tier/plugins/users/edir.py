@@ -48,10 +48,6 @@ class EDirUsersResource(Resource):
                         headers={'Content-type': 'application/json'}, status_code=500)
                         
     def read_users(self, request):
-        
-        log.info("Read users...")
-        
-    
         server = Server('coalmine.qalab.cam.novell.com', get_info=ALL)
         conn = Connection(server, "cn=admin,ou=sa,o=system", "test", auto_bind=True)
         
