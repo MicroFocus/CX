@@ -1,0 +1,29 @@
+ version: '2'
+ services:
+   web:
+     build:
+       context: ../middle_tier
+       dockerfile: Dockerfile.development
+     volumes:
+       - ./logs:/opt/logs
+       - ../middle_tier:/opt/middle_tier
+     ports:
+       - "5000:5000"
+   ui:
+     build: ../token-validation
+     volumes:
+       - ../token-validation:/usr/src/app
+       - /usr/src/app/node_modules
+     ports:
+       - "9080:8080"
+       - "35729:35729"
+
+   nginx:
+     build: nginx-self
+     ports:
+       - "80:80"
+     command: /bin/bash -c "nginx -g 'daemon off;'"
+     depends_on:
+       - web
+       - ui
+

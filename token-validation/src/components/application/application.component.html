@@ -1,0 +1,26 @@
+<h2>Token Validation Example</h2>
+
+<div class="dashboard-component" >
+    <h2 class="dashboard-header">Users</h2>
+
+    <p>
+        <table>
+            <thead>
+                <tr>
+                    <th>Username</th>
+                    <th>Given Name</th>
+                    <th>Family Name</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="user in $ctrl.users track by $index">
+                    <td>{{user.cn}}</td>
+                    <td>{{user.givenName}}</td>
+                    <td>{{user.sn}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </p>
+</div>
+
+<ui-view></ui-view>
