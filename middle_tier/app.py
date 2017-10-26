@@ -5,7 +5,9 @@ from logging.handlers import RotatingFileHandler
 import flask
 from flask import Flask, jsonify
 
+from exceptions import MiddleTierException
 from proxy.request import Request
+from security import UnauthorizedSecurityException
 from services.loader import ServiceLoader, NotFoundServiceException
 from utils.reverse import ReverseProxied
 
@@ -54,9 +56,15 @@ def internal_server_error(error):
     return jsonify({"error": "{}".format(str(error))}), 404
 
 
+@application.errorhandler(MiddleTierException)
+def unhandled_app_exception(e):
+    application.logger.exception('Application exception: %s status', e.code)
+    return jsonify({"error": "{}".format(str(e))}), e.code
+
+
 @application.errorhandler(Exception)
 def unhandled_exception(e):
-    application.logger.exception('Unhandled Exception', e)
+    application.logger.exception('Unhandled Exception')
     return jsonify({"error": "{}".format(str(e))}), 500
 
 
@@ -67,8 +75,12 @@ def home(service_name, sub_url):
     url = "/" + service_name + "/" + sub_url
     service_request = Request(url, request.method, request.args, request.headers, request.get_data(as_text=True))
     service = loader.find_service(service_request)
+    application.logger.debug("Service: %s", str(service))
     if service:
-        response = service.handle(service_request)
+        try:
+            response = service.handle(service_request)
+        except UnauthorizedSecurityException as e:
+            return jsonify({"error": "{}".format(str(e))}), 401
         resp = flask.Response(response.content)
         for key, value in response.headers.items():
             if key not in ["Content-Length", "Content-Encoding", "Transfer-Encoding"]:

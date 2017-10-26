@@ -1,8 +1,8 @@
 import importlib
+import logging
 import re
 
-import logging
-
+from exceptions import MiddleTierException
 from proxy.request import send_request
 
 log = logging.getLogger(__name__)
@@ -50,15 +50,15 @@ class VirtualHandler(Handler):
         module_name = self.virtual["function_source_uri"]
         module = importlib.import_module(module_name)
         if not module_name:
-            raise Exception("Can't load module: {}".format(module_name))
+            raise MiddleTierException("Can't load module: {}".format(module_name))
 
         clazz, method = self.virtual["response_function_name"].split(".")
         clazz_obj = getattr(module, clazz)
         if not clazz_obj:
-            raise Exception("Can't load class: {} {}".format(module_name, clazz))
+            raise MiddleTierException("Can't load class: {} {}".format(module_name, clazz))
         virtual_handler = clazz_obj(self.service)
         method_obj = getattr(virtual_handler, method)
         if not method_obj:
-            raise Exception("Can't load method: {} {} {}".format(module_name, clazz, method))
+            raise MiddleTierException("Can't load method: {} {} {}".format(module_name, clazz, method))
         response = method_obj(request)
         return response

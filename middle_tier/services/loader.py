@@ -1,9 +1,14 @@
 import json
 
+from exceptions import MiddleTierException
 from services.service import Service
 
 
-class NotFoundServiceException(Exception):
+class NotFoundServiceException(MiddleTierException):
+    pass
+
+
+class NotFoundSecurityServiceException(MiddleTierException):
     pass
 
 
@@ -18,6 +23,7 @@ class ServiceLoader(object):
     def __init__(self) -> None:
         super().__init__()
         self.services = []
+        self.auth_services = []
 
     def load(self) -> list:
         with open(CONFIG_PATH) as services_file:
@@ -27,8 +33,12 @@ class ServiceLoader(object):
 
     def process_services(self, services_json):
         services = []
-        for service in services_json:
-            services.append(Service(service))
+        for service in services_json.get("services", []):
+            auth = service.get("auth")
+            auth_service = None
+            if auth:
+                auth_service = self.get_auth_service(services_json, auth)
+            services.append(Service(service, auth=auth_service))
         return services
 
     def get_services(self):
@@ -39,3 +49,9 @@ class ServiceLoader(object):
             if service.can_handle(request):
                 return service
         return None
+
+    def get_auth_service(self, service_definition, service_id):
+        for auth_service in service_definition.get("auth", []):
+            if auth_service["id"] == service_id:
+                return auth_service
+        raise NotFoundSecurityServiceException("There is not auth service: {}".format(service_id))
