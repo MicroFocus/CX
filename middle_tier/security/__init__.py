@@ -8,7 +8,8 @@ class IncorrectSecurityConfigurationException(MiddleTierException):
 
 
 class UnauthorizedSecurityException(MiddleTierException):
-    pass
+    def __init__(self, *args, **kwargs):
+        super().__init__(self, *args, code=401, *kwargs)
 
 
 class SecurityInternalException(MiddleTierException):

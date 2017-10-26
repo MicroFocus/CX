@@ -46,12 +46,12 @@ class OSPProxy:
     def get_osp_token(self, request, service_data):
         token = request.headers.get(service_data.get("auth_header_name", "Authorization"))
         if not token:
-            raise MiddleTierException("Provide OSP token format")
+            raise UnauthorizedSecurityException("No Authentication header or parameter was included in the request.")
         bearer_prefix = "Bearer "
         if token.startswith(bearer_prefix):
             token = token[len(bearer_prefix):]
         else:
-            raise MiddleTierException("Incorrect OSP token format")
+            raise UnauthorizedSecurityException("Authentication header was incorrect.")
         logger.debug("Token value = {}".format(token))
         return token
 
