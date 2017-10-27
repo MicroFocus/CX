@@ -8,6 +8,8 @@ However, before you can use these APIs you need a framework.  A place to write y
 
 ## The CX architecture
 
+![CX OSP Integration Diagram](doc/images/cx_arch.png)
+
 CX projects have three fundamental components:
 
 1. **Client**  The client runs with AngularJS.  It builds with Gulp and it works like a normal AngularJS application.
@@ -20,12 +22,14 @@ For more information about the CX architecture check out this video overview:
 
 [CX Self Registration Demo Video](https://vimeo.com/226010406)
 
-There are currently four CX projects:  
+There are currently five CX projects:  
 
 *   **hello-world** is the prefect template for a simple CX project.
 *   **self-registration** shows you how to use the [ng-ias](https://github.com/MicroFocus/ng-ias) project to create a wizard for creating new users that matches the Micro Focus look and feel.
 *   **self-registration-2** shows you how to create a single page application for registering new users.  This sample uses Bootstrap and Font Awesome to show you how to create a different look and feel with CX.
-*   **ig-overview** shows you how to integrate with OAuth2 and OSP to make authenticated REST calls to [Identity Governance](https://www.netiq.com/products/identity-governance/).
+*   **ig-overview** shows you how to use CX to connect to REST endpoints that support OAuth2 and OSP to make authenticated REST calls to Micro Focus products like [Identity Governance](https://www.netiq.com/products/identity-governance/).
+*   **token-validation** shows you how use the CX security proxy to validate tokens and secure your custom REST endpoints.
+
 
 To use CX clone or download the repository.  Each of those projects has a separate README file with instructions.
 
