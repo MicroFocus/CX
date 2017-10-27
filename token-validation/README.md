@@ -34,7 +34,7 @@ Once you have added these properties you must restart your server.
 
 **Step Two** - Configure the OSP location in your `services.json` file.  Go to the bottom of the and find the `auth` section.  It will look like this:
 
-```
+```json
 "auth": [
     {
       "id": "osp",
