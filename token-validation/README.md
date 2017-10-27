@@ -60,7 +60,7 @@ You will need to change the `username`, the `password`, and the `target_url`.  U
 
 **Step Three** - Add the `auth` property to an endpoint in the `services.json` file like this:
 
-```
+```json
 {
   "id": "users",
   "name": "Ldap users service wrapper",
@@ -87,7 +87,7 @@ The second step is to configure the auth section of the `services.json` file.  T
 
 **Step Four** - Edit your project to tell Gromit about your OSP configuration.  You do this by setting the following JavaScript variables:
 
-```JavaScript
+```javascript
 gromit.ClientId = 'cx';
 gromit.AuthUrl = 'http://192.168.0.76:8080/osp/a/idm/auth/oauth2/grant';
 gromit.AuthLogoutUrl = 'http://192.168.0.76:8080/osp/a/idm/auth/app/logout';
