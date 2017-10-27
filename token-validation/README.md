@@ -1,6 +1,6 @@
 # Token Validation
 
-This project shows how to perform token validation in the middle tier.  This sample makes a simple REST endpoint available in the middle tier and uses single sign on with OSP to provide security for that endpoint.ted project for your new CX application.
+This project shows how to perform token validation in the middle tier.  This sample makes a simple REST endpoint available in the middle tier and uses single sign on with OSP to provide security for that endpoint.
 
 ## Running the Application
 
@@ -14,9 +14,9 @@ Once the Docker container starts the application will be running at http://local
 
 ## Configuring Your Project
 
-This project shows how to use the middle tier OSP security proxy to validate OAuth2 tokens.  This makes it easy to secure REST endpoints in the middle tier.
+This project shows how to use the middle tier OSP security proxy to validate OAuth2 tokens.  This makes it easy to secure REST endpoints in the middle tier, but first you need some configuration to support SSO.
 
-**Step One** -  Create a new SSO client for your application.  For this example we'll call our new client `cx`.  This new client is defined in the `ism-configuration.properties` file in the `tomcat/conf` directory on the server running your OSP.  This is normally the server running the REST endpoints you are trying to connect to, but can be configured as a different server.
+**Step One** -  Create a new SSO client for your application.  For this example we'll call our new client `cx`.  This new client is defined in the `ism-configuration.properties` file in the `tomcat/conf` directory on the server where OSP is running.
 
 The easiest way to add a new SSO client is to edit the `ism-configuration.properties` file by hand and add the following three properties:
 
@@ -32,7 +32,7 @@ The redirect URL must point to the exact server you want to use when accessing y
 
 Once you have added these properties you must restart your server.
 
-**Step Two** - Configure the OSP location in your `services.json` file.  Go to the bottom of the and find the `auth` section.  It will look like this:
+**Step Two** - Configure the OSP location in your `services.json` file.  Go to the bottom of the file and find the `auth` section.  It looks like this:
 
 ```json
 "auth": [
@@ -85,6 +85,8 @@ This property tells the middle tier to require a valid token for this endpoint.
 
 The second step is to configure the auth section of the `services.json` file.  This is where you configure the location of your OSP server.
 
+*You must restart your Docker container to pick up these changes.*
+
 **Step Four** - Edit your project to tell Gromit about your OSP configuration.  You do this by setting the following JavaScript variables:
 
 ```javascript
@@ -94,8 +96,6 @@ gromit.AuthLogoutUrl = 'http://192.168.0.76:8080/osp/a/idm/auth/app/logout';
 ```
 
 You can set these properties dynamically in your code or hard-code them into your index.html file.  They just need to be set before you use Gromit to call the server.
-
-**Step Five** - Restart your Docker container to pick up these changes.
 
 ## How It Works
 
