@@ -105,7 +105,7 @@ This section walks you through how we make a request and validate tokens using t
 
 1. The browser makes a REST request to the server with no token.
 1. The middle tier returns 401 (Unauthorized) because the request has no token.
-1. Gromit intercepts the 401 response and opens the OSP login page in an iFrame.
+1. Gromit intercepts the 401 response and redirects to OSP in an iFrame.
 1. The user logs in to OSP and is granted a token.
 1. Gromit replays the request from step one with a valid token.
 1. The middle tier calls OSP to validate the token.
