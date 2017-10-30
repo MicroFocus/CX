@@ -102,7 +102,7 @@ class OSPVirtualEndpoint(Resource):
     def get_token(self, request):
         bearer_prefix = "Bearer "
         token = request.headers.get("Authorization")
-        if not token.startswith(bearer_prefix):
+        if not token or not token.startswith(bearer_prefix):
             raise MiddleTierException("Incorrect auth key")
         token = token[len(bearer_prefix):]
         try:

@@ -43,7 +43,7 @@ class CustomKeySecurityHandlerWrapper(SecurityHandler):
             try:
                 response = self.cache[key]
             except KeyError:
-                logger.debug("Cache doesn't have this key")
+                logger.debug("Cache doesn't have this key: %s", key)
         if response is None:
             response = self.virtual_handler(key)
             if self.cache:
