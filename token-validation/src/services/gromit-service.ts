@@ -31,4 +31,18 @@ export default class GromitService {
             callback(data);
         });
     }
+
+    /**
+     * Gets information about the current user from the token.  This call
+     * will prompt the user to log in if they haven't already.
+     * 
+     * @param callback The callback function to get the data.
+     */
+    getTokenInfo(callback) {
+        let http = this.$http;
+
+        gromit.get('/api/osp/token', http, function(data) {
+            callback(data);
+        });
+    }
 }

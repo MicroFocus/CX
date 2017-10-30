@@ -14,9 +14,11 @@ export default class ApplicationComponent {
     constructor(private gromitService) {
 
         this.getUsers();
+        this.getTokenInfo();
     }
 
     private users = [];
+    private tokenInfo: any;
 
     /**
      * Load users from the middle tier and add them to the users array
@@ -29,6 +31,18 @@ export default class ApplicationComponent {
             for (let user of data) {
                 users.push(user);
             }
+        });
+    }
+
+    /**
+     * Load information about the current user
+     */
+    getTokenInfo() {
+        let gromitService = this.gromitService;
+        let appComp = this;
+
+        gromitService.getTokenInfo(function(data: any) {
+            appComp.tokenInfo = data;
         });
     }
 }
