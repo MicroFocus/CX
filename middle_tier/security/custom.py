@@ -37,15 +37,20 @@ class CustomKeySecurityHandlerWrapper(SecurityHandler):
 
     def handle(self, request):
         key = self.get_key(request, self.auth_data)
+        response = None
         if self.cache and self.cache.has_key(key):
             logger.debug("Using cache for key: %s", key)
-            response = self.cache[key]
-        else:
+            try:
+                response = self.cache[key]
+            except KeyError:
+                logger.debug("Cache doesn't have this key")
+        if response is None:
             response = self.virtual_handler(key)
             if self.cache:
                 logger.debug("Setting cache value for key: %s", key)
                 self.cache[key] = response
-        request.auth = response
+        if response:
+            request.auth = response
         return response
 
     @staticmethod
