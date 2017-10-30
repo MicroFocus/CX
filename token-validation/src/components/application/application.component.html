@@ -5,16 +5,16 @@
         <table>
             <thead>
                 <tr>
-                    <th>Username</th>
                     <th>Given Name</th>
                     <th>Family Name</th>
+                    <th>Username</th>
                 </tr>
             </thead>
             <tbody>
                 <tr ng-repeat="user in $ctrl.users track by $index">
-                    <td>{{user.cn}}</td>
                     <td>{{user.givenName}}</td>
                     <td>{{user.sn}}</td>
+                    <td>{{user.cn}}</td>
                 </tr>
             </tbody>
         </table>
