@@ -34,6 +34,28 @@
       "auth": "osp"
     },
     {
+      "id": "osp",
+      "name": "OSP wrapper",
+      "description": "",
+      "virtual": [
+        {
+          "response_function_name": "OSPVirtualEndpoint.get_token",
+          "function_source_uri": "plugins.osp.osp_security_proxy",
+          "path": "token",
+          "method": "GET"
+        }
+      ],
+      "data": {
+        "username": "iac",
+        "password": "secret",
+        "app": "idm",
+        "target_url": "http://10.204.44.18:8080"
+      },
+      "proxy": {
+        "listen_path": "/osp/"
+      }
+    },
+    {
       "id": "users",
       "name": "Ldap users service wrapper",
       "description": "",
@@ -52,8 +74,7 @@
         }
       ],
       "proxy": {
-        "listen_path": "/users/",
-        "target_url": null
+        "listen_path": "/users/"
       },
       "auth": "osp"
     },
@@ -70,19 +91,20 @@
   "auth": [
     {
       "id": "osp",
-      "type": "custom",
+      "type": "custom_key",
       "auth_header_name": "Authorization",
       "use_param": false,
       "param_name": null,
       "use_cookie": false,
       "cookie_name": null,
+      "cache_time": 100,
       "data": {
         "response_function_name": "OSPProxy.check",
         "function_source_uri": "plugins.osp.osp_security_proxy",
-        "username": "cx",
+        "username": "iac",
         "password": "secret",
         "app": "idm",
-        "target_url": "http://192.168.0.76:8080"
+        "target_url": "http://10.204.44.18:8080"
       }
     }
   ]

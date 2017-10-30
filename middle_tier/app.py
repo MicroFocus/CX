@@ -77,10 +77,7 @@ def home(service_name, sub_url):
     service = loader.find_service(service_request)
     application.logger.debug("Service: %s", str(service))
     if service:
-        try:
-            response = service.handle(service_request)
-        except UnauthorizedSecurityException as e:
-            return jsonify({"error": "{}".format(str(e))}), 401
+        response = service.handle(service_request)
         resp = flask.Response(response.content)
         for key, value in response.headers.items():
             if key not in ["Content-Length", "Content-Encoding", "Transfer-Encoding"]:

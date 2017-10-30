@@ -7,6 +7,7 @@ from proxy.request import send_request
 
 log = logging.getLogger(__name__)
 
+
 class Handler(object):
     def __init__(self):
         pass
@@ -28,22 +29,21 @@ class CommonHandler(Handler):
         return (re.match(self.listen_path, request.url) is not None) and self.target_url
 
     def handle(self, request):
-        final_url = "{}/{}".format(self.target_url,request.url[len(self.listen_path):])
+        final_url = "{}/{}".format(self.target_url, request.url[len(self.listen_path):])
         response = send_request(final_url, request.method, request.headers, request.data)
         return response
 
 
 class VirtualHandler(Handler):
-    def __init__(self,service, virtual):
+    def __init__(self, service, virtual):
         super().__init__()
         self.service = service
         self.virtual = virtual
 
-
     def can_handle(self, request):
         handler_url = "{}{}".format(self.service.listen_path, self.virtual["path"])
         can_handle = (re.match(handler_url, request.url) is not None) and (
-        request.method == self.virtual["method"])
+            request.method == self.virtual["method"])
         return can_handle
 
     def handle(self, request):
