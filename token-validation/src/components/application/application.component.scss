@@ -3,3 +3,13 @@ application-component {
   flex-flow: column nowrap;
   height: 100%;
 }
+
+.dashboard-component {
+    margin: 15px;
+    float: left;
+    margin-right: 75px;
+}
+
+h2 {
+    min-height: 2em;
+}
