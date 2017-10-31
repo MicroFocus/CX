@@ -2,6 +2,8 @@
 
 The [services.json](services.json) file controls the middle tier.  It is the place where you add custom REST endpoints and configure security settings.
 
+> Note:  The `services.json` file is one of the rare places where the middle tier can't pick up changes dynamically in development mode.  **You must restart the Docker container to pick up changes in the `services.json` file.**
+
 ## Using the middle tier as a proxy server
 
 The middle tier can act as a proxy server to avoid the [same-origin policy](https://en.wikipedia.org/wiki/Same-origin_policy) restrictions.  This makes it possible to call REST endpoints on other servers.  
