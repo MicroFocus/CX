@@ -97,7 +97,7 @@
       "param_name": null,
       "use_cookie": false,
       "cookie_name": null,
-      "cache_time": 100,
+      "cache_time": 120,
       "data": {
         "response_function_name": "OSPProxy.check",
         "function_source_uri": "plugins.osp.osp_security_proxy",
