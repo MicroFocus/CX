@@ -2,7 +2,7 @@
 
 The [services.json](services.json) file controls the middle tier.  It is the place where you add custom REST endpoints and configure security settings.
 
-##Using the middle tier as a proxy server
+## Using the middle tier as a proxy server
 
 The middle tier can act as a proxy server to avoid the [same-origin policy](https://en.wikipedia.org/wiki/Same-origin_policy) restrictions.  This makes it possible to call REST endpoints on other servers.  
 
@@ -27,7 +27,7 @@ Proxy endpoints look like this:
     * `listen_path` - Is the path of your endpoint.  This endpoint will be available at the url `/api/myendpoint`.
     * `target_url` - This is the URL the endpoint will connect to at the remote server.
 
-##Adding custom REST endpoints
+## Adding custom REST endpoints
 
 The middle tier also supports custom REST endpoints in CX.  Custom REST endpoints, also called virtual endpoints, are a place where you can write your own code that runs on the middle tier.  
 
@@ -95,11 +95,11 @@ In the `services.json` file the endpoint values are:
 	 *  `method` - This defines the HTTP method of the REST endpoint.  This can be `GET`, `PUT`, `POST`, or `DELETE`.
  *  `list_path` - The listen path defines the path for the entire set of REST endpoints in entry.  In this case the REST endpoints would use the URL `/api/custom/<specific endpoint entry>`.
 
- ##Using security in the middle tier
+## Using security in the middle tier
  
  The middle has the ability to use Micro Focus OSP as a security provider.  This makes enables sing sign on and validates tokens before calling custom REST endpoint.  In essence it makes sure that you always have a valid token before executing any code in custom REST endpoints. 
  
- ###Setting up the OSP configuration 
+### Setting up the OSP configuration 
  
  The [token validation](../token-validation) sample project has an example of setting this up.  
  
@@ -139,7 +139,7 @@ The  first set of properties including the `id`, `type`, `auth_header_name`, `us
 	 * `app` - This is the name of the SSO application configured in your OSP server
 	 * `target_url` - This is the location of your OSP server.  
 
-###Securing individual endpoints
+### Securing individual endpoints
 
 Once you have configured the OSP connection you are ready to add security to individual endpoints.
 
