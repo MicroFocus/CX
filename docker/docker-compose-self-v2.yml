@@ -26,4 +26,6 @@
      depends_on:
        - web
        - ui
+   redis:
+     image: "redis:alpine"
 

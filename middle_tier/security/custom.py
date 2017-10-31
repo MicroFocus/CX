@@ -1,13 +1,14 @@
 import importlib
 import logging
 
-from lru import LRUCacheDict
+from werkzeug.contrib.cache import RedisCache
 
+from cache import get_cache
 from exceptions import MiddleTierException
 from security import SecurityHandler, UnauthorizedSecurityException
 
 logger = logging.getLogger()
-MAX_CACHE_SIZE = 10000
+
 
 
 # Override this class to develop new key security checker
@@ -23,9 +24,9 @@ class CustomKeySecurityHandlerWrapper(SecurityHandler):
         super().__init__(auth_data)
         self.auth_data = auth_data
         auth_data_custom = self.auth_data.get("data", {})
-        cache_time = self.auth_data.get('cache_time')
-        if cache_time:
-            self.cache = LRUCacheDict(max_size=MAX_CACHE_SIZE, expiration=cache_time)
+        self.cache_time = self.auth_data.get('cache_time')
+        if self.cache_time:
+            self.cache = get_cache()
         self.module_name = auth_data_custom["function_source_uri"]
         self.clazz, self.method = auth_data_custom["response_function_name"].split(".")
         self.virtual_handler_clazz = self.create_auth_service(self.auth_data, self.module_name, self.clazz)
@@ -38,17 +39,15 @@ class CustomKeySecurityHandlerWrapper(SecurityHandler):
     def handle(self, request):
         key = self.get_key(request, self.auth_data)
         response = None
-        if self.cache and self.cache.has_key(key):
-            logger.debug("Using cache for key: %s", key)
-            try:
-                response = self.cache[key]
-            except KeyError:
-                logger.debug("Cache doesn't have this key: %s", key)
+        if self.cache:
+            response = self.cache.get(key)
+            if response:
+                logger.debug("Using cache for key: %s", key)
         if response is None:
             response = self.virtual_handler(key)
             if self.cache:
                 logger.debug("Setting cache value for key: %s", key)
-                self.cache[key] = response
+                self.cache.set(key, response, timeout=self.cache_time)
         if response:
             request.auth = response
         return response

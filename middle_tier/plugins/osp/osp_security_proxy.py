@@ -79,7 +79,13 @@ class OSPProxy(CustomKeyHandler):
             raise UnauthorizedSecurityException("Incorrect auth key")
         token = token[len(bearer_prefix):]
         try:
-            return OSPAuthenticationResponse(self.osp_client.check_token(token))
+            check_token = self.osp_client.check_token(token)
+            is_active = check_token.get('active', False)
+            logger.debug("OSP user status: {}".format(is_active))
+            if is_active:
+                return OSPAuthenticationResponse(check_token)
+            else:
+                raise UnauthorizedSecurityException("Not authorized")
         except Exception:
             raise UnauthorizedSecurityException("Not authorized")
 
