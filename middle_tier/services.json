@@ -46,10 +46,10 @@
         }
       ],
       "data": {
-        "username": "iac",
+        "username": "cx",
         "password": "secret",
         "app": "idm",
-        "target_url": "http://10.204.44.18:8080"
+        "target_url": "http://192.168.0.76:8080"
       },
       "proxy": {
         "listen_path": "/osp/"
@@ -101,10 +101,10 @@
       "data": {
         "response_function_name": "OSPProxy.check",
         "function_source_uri": "plugins.osp.osp_security_proxy",
-        "username": "iac",
+        "username": "cx",
         "password": "secret",
         "app": "idm",
-        "target_url": "http://10.204.44.18:8080"
+        "target_url": "http://192.168.0.76:8080"
       }
     }
   ]
