@@ -13,7 +13,6 @@ export default class ApplicationComponent {
     static $inject = ['gromitService'];
     constructor(private gromitService) {
 
-        this.getUsers();
         this.getTokenInfo();
     }
 
@@ -25,6 +24,7 @@ export default class ApplicationComponent {
      */
     getUsers() {
         let gromitService = this.gromitService;
+        this.users = [];
         let users = this.users;
 
         gromitService.getUsers(function(data: any) {
@@ -43,6 +43,7 @@ export default class ApplicationComponent {
 
         gromitService.getTokenInfo(function(data: any) {
             appComp.tokenInfo = data;
+            appComp.getUsers();
         });
     }
 }
