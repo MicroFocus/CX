@@ -43,6 +43,13 @@ export default class ApplicationComponent {
 
         gromitService.getTokenInfo(function(data: any) {
             appComp.tokenInfo = data;
+
+            /*
+             * We want to wait until we finish getting token information before
+             * we call for more information in the server.  This is more efficient
+             * since it means we only have to replay one REST call instead of 
+             * multiple calls.
+             */ 
             appComp.getUsers();
         });
     }
