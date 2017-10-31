@@ -94,3 +94,75 @@ In the `services.json` file the endpoint values are:
 	 *  `path` - This is the path of the endpoint within the space of this entire entry.  For this example our final URL would be `/api/custom/list'.
 	 *  `method` - This defines the HTTP method of the REST endpoint.  This can be `GET`, `PUT`, `POST`, or `DELETE`.
  *  `list_path` - The listen path defines the path for the entire set of REST endpoints in entry.  In this case the REST endpoints would use the URL `/api/custom/<specific endpoint entry>`.
+
+ ##Using security in the middle tier
+ 
+ The middle has the ability to use Micro Focus OSP as a security provider.  This makes enables sing sign on and validates tokens before calling custom REST endpoint.  In essence it makes sure that you always have a valid token before executing any code in custom REST endpoints. 
+ 
+ ###Setting up the OSP configuration 
+ 
+ The [token validation](../token-validation) sample project has an example of setting this up.  
+ 
+ The first step to configuring security is to configure the `auth` section in the `services.json` file like this:
+ 
+ ```
+ "auth": [
+    {
+      "id": "osp",
+      "type": "custom_key",
+      "auth_header_name": "Authorization",
+      "use_param": false,
+      "param_name": null,
+      "use_cookie": false,
+      "cookie_name": null,
+      "cache_time": 100,
+      "data": {
+        "response_function_name": "OSPProxy.check",
+        "function_source_uri": "plugins.osp.osp_security_proxy",
+        "username": "cx",
+        "password": "secret",
+        "app": "idm",
+        "target_url": "http://192.168.0.76:8080"
+      }
+    }
+  ]
+```
+
+The  first set of properties including the `id`, `type`, `auth_header_name`, `user_param`, `param_name`, `user_cookie`, and `cookie_name` properties are just added for supporting other authentication providers in a future release.  Right now the middle tier only supports Micro Focus OSP and you shouldn't change those properties.
+
+ * `cache_time` - This property controls the length of the token cache.  This indicates how long the middle tier will consider a token valid until it queries OSP to re-validate the token.  The value is in seconds.  The default token life for OSP is two minutes so we use 100 seconds.
+ * `data` - This section defines the implementation of the security proxy.
+	 * `response_function_name` - This property points to the default implementation of the OSP integration.  You should only change this if you want to use a custom implementation.
+	 * `function_source_uri` - This property points to the file containing the default implementation of the OSP integration.  You should only change this if you want to use a custom implementation.
+	 * `username` - This is the client ID of your SSO client.  You should change this to use an SSO client configured in your OSP server.
+	 * `password` - This is the client secret of your SSO client.  You should change this to use an SSO client configured in your OSP server.
+	 * `app` - This is the name of the SSO application configured in your OSP server
+	 * `target_url` - This is the location of your OSP server.  
+
+###Securing individual endpoints
+
+Once you have configured the OSP connection you are ready to add security to individual endpoints.
+
+From our previous example you can just add the `auth` property to the REST endpoint definition like this:
+
+```
+{
+  "id": "mycustomendpoint",
+  "name": "My custom REST endpoint",
+  "description": "",
+  "virtual": [
+    {
+      "response_function_name": "MyCustomResource.get_custom_data",
+      "function_source_uri": "plugins.myendpoints.myendpoint",
+      "path": "list",
+      "method": "GET"
+    }
+  ],
+  "proxy": {
+    "listen_path": "/custom/"
+  },
+  "auth": "osp"
+}
+```
+
+This configuration will take the default OSP configuration to validate tokens.  
