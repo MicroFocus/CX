@@ -99,7 +99,7 @@ In the `services.json` file the endpoint values are:
 
 ## Using security in the middle tier
  
- The middle has the ability to use Micro Focus OSP as a security provider.  This makes enables sing sign on and validates tokens before calling custom REST endpoint.  In essence it makes sure that you always have a valid token before executing any code in custom REST endpoints. 
+ The middle tier has the ability to use Micro Focus OSP as a security provider.  This enables single sign on and validates tokens before calling custom REST endpoints.  In essence it makes sure that you always have a valid token before executing any code in custom REST endpoints. 
  
 ### Setting up the OSP configuration 
  
