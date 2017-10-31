@@ -139,5 +139,6 @@ class OSPVirtualEndpoint(Resource):
             if not is_active:
                 raise UnauthorizedSecurityException("Not authorized")
         except Exception:
-            return Response(json.dumps({}), headers={'Content-type': "application/json"})
+            logger.exception("Failed to check token")
+            raise UnauthorizedSecurityException("Not authorized")
         return Response(json.dumps(response), headers={'Content-type': "application/json"})
