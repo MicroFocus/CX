@@ -1,6 +1,6 @@
 # Services.json
 
-The [services.json](services.json) file controls the middle tier.  It is the place where you add custom REST endpoints and configure security settings.
+The [services.json](services.json) file controls the middle tier.  It's the place where you add custom REST endpoints and configure security settings.
 
 > Note:  The `services.json` file is one of the rare places where the middle tier can't pick up changes dynamically in development mode.  **You must restart the Docker container to pick up changes in the `services.json` file.**
 
@@ -22,7 +22,7 @@ Proxy endpoints look like this:
 }
 ```
 
- * `id` - The ID of the endpoint.  This my be unique in the `services.json` file.
+ * `id` - The ID of the endpoint.  This must be unique in the `services.json` file.
  * `name` - The name of the endpoint.
  * `description` - The description of this endpoint.
  * `proxy` - This section defines the endpoint you are proxying.
@@ -85,15 +85,15 @@ class MyCustomResource(Resource):
         return Response(json.dumps(data), headers={'Content-type': 'application/json'})
 ```
 
-In the `services.json` file the endpoint values are:
+In the `services.json` file the properties for a custom REST endpoint are:
 
- * `id` - The ID of the endpoint.  This my be unique in the `services.json` file.
+ * `id` - The ID of the endpoint.  This must be unique in the `services.json` file.
  * `name` - The name of the endpoint.
  * `description` - The description of this endpoint.
  * `virtual` - This array contains the set of virtual REST endpoints.  It can contain multiple entries.
 	 * 	`response_function_name` - The name of the class and function that will be called when this endpoint is invoked.  In this case the middle tier will call a function called `get_custom_data` in the class `MyCustomResource`.
-	 *  `function_source_uri` - Defines the path to the file containing the Python implementation of the endpoint.  If you created a your custom endpoint in the `middle_tier/plugins/myendpoints` folder and named it `myendpoint.py` then the source URI would be `plugins.myendpoints.myendpoint`.  
-	 *  `path` - This is the path of the endpoint within the space of this entire entry.  For this example our final URL would be `/api/custom/list'.
+	 *  `function_source_uri` - Defines the path to the file containing the Python implementation of the endpoint.  If you created your custom endpoint in the `middle_tier/plugins/myendpoints` folder and named it `myendpoint.py` then the source URI would be `plugins.myendpoints.myendpoint`.  
+	 *  `path` - This is the path of the endpoint within the space of this entry.  For this example our final URL would be `/api/custom/list`.  It is `api` because all REST endpoints end up under `api`, `custom` because that is the list path of this set of endpoints, and `list` because that is the path of this specific endpoint.
 	 *  `method` - This defines the HTTP method of the REST endpoint.  This can be `GET`, `PUT`, `POST`, or `DELETE`.
  *  `list_path` - The listen path defines the path for the entire set of REST endpoints in entry.  In this case the REST endpoints would use the URL `/api/custom/<specific endpoint entry>`.
 
@@ -117,7 +117,7 @@ In the `services.json` file the endpoint values are:
       "param_name": null,
       "use_cookie": false,
       "cookie_name": null,
-      "cache_time": 100,
+      "cache_time": 120,
       "data": {
         "response_function_name": "OSPProxy.check",
         "function_source_uri": "plugins.osp.osp_security_proxy",
@@ -132,7 +132,7 @@ In the `services.json` file the endpoint values are:
 
 The  first set of properties including the `id`, `type`, `auth_header_name`, `user_param`, `param_name`, `user_cookie`, and `cookie_name` properties are just added for supporting other authentication providers in a future release.  Right now the middle tier only supports Micro Focus OSP and you shouldn't change those properties.
 
- * `cache_time` - This property controls the length of the token cache.  This indicates how long the middle tier will consider a token valid until it queries OSP to re-validate the token.  The value is in seconds.  The default token life for OSP is two minutes so we use 100 seconds.
+ * `cache_time` - This property controls the length of the token cache.  This indicates how long the middle tier will consider a token valid until it queries OSP to re-validate the token.  The value is in seconds.  
  * `data` - This section defines the implementation of the security proxy.
 	 * `response_function_name` - This property points to the default implementation of the OSP integration.  You should only change this if you want to use a custom implementation.
 	 * `function_source_uri` - This property points to the file containing the default implementation of the OSP integration.  You should only change this if you want to use a custom implementation.
