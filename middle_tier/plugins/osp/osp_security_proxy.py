@@ -19,14 +19,20 @@ TIMEOUT = "timeout"
 
 
 class OSPAuthenticationResponse(AuthenticationResponse):
+    """This is the authentication response that handles returning the token when it is valid"""
     def __init__(self, response):
         self.response = response
 
     def get_username(self):
+        """Get the username of the user represented by the token"""
         return self.response.get("username")
 
 
 class OSPTokenCheckClient:
+    """
+    This class handles calling the OSP server to validate tokens.  It manages the introspect URL 
+    and makes the REST request to check if a token is valid.
+    """
     def __init__(self, url, username, password, app, timeout=10):
         self.app = app
         self.url = self.get_osp_introspect_url(url, app)
@@ -38,12 +44,18 @@ class OSPTokenCheckClient:
                 "These params are not configured: {}")
 
     def get_osp_introspect_url(self, url, app):
+        """Get the OSP introspect REST endpoint URL"""
         url = '{base}/osp/a/{app}/auth/oauth2/introspect'.format(base=url,
                                                                  app=app)
         logger.debug("OSP introspect url = {}".format(url))
         return url
 
     def check_token(self, token):
+        """
+        This function makes the REST call to validate the token.  It will return the JSON
+        response from OSP which may be token information or may indicate that the token is
+        not active.
+        """
         logger.debug("OSP url: {}".format(self.url))
         try:
             r = requests.post(self.url, auth=(self.username, self.password), data={
@@ -59,6 +71,11 @@ class OSPTokenCheckClient:
 
 
 class OSPProxy(CustomKeyHandler):
+    """
+    The OSP proxy does the actual checking of tokens and interprets the responses.  It also handles
+    reading the token from the HTTP header and making sure that it's there before passing code control
+    on to other REST endpoints.
+    """
     def __init__(self, config):
         super().__init__(config)
         if self.config is None:
@@ -76,7 +93,7 @@ class OSPProxy(CustomKeyHandler):
         logger.debug("OSP security proxy data = {}".format(self.config))
         bearer_prefix = "Bearer "
         if not token.startswith(bearer_prefix):
-            raise UnauthorizedSecurityException("Incorrect auth key")
+            raise UnauthorizedSecurityException("Not authorized")
         token = token[len(bearer_prefix):]
         try:
             check_token = self.osp_client.check_token(token)
@@ -91,6 +108,10 @@ class OSPProxy(CustomKeyHandler):
 
 
 class OSPVirtualEndpoint(Resource):
+    """
+    This endpoint handles getting information about the token.  It can act like a whoAmI style
+    call and is a good candidate for a first REST call in an application.  
+    """
     def __init__(self, service):
         super().__init__(service)
         self.config = service.service_definition
