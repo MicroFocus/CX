@@ -113,6 +113,10 @@ class OSPVirtualEndpoint(Resource):
         token = token[len(bearer_prefix):]
         try:
             response = self.osp_client.check_token(token)
+            is_active = response.get('active', False)
+            logger.debug("OSP user status: {}".format(is_active))
+            if not is_active:
+                raise UnauthorizedSecurityException("Not authorized")
         except Exception:
             return Response(json.dumps({}), headers={'Content-type': "application/json"})
         return Response(json.dumps(response), headers={'Content-type': "application/json"})
