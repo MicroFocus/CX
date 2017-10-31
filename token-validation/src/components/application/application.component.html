@@ -1,22 +1,26 @@
-<h2>Token Validation Example</h2>
-
-<div class="dashboard-component" >
-    <h2 class="dashboard-header">Users</h2>
+<div class="dashboard-component">
+    <h2 class="dashboard-header">List of users from eDirectory</h2>
+    
+    <p>
+        This application shows you how to use the OSP integration service in the CX middle tier.
+    </p>
+    
+    <h3 ng-if="$ctrl.tokenInfo">Hello {{$ctrl.tokenInfo.username}}</h3>
 
     <p>
         <table>
             <thead>
                 <tr>
-                    <th>Username</th>
                     <th>Given Name</th>
                     <th>Family Name</th>
+                    <th>Username</th>
                 </tr>
             </thead>
             <tbody>
                 <tr ng-repeat="user in $ctrl.users track by $index">
-                    <td>{{user.cn}}</td>
                     <td>{{user.givenName}}</td>
                     <td>{{user.sn}}</td>
+                    <td>{{user.cn}}</td>
                 </tr>
             </tbody>
         </table>

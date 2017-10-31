@@ -59,12 +59,6 @@ ngGulp(gulp, {
 // Define some of our own additional tasks
 //
 
-gulp.task('copy:oauth.html', function() {
-    return gulp
-        .src(path.resolve(cwd, 'node_modules/unjar-from-url/node_modules/gromit/html/oauth.html'))
-        .pipe(gulp.dest(path.resolve(cwd, 'dist')));
-});
-
 gulp.task('copy:gromit', function() {
     return gulp
         .src(path.resolve(cwd, 'node_modules/unjar-from-url/node_modules/gromit/**/*'))
@@ -86,8 +80,3 @@ gulp.task('inject-gromit-settings', [], function () {
 });
 
 gulp.tasks['default'].dep.push('inject-gromit-settings');
-gulp.task('copy:extras', ['copy:oauth.html', 'copy:gromit']);
-
-// Ensure copy:extras is a part of the copy:development & copy:production base tasks:
-gulp.tasks['copy:development'].dep.push('copy:extras');
-gulp.tasks['copy:production'].dep.push('copy:extras');

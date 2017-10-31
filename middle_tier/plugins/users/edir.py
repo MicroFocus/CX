@@ -59,7 +59,7 @@ class EDirUsersResource(Resource):
         server = Server('coalmine.qalab.cam.novell.com', get_info=ALL)
         conn = Connection(server, "cn=admin,ou=sa,o=system", "test", auto_bind=True)
         
-        conn.search('ou=users,o=data', '(objectClass=Person)', attributes=['dn', 'cn', 'givenName', 'sn'])
+        conn.search('ou=users,o=data', '(objectClass=Person)', attributes=['dn', 'cn', 'givenName', 'sn'], size_limit=20)
         
         data = []
         for entry in conn.entries:            

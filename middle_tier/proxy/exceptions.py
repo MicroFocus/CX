@@ -1,8 +1,10 @@
+from exceptions import MiddleTierException
 
-class IncorrectService(Exception):
+
+class IncorrectService(MiddleTierException):
     pass
 
 
-class IncorrectMethod(Exception):
+class IncorrectMethod(MiddleTierException):
     pass
 

@@ -10,6 +10,12 @@ export default class GromitService {
     }
 
     init() {
+        gromit.addCSSLink = function() {
+            /*
+             * We are doing this so we don't get the Gromit CSS.  Gromit has added
+             * a real flag for this in the latest release, but it isn't out yet.
+             */
+        };
         gromit.init();
     }
 
@@ -22,6 +28,20 @@ export default class GromitService {
         let http = this.$http;
 
         gromit.get('/api/users/list', http, function(data) {
+            callback(data);
+        });
+    }
+
+    /**
+     * Gets information about the current user from the token.  This call
+     * will prompt the user to log in if they haven't already.
+     * 
+     * @param callback The callback function to get the data.
+     */
+    getTokenInfo(callback) {
+        let http = this.$http;
+
+        gromit.get('/api/osp/token', http, function(data) {
             callback(data);
         });
     }

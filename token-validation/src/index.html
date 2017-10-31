@@ -16,7 +16,9 @@
     <script type="application/javascript" src="gromit/js/gromit-all-min.js"></script>
     
     <script type="text/javascript">
-// Gromit config goes here
+        gromit.ClientId = 'cx';
+        gromit.AuthUrl = 'http://192.168.0.76:8080/osp/a/idm/auth/oauth2/grant';
+        gromit.AuthLogoutUrl = 'http://192.168.0.76:8080/osp/a/idm/auth/app/logout';
     </script>
         
     <script type="application/javascript" src="app.js"></script>

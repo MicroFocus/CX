@@ -12,6 +12,8 @@ class Request:
         self.method = method
         self.url = url
         self.verify_ssl = verify_ssl
+        # Will be set by security handler
+        self.auth = None
 
 
 def send_request(url, method, request_headers, data=None, stream=True):
