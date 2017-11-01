@@ -49,7 +49,7 @@ export default class ApplicationComponent {
              * we call for more information in the server.  This is more efficient
              * since it means we only have to replay one REST call instead of 
              * multiple calls.
-             */ 
+             */
             appComp.getUsers();
         });
     }
