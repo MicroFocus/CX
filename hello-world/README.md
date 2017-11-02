@@ -9,7 +9,22 @@ This is the barebones CX project.  It's a great place to start from and a good t
 * A **Docker** container to bring it all together
 * **Gulp** and the basic build 
 
-This project shows how to use the CX framework to build the basic Hello World!  This sample comes with a simple starting page and the Gromit framework configured and ready to make REST calls.  This is a great started project for your new CX application.
+This project shows how to use the CX framework to build the basic Hello World!  This sample comes with a simple starting page and the Gromit framework configured and ready to make REST calls.  This is a great starter project for your new CX application.
+
+## Running the Application
+
+Hello World! is the easiest CX project to get up and running.  This video shows you how to do it with just two commands:
+
+[![CX Asciinema](../doc/images/hello_world.png)](https://asciinema.org/a/145577)
+
+The easiest way to run this application is with the Docker container.  Change to the docker folder and run the following command:
+
+```
+docker-compose -f docker-compose-helloworld.yml up --force-recreate --build
+```
+
+Once the Docker container starts the application will be running at http://localhost, but you must access it via the URL configured during OSP SSO client configuration.
+
 
 ### Project Structure
 The application directory structure is layout out as follows. This structure is configurable.
@@ -28,16 +43,6 @@ The application directory structure is layout out as follows. This structure is 
 * `gulpfile.js` Invoke ngGulp here. Register any custom gulp tasks here.
 * `tsconfig.json` This configured the TypeScript compiler.
 * `tslint.json` This is the configuration file for TSLint which checks TypeScript code.
-
-## Running the Application
-
-The easiest way to run this application is with the Docker container.  Change to the docker folder and run the following command:
-
-```
-docker-compose -f docker-compose-helloworld.yml up --force-recreate --build
-```
-
-Once the Docker container starts the application will be running at http://localhost, but you must access it via the URL configured during OSP SSO client configuration.
 
 ## Building the Client Side Separately
 You can build the client-side of this application separately.  You don't have to, but it can sometimes be useful to see better build errors.
