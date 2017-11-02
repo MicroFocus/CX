@@ -71,21 +71,6 @@ gulp.task('copy:gromit', function() {
         .pipe(gulp.dest(path.resolve(cwd, 'dist/gromit')));
 });
 
-var fs = require('fs');
-var replace = require('gulp-replace');
-
-gulp.task('inject-gromit-settings', [], function () {
-    if (fs.existsSync('dist/index.html')) {
-        fs.unlinkSync('dist/index.html');
-    }
-    gulp.src(['src/index.html'])
-        .pipe(replace('// Gromit config goes here', function() {
-            return fs.readFileSync('src/oauth.config', 'utf8');
-        }))
-    .pipe(gulp.dest('dist/'));
-});
-
-gulp.tasks['default'].dep.push('inject-gromit-settings');
 gulp.task('copy:extras', ['copy:oauth.html', 'copy:gromit']);
 
 // Ensure copy:extras is a part of the copy:development & copy:production base tasks:
