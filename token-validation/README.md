@@ -13,7 +13,7 @@ docker-compose -f docker-compose-token-validation.yml up --force-recreate --buil
 Once the Docker container starts the application will be running at http://localhost, but you must access it via the URL configured during OSP SSO client configuration.
 
 ## Watch the Video
-[![Identity Governance Overview](video.png)](https://vimeo.com/240840649)
+[![Adding Securty to the CX Middle Tier](video.png)](https://vimeo.com/240840649)
 
 ## Configuring Your Project
 
