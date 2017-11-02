@@ -1,0 +1,9 @@
+// Site wide styles and configuration
+@import 'styles/layout';
+
+// Component styles
+@import 'components/application/application.component';
+
+table td, table th {
+    vertical-align: middle;
+}

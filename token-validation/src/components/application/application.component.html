@@ -1,0 +1,30 @@
+<div class="dashboard-component">
+    <h2 class="dashboard-header">List of users from eDirectory</h2>
+    
+    <p>
+        This application shows you how to use the OSP integration service in the CX middle tier.
+    </p>
+    
+    <h3 ng-if="$ctrl.tokenInfo">Hello {{$ctrl.tokenInfo.username}}</h3>
+
+    <p>
+        <table>
+            <thead>
+                <tr>
+                    <th>Given Name</th>
+                    <th>Family Name</th>
+                    <th>Username</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="user in $ctrl.users track by $index">
+                    <td>{{user.givenName}}</td>
+                    <td>{{user.sn}}</td>
+                    <td>{{user.cn}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </p>
+</div>
+
+<ui-view></ui-view>
