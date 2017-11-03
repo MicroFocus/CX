@@ -24,7 +24,7 @@ For more information about the CX architecture check out this video overview:
 
 There are currently five CX projects:  
 
-*   **hello-world** is the prefect template for a simple CX project.
+*   **hello-world** is the perfect template for a simple CX project.
 *   **self-registration** shows you how to use the [ng-ias](https://github.com/MicroFocus/ng-ias) project to create a wizard for creating new users that matches the Micro Focus look and feel.
 *   **self-registration-2** shows you how to create a single page application for registering new users.  This sample uses Bootstrap and Font Awesome to show you how to create a different look and feel with CX.
 *   **ig-overview** shows you how to use CX to connect to REST endpoints that support OAuth2 and OSP to make authenticated REST calls to Micro Focus products like [Identity Governance](https://www.netiq.com/products/identity-governance/).
