@@ -22,5 +22,5 @@ RUN git config --global http.sslverify false
 RUN echo -N | git config --global http.sslverify false
 RUN echo -n | openssl s_client -showcerts -connect https://secmgmtgit.provo.novell.com:8443 2>/dev/null  | sed -ne '/-BEGIN CERTIFICATE-/,/-END CERTIFICATE-/p'
 
-CMD npm install && npm run start
+CMD npm install --unsafe-perm && npm run start
 

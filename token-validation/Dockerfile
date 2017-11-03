@@ -17,5 +17,5 @@ RUN npm set progress=false
 # Expose port
 EXPOSE 8080
 
-CMD npm install && npm run start
+CMD npm install --unsafe-perm && npm run start
 
