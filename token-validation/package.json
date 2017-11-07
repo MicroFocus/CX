@@ -41,7 +41,7 @@
   "unjar-from-url-config": [
     {
       "directory": "gromit",
-      "url": "https://oss.sonatype.org/service/local/repositories/releases/content/org/gromitsoft/gromit/1.0.3/gromit-1.0.3.jar"
+      "url": "https://oss.sonatype.org/service/local/repositories/releases/content/org/gromitsoft/gromit/1.0.4/gromit-1.0.4.jar"
     }
   ]
 }
