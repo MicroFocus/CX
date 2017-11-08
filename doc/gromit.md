@@ -1,14 +1,14 @@
 # Adding Gromit to a CX Project
 
-Gromit is the OAuth2 client that we use for CX projects.  This client is specifically configured to work with Micro Focus OSP.  
+[Gromit](https://github.com/Gromit-Soft/gromit) is the OAuth2 client that we use for CX projects.  This works well with OSP the Micro Focus OAuth2 provider.
 
-Gromit comes as a JAR file.  You can find the latest version on the [Sonatype Nexus server](https://oss.sonatype.org/#nexus-search;quick~gromit).  
+Gromit is packaged as a JAR file.  You can find the latest version on the [Sonatype Nexus server](https://oss.sonatype.org/#nexus-search;quick~gromit).  
 
-If you start with the Hello World! project or one of the other CX sample projects then you will get Gromit automatically in your project.  If you want to make a new project from scratch then follow the instructions in this page to add Gromit to your project.
+If you start with the Hello World! project or one of the other CX sample projects then Gromit will be automatically included.  If you want to make a new project from scratch then follow the instructions in this page to add Gromit to your project.
 
 ## Add the Gromit project dependency
 
-The easiest way to get Gromit in your project is to add it to the `package.json` file in your project.  First you need to add a dependency on the `unjar-from-url` project like this:
+The easiest way to get Gromit in your project is to add it to the `package.json` file.  First you need to add a dependency for the `unjar-from-url` project like this:
 
 ```
 "devDependencies": {
@@ -33,13 +33,13 @@ Lastly, you need to make sure this gets run as part of your regular install by a
     "postinstall": "unjar-from-url"
 ```
 
-Now just run `npm install` and you should have the Gromit project in the `node_modules/unjar-from-url/node_modules/gromit` directory.
+Now just run `npm install` and you should have the Gromit files in the `node_modules/unjar-from-url/node_modules/gromit` directory under your project.
 
 ## Add Gromit to your build
 
 Now that you have the Gromit dependencies in your `node_modules` directory you need to make sure they get added to your built project.  This happens in the `gulpfile.js` file in your project.
 
-Add the following custom task to `gulpfile.js`:
+Add the following two custom tasks to `gulpfile.js`:
 
 ```
 gulp.task('copy:gromit', function() {
@@ -47,9 +47,24 @@ gulp.task('copy:gromit', function() {
         .src(path.resolve(cwd, 'node_modules/unjar-from-url/node_modules/gromit/**/*'))
         .pipe(gulp.dest(path.resolve(cwd, 'dist/gromit')));
 });
+
+gulp.task('copy:oauth', function() {
+    return gulp
+        .src(path.resolve(cwd, 'node_modules/unjar-from-url/node_modules/gromit/html/oauth.html'))
+        .pipe(gulp.dest(path.resolve(cwd, 'dist/')));
+});
 ```
 
-This will take the files in your `node_modules/unjar-from-url/node_modules/gromit` directory and copy them to the `dist/gromit` directory when you run `gulp`.  Because this is happening as part of the `copy` task in Gulp you don't need to do anything special to make it happen in the build.
+The first task will take the files in your `node_modules/unjar-from-url/node_modules/gromit` directory and copy them to the `dist/gromit` directory.  The second task will copy the `oauth.html` file to the root of your `dist` folder.  This file is needed when we handle the login process in Gromit.
+
+Next you want to make sure these two tasks are run by default when you run Gulp.  Add these two lines to your `gulpfile.js` file:
+
+```
+gulp.tasks['default'].dep.push('copy:gromit');
+gulp.tasks['default'].dep.push('copy:oauth');
+```
+
+Now these two tasks will run every time you run the `gulp` command.
 
 ## Import the Gromit scripts
 
@@ -63,7 +78,7 @@ All you need to do is add the following line to your `index.html` file:
 
 ## Add the Gromit module to your project
 
-The last step is to call the `gromit.init` function somewhere in your project.  You just need to call this before you actually call Gromit.  We often do this in the services code.  
+The last step is to call the `gromit.init` function somewhere in your project.  You need to call this before you call Gromit to make a REST call.  We often do this in the services code.  
 
 The `gromit` object is in your window scope so you just need to make this call somewhere in your project:
 
