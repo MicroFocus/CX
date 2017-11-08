@@ -10,12 +10,7 @@ export default class GromitService {
     }
 
     init() {
-        gromit.addCSSLink = function() {
-            /*
-             * We are doing this so we don't get the Gromit CSS.  Gromit has added
-             * a real flag for this in the latest release, but it isn't out yet.
-             */
-        };
+        gromit.addCSS = false;
         gromit.init();
     }
 

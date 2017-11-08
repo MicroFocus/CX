@@ -65,6 +65,12 @@ gulp.task('copy:gromit', function() {
         .pipe(gulp.dest(path.resolve(cwd, 'dist/gromit')));
 });
 
+gulp.task('copy:oauth', function() {
+    return gulp
+        .src(path.resolve(cwd, 'node_modules/unjar-from-url/node_modules/gromit/html/oauth.html'))
+        .pipe(gulp.dest(path.resolve(cwd, 'dist/')));
+});
+
 var fs = require('fs');
 var replace = require('gulp-replace');
 
@@ -79,4 +85,5 @@ gulp.task('inject-gromit-settings', [], function () {
     .pipe(gulp.dest('dist/'));
 });
 
-gulp.tasks['default'].dep.push('inject-gromit-settings');
+gulp.tasks['default'].dep.push('copy:gromit');
+gulp.tasks['default'].dep.push('copy:oauth');
