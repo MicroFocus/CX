@@ -39,10 +39,16 @@ class OSPTokenCheckClient:
         self.username = username
         self.timeout = timeout
         self.password = password
-        if any(prop is None for prop in [url, username, password, app, timeout]):
-            raise MiddleTierException(
-                "These params are not configured: {}")
-
+        
+        if url is None:
+            raise MiddleTierException("The target_url parameter is not configured in the services.json file.")
+        if username is None:
+            raise MiddleTierException("The username parameter is not configured in the services.json file.")
+        if password is None:
+            raise MiddleTierException("The password parameter is not configured in the services.json file.")
+        if app is None:
+            raise MiddleTierException("The app parameter is not configured in the services.json file.")
+            
     def get_osp_introspect_url(self, url, app):
         """Get the OSP introspect REST endpoint URL"""
         url = '{base}/osp/a/{app}/auth/oauth2/introspect'.format(base=url,
