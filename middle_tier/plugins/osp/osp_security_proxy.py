@@ -61,8 +61,16 @@ class OSPTokenCheckClient:
             r = requests.post(self.url, auth=(self.username, self.password), data={
                 "token": token}, timeout=self.timeout)
             logger.debug("OSP returns: {}".format(r.text))
+            logger.debug("r.status_code: {}".format(r.status_code))
             if r.status_code == 200:
                 return r.json()
+            elif r.status_code == 401:
+                '''
+                When the server returns a 401 it means that the client ID or 
+                client secret are incorrect.  In this case we can give a better
+                error message to help sort out the configuration issue.
+                '''
+                raise IncorrectSecurityConfigurationException("Unable to authenticate request")
             else:
                 return None
         except Exception as e:
@@ -138,7 +146,37 @@ class OSPVirtualEndpoint(Resource):
             logger.debug("OSP user status: {}".format(is_active))
             if not is_active:
                 raise UnauthorizedSecurityException("Not authorized")
-        except Exception:
+        except UnauthorizedSecurityException:
             logger.exception("Failed to check token")
             raise UnauthorizedSecurityException("Not authorized")
+        except IncorrectSecurityConfigurationException:
+            '''
+            This exception happens because there was a configuration error validating the token.
+            We don't want to returna 401 in this case because the client will just request a new
+            token, get the same token (because it is valid), and then try to validate it again.
+            That causes a refresh loop in the browser.  Instead we want to return a 400 so we 
+            can stop the loop and have a better error message.
+            '''
+            raise IncorrectSecurityConfigurationException("The OSP server said that the token validation request was " +
+            "unauthorized.  That means the client ID or client secret are incorrect in the services.json file.")
+        except Exception:
+            '''
+            This exception happens because we couldn't contact the OSP server.  This most likely
+            happens because of the configuration error in the services.json file.  We don't want 
+            to returna 401 in this case because the client will just request a new token, get the 
+            same token (because it is valid), and then try to validate it again.  That causes a 
+            refresh loop in the browser.  Instead we want to return a 400 so we can stop the loop 
+            and have a better error message.
+            '''
+            logger.exception("""
+-----------------------------------------
+
+The middle tier was unable to contact the OSP server to validate the token.  This 
+means your OSP server was either offline or unreachable.
+
+-----------------------------------------
+            """)
+            raise IncorrectSecurityConfigurationException("The middle tier was unable to contact the OSP server to " + 
+            "validate the token.  This means your OSP server was either offline or unreachable.  Check the " + 
+            "configuration in the services.json file.")
         return Response(json.dumps(response), headers={'Content-type': "application/json"})
