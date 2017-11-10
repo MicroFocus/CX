@@ -7,3 +7,62 @@
 table td, table th {
     vertical-align: middle;
 }
+
+/*
+   The styles for the fatal error message panel
+ */
+#errorpanel {
+    background: #e6e6e6;
+    border: thin solid darkgray;
+    font-size: 18px;
+    line-height: 28px;
+    color: #e00000;
+    position: relative;
+    padding: 1em;
+    border-radius: 6px;
+    margin-right: 2em;
+    display: none;
+}
+
+#errorpanel_hide {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    text-indent: -999999px;
+    width: 22px;
+    height: 22px;
+}
+
+#errorpanel_hide a {
+    text-decoration: none;
+}
+
+#errorpanel_hide a {
+    text-decoration: none;
+}
+
+#pagewarningpanel {
+    background: #e6e6e6;
+    border: thin solid darkgray;
+    font-size: 18px;
+    line-height: 28px;
+    position: relative;
+    padding: 1.5em;
+    border-radius: 6px;
+    margin-right: 2em;
+    top: 50px;
+    display: none;
+}
+
+div.longMessagePanel a.closeAnchor,
+div.errorDetailsPanel a.closeAnchor,
+#errorpanel_hide {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    display: block;
+    width: 10px;
+    height: 10px;
+    background: url("gromit/css/images/icon_X.png") no-repeat scroll transparent;
+	background-size: 10px;
+}
