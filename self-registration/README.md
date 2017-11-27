@@ -1,29 +1,5 @@
 # CX-App Self Registration Demo
 
-#### Certificate required for downloading dependencies from the internal Bitbucket server
-
-In order to build this project using npm, you'll need to make sure your git client is able to connect to our internal Bitbucket server, which uses a digital certificate signed using the Micro Focus internal Certificate Authority.
-
-Instructions for downloading and configuring the Micro Focus certificate for use with Git can be found at the following location:
-https://wiki.provo.microfocus.com:8443/display/ENG/Bitbucket+Server+-+Getting+Started
-
-However, for the condensed version version...
-
-Download the secmgmtgit.provo.novell.com.pem file from the following location, and save it somewhere, like your user home directory: 
-https://wiki.provo.microfocus.com:8443/download/attachments/32741329/secmgmtgit.provo.novell.com.pem.txt?version=1&modificationDate=1450809745832&api=v2
-
-Tell git to recognize it as a trusted Certificate Authority by running the command:
-
-```
-$ git config --global http."https://secmgmtgit.provo.novell.com:8443/".sslCAInfo C:/path/to/secmgmtgit.provo.novell.com.pem
-```
-
-You can verify it was set correctly by running the following command:
-
-```
-$ git config http.https://secmgmtgit.provo.novell.com:8443/.sslcainfo
-```
-
 ### Running in a Docker Container
 
 The easiest way to run this application is with the Docker container.  Change to the docker folder and run the following command:
