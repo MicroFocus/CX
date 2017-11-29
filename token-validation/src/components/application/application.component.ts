@@ -13,7 +13,6 @@ export default class ApplicationComponent {
     static $inject = ['gromitService'];
     constructor(private gromitService) {
 
-        this.getUsers();
         this.getTokenInfo();
     }
 
@@ -25,6 +24,7 @@ export default class ApplicationComponent {
      */
     getUsers() {
         let gromitService = this.gromitService;
+        this.users = [];
         let users = this.users;
 
         gromitService.getUsers(function(data: any) {
@@ -43,6 +43,14 @@ export default class ApplicationComponent {
 
         gromitService.getTokenInfo(function(data: any) {
             appComp.tokenInfo = data;
+
+            /*
+             * We want to wait until we finish getting token information before
+             * we call for more information in the server.  This is more efficient
+             * since it means we only have to replay one REST call instead of 
+             * multiple calls.
+             */ 
+            appComp.getUsers();
         });
     }
 }
