@@ -196,6 +196,11 @@ This endpoint gets information about the current token.  It will also force the 
 
 These fields are variable depending upon the state of the token. 
 
+  * `username` is the name of the currently logged in user.
+  * `active` indicates that the token is currently active.
+
+The rest of the attributes are internal to the token and subject to change.
+
 You must [configure OSP authentication](#setting-up-the-osp-configuration) to use this REST endpoint.
 
 ### GET /api/osp/attributes
