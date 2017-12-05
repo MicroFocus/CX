@@ -93,9 +93,9 @@ class OSPTokenCheckClient:
             
     def check_attributes(self, token):
         """
-        This function makes the REST call to validate the token.  It will return the JSON
-        response from OSP which may be token information or may indicate that the token is
-        not active.
+        This function makes the REST call to get attributes based on the user represented
+        by the token.  It will return the JSON response from OSP which may be a JSON 
+        document with user information or may indicate that the token is not active.
         """
         logger.debug("OSP attributes url: {}".format(self.attr_url + token))
         try:
