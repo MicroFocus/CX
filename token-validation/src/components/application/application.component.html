@@ -1,12 +1,46 @@
 <div class="dashboard-component">
-    <h2 class="dashboard-header">List of users from eDirectory</h2>
+    <h2 class="dashboard-header">CX and OSP Token Validation</h2>
     
     <p>
         This application shows you how to use the OSP integration service in the CX middle tier.
     </p>
     
-    <h3 ng-if="$ctrl.tokenInfo">Hello {{$ctrl.tokenInfo.username}}</h3>
-
+    <p>
+        With a valid token we can get information about the current user like the username: <strong>{{$ctrl.tokenInfo.username}}</strong>.
+    </p>
+    
+    <p>
+        We can also make an extra rest call to get additional information about the user like:
+    </p>
+    
+    <p>
+        <table>
+            <tbody>
+                <tr>
+                    <td>Given name</td>
+                    <td>{{$ctrl.userAtts.first_name}}</td>
+                </tr>
+                <tr>
+                    <td>Family name</td>
+                    <td>{{$ctrl.userAtts.last_name}}</td>
+                </tr>
+                <tr>
+                    <td>DN</td>
+                    <td>{{$ctrl.userAtts.name}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </p>
+    
+    <p>
+        You can also <a href="#" ng-click="$ctrl.logout()">logout</a> and try a different user.
+    </p>
+    
+    <h2 class="dashboard-header">List of users from eDirectory</h2>
+    <p>
+        Now that we have a valid token we can use it to make REST calls to the middle tier.  Here is a list of the first 20 users in eDirectory.
+    </p>    
+    
     <p>
         <table>
             <thead>

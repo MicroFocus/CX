@@ -35,7 +35,8 @@ class OSPTokenCheckClient:
     """
     def __init__(self, url, username, password, app, timeout=10):
         self.app = app
-        self.url = self.get_osp_introspect_url(url, app)
+        self.token_url = self.get_osp_introspect_url(url, app)
+        self.attr_url = self.get_osp_attributes_url(url, app)
         self.username = username
         self.timeout = timeout
         self.password = password
@@ -55,6 +56,13 @@ class OSPTokenCheckClient:
                                                                  app=app)
         logger.debug("OSP introspect url = {}".format(url))
         return url
+        
+    def get_osp_attributes_url(self, url, app):
+        """Get the OSP attributes REST endpoint URL"""
+        url = '{base}/osp/a/{app}/auth/oauth2/getattributes?attributes=client+name+last_name+first_name+initials+email+roles+language+cacheable+expiration&access_token='.format(base=url,
+                                                                 app=app)
+        logger.debug("OSP introspect url = {}".format(url))
+        return url
 
     def check_token(self, token):
         """
@@ -62,10 +70,36 @@ class OSPTokenCheckClient:
         response from OSP which may be token information or may indicate that the token is
         not active.
         """
-        logger.debug("OSP url: {}".format(self.url))
+        logger.debug("OSP token url: {}".format(self.token_url))
         try:
-            r = requests.post(self.url, auth=(self.username, self.password), data={
+            r = requests.post(self.token_url, auth=(self.username, self.password), data={
                 "token": token}, timeout=self.timeout)
+            logger.debug("OSP returns: {}".format(r.text))
+            logger.debug("r.status_code: {}".format(r.status_code))
+            if r.status_code == 200:
+                return r.json()
+            elif r.status_code == 401:
+                '''
+                When the server returns a 401 it means that the client ID or 
+                client secret are incorrect.  In this case we can give a better
+                error message to help sort out the configuration issue.
+                '''
+                raise IncorrectSecurityConfigurationException("Unable to authenticate request")
+            else:
+                return None
+        except Exception as e:
+            logger.exception("Failed to run OSP token checker")
+            raise e
+            
+    def check_attributes(self, token):
+        """
+        This function makes the REST call to validate the token.  It will return the JSON
+        response from OSP which may be token information or may indicate that the token is
+        not active.
+        """
+        logger.debug("OSP attributes url: {}".format(self.attr_url + token))
+        try:
+            r = requests.get(self.attr_url + token, auth=(self.username, self.password), timeout=self.timeout)
             logger.debug("OSP returns: {}".format(r.text))
             logger.debug("r.status_code: {}".format(r.status_code))
             if r.status_code == 200:
@@ -139,6 +173,54 @@ class OSPVirtualEndpoint(Resource):
         app = data.get(APP_PROP)
         timeout = data.get(TIMEOUT, 10)
         self.osp_client = OSPTokenCheckClient(url, username, password, app, timeout)
+        
+    def get_attributes(self, request):
+        bearer_prefix = "Bearer "
+        token = request.headers.get("Authorization")
+        if not token or not token.startswith(bearer_prefix):
+            raise UnauthorizedSecurityException("Not authorized")
+        token = token[len(bearer_prefix):]
+        
+        try:
+            response = self.osp_client.check_attributes(token)
+            is_error = response.get('error')
+            logger.debug("OSP user attributes status: {}".format(is_error))
+            if is_error:
+                raise UnauthorizedSecurityException("Not authorized")
+        except UnauthorizedSecurityException:
+            logger.exception("Failed to check token")
+            raise UnauthorizedSecurityException("Not authorized")
+        except IncorrectSecurityConfigurationException:
+            '''
+            This exception happens because there was a configuration error validating the token.
+            We don't want to returna 401 in this case because the client will just request a new
+            token, get the same token (because it is valid), and then try to validate it again.
+            That causes a refresh loop in the browser.  Instead we want to return a 400 so we 
+            can stop the loop and have a better error message.
+            '''
+            raise IncorrectSecurityConfigurationException("The OSP server said that the token validation request was " +
+            "unauthorized.  That means the client ID or client secret are incorrect in the services.json file.")
+        except Exception:
+            '''
+            This exception happens because we couldn't contact the OSP server.  This most likely
+            happens because of the configuration error in the services.json file.  We don't want 
+            to returna 401 in this case because the client will just request a new token, get the 
+            same token (because it is valid), and then try to validate it again.  That causes a 
+            refresh loop in the browser.  Instead we want to return a 400 so we can stop the loop 
+            and have a better error message.
+            '''
+            logger.exception("""
+-----------------------------------------
+
+The middle tier was unable to contact the OSP server to validate the token.  This 
+means your OSP server was either offline or unreachable.
+
+-----------------------------------------
+            """)
+            raise IncorrectSecurityConfigurationException("The middle tier was unable to contact the OSP server to " + 
+            "validate the token.  This means your OSP server was either offline or unreachable.  Check the " + 
+            "configuration in the services.json file.")
+        return Response(json.dumps(response), headers={'Content-type': "application/json"})
 
     def get_token(self, request):
         bearer_prefix = "Bearer "

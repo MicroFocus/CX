@@ -43,6 +43,12 @@
           "function_source_uri": "plugins.osp.osp_security_proxy",
           "path": "token",
           "method": "GET"
+        },
+        {
+          "response_function_name": "OSPVirtualEndpoint.get_attributes",
+          "function_source_uri": "plugins.osp.osp_security_proxy",
+          "path": "attributes",
+          "method": "GET"
         }
       ],
       "data": {
