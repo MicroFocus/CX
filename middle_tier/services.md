@@ -168,3 +168,56 @@ From our previous example you can just add the `auth` property to the REST endpo
 ```
 
 This configuration will take the default OSP configuration to validate tokens.  
+
+## REST Endpoints in the Middle Tier
+
+The middle tier is a flexible layer for adding custom REST endpoints, but it also comes with a few built in REST endpoints.
+
+### GET /api/osp/token
+
+This endpoint gets information about the current token.  It will also force the user to log in if they haven't already.  The typical output looks like this:
+
+```
+{
+	"client_id": "cx",
+	"username": "bejones",
+	"nbf": 1512491658,
+	"aud": ["iac-daas", "iac-service", "iac-dtp", "cx", "iac2", "rpt", "iac", "wf"],
+	"iss": "http://192.168.0.76:8080/osp/a/idm/auth/oauth2",
+	"jti": "c741b458-7a2e-4538-92e9-92564b2bdd34",
+	"scope": null,
+	"exp": 1512491778,
+	"sub": "bisadus-82acd744c3fec4415ebf82acd744c3fe",
+	"token_type": "Bearer",
+	"iat": 1512491658,
+	"active": true
+}
+```
+
+These fields are variable depending upon the state of the token. 
+
+You must [configure OSP authentication](#setting-up-the-osp-configuration) to use this REST endpoint.
+
+### GET /api/osp/attributes
+
+This endpoint gets information about the current user.  The typical output looks like this:
+
+```
+{
+	"first_name": "Bernie ",
+	"client": "cx",
+	"expiration": "1512493192042",
+	"last_name": "Jones",
+	"email": ["bejones@newworld.com", "bejones@nospam.net"],
+	"name": "cn=bejones,ou=users,o=data"
+}
+```
+
+  * `first_name` is the user's given name.
+  * `client` is the name of the OSP client used to get this data.
+  * `expiration` is the time in milliseconds when the token will expire.
+  * `last_name` is the user's family name.
+  * `email` is an array of the user's email addresses.
+  * `name` is the user's DN in the identity source.
+
+You must [configure OSP authentication](#setting-up-the-osp-configuration) to use this REST endpoint.
