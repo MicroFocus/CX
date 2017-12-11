@@ -1,4 +1,4 @@
-Flask==0.10.1
+Flask==0.12.2
 requests
 ldap3==1.3.3
 Werkzeug==0.12.2
