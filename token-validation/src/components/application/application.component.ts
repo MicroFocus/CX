@@ -6,7 +6,7 @@ import { Component } from '../../component.decorator';
 
 /**
  * This is the TypeScript controller for our application component.  It has a single
- * function call which invokes the Gromit Service.  You can add more calls to the 
+ * function call which invokes the Gromit Service.  You can add more calls to the
  * Gromit Service to make more REST calls.
  */
 export default class ApplicationComponent {
@@ -18,6 +18,11 @@ export default class ApplicationComponent {
 
     private users = [];
     private tokenInfo: any;
+    private userAtts: any;
+
+    logout() {
+        this.gromitService.doLogout();
+    }
 
     /**
      * Load users from the middle tier and add them to the users array
@@ -47,10 +52,23 @@ export default class ApplicationComponent {
             /*
              * We want to wait until we finish getting token information before
              * we call for more information in the server.  This is more efficient
-             * since it means we only have to replay one REST call instead of 
+             * since it means we only have to replay one REST call instead of
              * multiple calls.
              */
             appComp.getUsers();
+            appComp.getUserAttributes();
+        });
+    }
+
+    /**
+     * Load additional attributes about the current user.
+     */
+    getUserAttributes() {
+        let gromitService = this.gromitService;
+        let appComp = this;
+
+        gromitService.getUserAttributes(function(data: any) {
+            appComp.userAtts = data;
         });
     }
 }

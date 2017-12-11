@@ -5,6 +5,7 @@ var path = require('path');
 
 var cwd = process.cwd();
 ngGulp(gulp, {
+    disableLiveReload: true,
     devServerPort: 8080,
     externals: {
         'angular-material': 'window["angular-material"]',

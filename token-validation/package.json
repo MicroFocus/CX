@@ -34,7 +34,7 @@
     "jasmine-ts": "0.1.3",
     "jquery": "3.2.1",
     "js-cookie": "1.5.1",
-    "ng-gulp": "jedwardhawkins/ng-gulp.git#v0.7.2",
+    "ng-gulp": "0.7.5",
     "typescript": "2.3.0",
     "unjar-from-url": "1.1.1"
   },
