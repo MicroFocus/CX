@@ -67,12 +67,6 @@
       "description": "",
       "virtual": [
         {
-          "response_function_name": "EDirUsersResource.create_user",
-          "function_source_uri": "plugins.users.edir",
-          "path": "create",
-          "method": "POST"
-        },
-        {
           "response_function_name": "EDirUsersResource.read_users",
           "function_source_uri": "plugins.users.edir",
           "path": "list",
@@ -83,6 +77,22 @@
         "listen_path": "/users/"
       },
       "auth": "osp"
+    },
+    {
+      "id": "usersanon",
+      "name": "Ldap users service wrapper",
+      "description": "",
+      "virtual": [
+        {
+          "response_function_name": "EDirUsersResource.create_user",
+          "function_source_uri": "plugins.users.edir",
+          "path": "create",
+          "method": "POST"
+        }
+      ],
+      "proxy": {
+        "listen_path": "/users/"
+      }
     },
     {
       "id": "igserver",
