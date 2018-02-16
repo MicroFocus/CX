@@ -1,0 +1,11 @@
+<div class="page-header-secondary">
+
+  <ul class="nav nav-tabs" role="tablist">
+
+    <li role="presentation" routerLinkActive="active" *ngFor="let item of navigation">
+      <a role="tab" [routerLink]="item.path">{{ item.title }}</a>
+    </li>
+
+  </ul>
+
+</div>

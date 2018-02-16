@@ -1,0 +1,43 @@
+<div class="page-main masthead-offset-primary">
+  <div class="page-content">
+    <div class="wrapper-content container-fluid">
+      <div class="ebox wizard-ebox col-lg-6 col-md-9 col-sm-12">
+
+        <ux-wizard orientation="horizontal"
+          [(step)]="currentStep"
+          (stepChanging)="onStepChanging($event.from)"
+          (onCancel)="cancel()"
+          finishText="Create Account">
+
+          <ux-wizard-step header="Page 1" [valid]="stepStates[0].valid">
+            <app-generate-code [data]="data"
+              [submitted]="stepStates[0].submitted"
+              (validChange)="stepStates[0].valid = $event">
+            </app-generate-code>
+          </ux-wizard-step>
+
+          <ux-wizard-step header="Page 2" [valid]="stepStates[1].valid">
+            <app-personal-details [data]="data"
+              [submitted]="stepStates[1].submitted"
+              (validChange)="stepStates[1].valid = $event">
+            </app-personal-details>
+          </ux-wizard-step>
+
+          <ux-wizard-step header="Page 3" [valid]="stepStates[2].valid">
+            <app-account-details [data]="data"
+              [submitted]="stepStates[2].submitted"
+              (validChange)="stepStates[2].valid = $event">
+            </app-account-details>
+          </ux-wizard-step>
+
+          <ux-wizard-step header="Page 4">
+            <app-summary [data]="data">
+            </app-summary>
+          </ux-wizard-step>
+
+        </ux-wizard>
+
+      </div>
+    </div>
+  </div>
+</div>

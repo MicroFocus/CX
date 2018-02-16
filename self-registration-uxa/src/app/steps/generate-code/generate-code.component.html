@@ -1,0 +1,33 @@
+<div *ngIf="!requested">
+
+  <p class="step-summary">Self register by requesting a registration code.</p>
+
+  <div class="btn-container">
+    <button type="button" class="btn button-primary" (click)="request()">Request Code</button>
+  </div>
+
+  <span class="validation-error-text" [hidden]="!submitted">Request a code to continue</span>
+
+</div>
+
+<div *ngIf="requested">
+
+  <p class="step-summary">Enter the registration code sent to you.</p>
+
+  <form role="form" class="form-horizontal form-fields" [formGroup]="codeForm" novalidate>
+
+    <div class="form-group" [class.has-error]="hasError('code')">
+
+      <div class="col-sm-12">
+
+        <input type="text" class="form-control" placeholder="Code" formControlName="code">
+
+        <span class="validation-error-text" [hidden]="!hasError('code')">Required</span>
+
+      </div>
+
+    </div>
+
+  </form>
+
+</div>

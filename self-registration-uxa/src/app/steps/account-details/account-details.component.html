@@ -1,0 +1,80 @@
+<p class="step-summary">Enter your sign-in information, or choose a secure external sign-in provider.</p>
+
+<form role="form" class="form-horizontal" [formGroup]="detailsForm" novalidate>
+
+  <div class="form-group">
+
+    <div class="col-sm-12">
+
+      <div class="btn-group">
+        <button type="button" class="btn btn-lg button-toggle-primary external-signin-button"
+          [(ngModel)]="signinType" btnRadio="account" formControlName="signinType">
+          New Account
+        </button>
+        <button type="button" class="btn btn-lg button-toggle-primary external-signin-button" aria-label="Sign in with Facebook"
+          [(ngModel)]="signinType" btnRadio="facebook" formControlName="signinType">
+          <img src="../../../assets/images/facebook.png" alt="Facebook">
+        </button>
+        <button type="button" class="btn btn-lg button-toggle-primary external-signin-button" aria-label="Sign in with Google"
+          [(ngModel)]="signinType" btnRadio="google" formControlName="signinType">
+          <img src="../../../assets/images/google.png" alt="Google">
+        </button>
+        <button type="button" class="btn btn-lg button-toggle-primary external-signin-button" aria-label="Sign in with LinkedIn"
+          [(ngModel)]="signinType" btnRadio="linkedin" formControlName="signinType">
+          <img src="../../../assets/images/linkedin.png" alt="LinkedIn">
+        </button>
+      </div>
+
+    </div>
+
+  </div>
+
+  <div *ngIf="signinType === 'account'" class="form-group form-fields" formGroupName="account">
+
+    <div class="col-sm-12">
+
+      <div class="form-group">
+
+        <div class="col-sm-3">
+          <label for="id" class="control-label">User ID</label>
+        </div>
+        <div class="col-sm-9">
+          <input type="text" class="form-control" placeholder="User ID" formControlName="id">
+        </div>
+
+      </div>
+
+      <div class="form-group">
+
+        <div class="col-sm-3">
+          <label for="password" class="control-label">Password</label>
+        </div>
+        <div class="col-sm-9">
+          <input type="password" class="form-control" placeholder="Password" formControlName="password">
+        </div>
+
+      </div>
+
+      <div class="form-group">
+
+        <div class="col-sm-3">
+          <label for="passwordConfirm" class="control-label">Confirm Password</label>
+        </div>
+        <div class="col-sm-9">
+          <input type="password" class="form-control" placeholder="Confirm Password" formControlName="passwordConfirm">
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</form>
+
+<!-- <div>
+  <pre>{{detailsForm.value | json}}</pre>
+  <p>
+    Status: {{detailsForm.status}}
+  </p>
+</div> -->

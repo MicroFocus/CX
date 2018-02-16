@@ -1,0 +1,71 @@
+<p class="step-summary">Review and confirm your information</p>
+
+<div class="form-summary">
+  <div class="row">
+
+    <div class="col-sm-3">
+      <label class="control-label">Name</label>
+    </div>
+    <div class="col-sm-9">
+      {{data.personal?.title}} {{data.personal?.givenName}} {{data.personal?.familyName}}
+    </div>
+
+  </div>
+
+  <div class="row">
+
+    <div class="col-sm-3">
+      <label class="control-label">Job Title</label>
+    </div>
+    <div class="col-sm-9">
+      {{data.personal?.jobTitle}}
+    </div>
+
+  </div>
+
+  <div class="row">
+
+    <div class="col-sm-3">
+      <label class="control-label">Email</label>
+    </div>
+    <div class="col-sm-9">
+      {{data.personal?.email}}
+    </div>
+
+  </div>
+
+  <div class="row">
+
+    <div class="col-sm-3">
+      <label class="control-label">Birth Date</label>
+    </div>
+    <div class="col-sm-9">
+      {{birthDate | date}}
+    </div>
+
+  </div>
+
+  <div class="row">
+
+    <div class="col-sm-3">
+      <label class="control-label">Location</label>
+    </div>
+    <div class="col-sm-9">
+      {{data.personal?.office}}
+    </div>
+
+  </div>
+
+  <div class="row">
+
+    <div class="col-sm-3">
+      <label class="control-label">Sign-in Type</label>
+    </div>
+    <div class="col-sm-9">
+      <img *ngIf="signinImg" class="signin-type" [src]="signinImg" [alt]="'Sign in with ' + data.account?.externalSignin">
+      <span *ngIf="!signinImg">New Account</span>
+    </div>
+
+  </div>
+
+</div>
