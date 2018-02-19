@@ -6,21 +6,20 @@
 
     <div class="col-sm-12">
 
-      <div class="btn-group">
-        <button type="button" class="btn btn-lg button-toggle-primary external-signin-button"
-          [(ngModel)]="signinType" btnRadio="account" formControlName="signinType">
+      <div class="btn-group" btnRadioGroup formControlName="signinType">
+        <button type="button" btnRadio="account" class="btn btn-lg button-toggle-primary external-signin-button">
           New Account
         </button>
-        <button type="button" class="btn btn-lg button-toggle-primary external-signin-button" aria-label="Sign in with Facebook"
-          [(ngModel)]="signinType" btnRadio="facebook" formControlName="signinType">
+        <button type="button" btnRadio="facebook" class="btn btn-lg button-toggle-primary external-signin-button"
+          aria-label="Sign in with Facebook">
           <img src="../../../assets/images/facebook.png" alt="Facebook">
         </button>
-        <button type="button" class="btn btn-lg button-toggle-primary external-signin-button" aria-label="Sign in with Google"
-          [(ngModel)]="signinType" btnRadio="google" formControlName="signinType">
+        <button type="button" btnRadio="google" class="btn btn-lg button-toggle-primary external-signin-button"
+          aria-label="Sign in with Google">
           <img src="../../../assets/images/google.png" alt="Google">
         </button>
-        <button type="button" class="btn btn-lg button-toggle-primary external-signin-button" aria-label="Sign in with LinkedIn"
-          [(ngModel)]="signinType" btnRadio="linkedin" formControlName="signinType">
+        <button type="button" btnRadio="linkedin" class="btn btn-lg button-toggle-primary external-signin-button"
+          aria-label="Sign in with LinkedIn">
           <img src="../../../assets/images/linkedin.png" alt="LinkedIn">
         </button>
       </div>
@@ -29,7 +28,7 @@
 
   </div>
 
-  <div *ngIf="signinType === 'account'" class="form-group form-fields" formGroupName="account">
+  <div [hidden]="signinType !== 'account'" class="form-group form-fields" formGroupName="account">
 
     <div class="col-sm-12">
 
@@ -71,10 +70,3 @@
   </div>
 
 </form>
-
-<!-- <div>
-  <pre>{{detailsForm.value | json}}</pre>
-  <p>
-    Status: {{detailsForm.status}}
-  </p>
-</div> -->

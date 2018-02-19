@@ -8,16 +8,6 @@ import { Component, Input, Output } from '@angular/core';
 export class SummaryComponent {
   @Input() data: any;
 
-  get birthDate(): Date {
-    if (this.data.personal && this.data.personal.birthDate) {
-      return new Date(
-        this.data.personal.birthDate.year.value,
-        this.data.personal.birthDate.month.value,
-        this.data.personal.birthDate.day.value
-      );
-    }
-  }
-
   get signinImg(): string {
     if (this.data.account && this.data.account.signinType !== 'account') {
       return this._images[this.data.account.signinType];

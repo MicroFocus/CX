@@ -9,6 +9,7 @@ import { GenerateCodeComponent } from './generate-code/generate-code.component';
 import { PersonalDetailsComponent } from './personal-details/personal-details.component';
 import { AccountDetailsComponent } from './account-details/account-details.component';
 import { SummaryComponent } from './summary/summary.component';
+import { ComponentsModule } from '../components/components.module';
 
 @NgModule({
   imports: [
@@ -23,7 +24,10 @@ import { SummaryComponent } from './summary/summary.component';
     // UX Aspects
     DateTimePickerModule,
     RadioButtonModule,
-    SelectModule
+    SelectModule,
+
+    // App
+    ComponentsModule,
   ],
   exports: [GenerateCodeComponent, PersonalDetailsComponent, AccountDetailsComponent, SummaryComponent],
   declarations: [GenerateCodeComponent, PersonalDetailsComponent, AccountDetailsComponent, SummaryComponent],

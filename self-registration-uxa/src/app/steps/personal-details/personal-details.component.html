@@ -91,19 +91,7 @@
     </div>
     <div class="col-sm-9">
 
-      <div class="form-group date-group" formGroupName="birthDate">
-
-        <div class="date-segment col-sm-4">
-          <ux-select [value]="birthMonth" [options]="months" placeholder="Month" display="name" key="value" formControlName="month"></ux-select>
-        </div>
-        <div class="date-segment col-sm-4">
-          <ux-select [value]="birthDay" [options]="days" placeholder="Day" display="name" key="value" formControlName="day"></ux-select>
-        </div>
-        <div class="date-segment col-sm-4">
-          <ux-select [value]="birthYear" [options]="years" placeholder="Year" display="name" key="value" formControlName="year"></ux-select>
-        </div>
-
-      </div>
+      <app-date-input formControlName="birthDate"></app-date-input>
 
       <span class="validation-error-text" [hidden]="!hasError('birthDate')">Valid date required</span>
 

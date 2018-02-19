@@ -19,13 +19,13 @@ export class AccountDetailsComponent implements OnInit {
   }
 
   set signinType(value: string) {
-    this.detailsForm.setValue({ 'signinType': value });
+    this.detailsForm.get('signinType').setValue(value);
   }
 
   constructor(private _formBuilder: FormBuilder) {
 
     this.detailsForm = this._formBuilder.group({
-      signinType: ['account', Validators.required],
+      signinType: 'account',
       account: this._formBuilder.group({
         id: [''],
         password: [''],

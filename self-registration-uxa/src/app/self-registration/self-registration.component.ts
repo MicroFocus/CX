@@ -12,12 +12,12 @@ export class SelfRegistrationComponent {
 
   data = {};
 
-  currentStep: number = 2;
+  currentStep: number;
 
   stepStates: StepState[] = [];
 
   constructor(private _router: Router) {
-    for (let i = 0; i < 3; i++) {
+    for (let i = 0; i < 4; i++) {
       this.stepStates.push(new StepState());
     }
   }
