@@ -6,23 +6,25 @@
 
     <div class="col-sm-12">
 
-      <div class="btn-group" btnRadioGroup formControlName="signinType">
-        <button type="button" btnRadio="account" class="btn btn-lg button-toggle-primary external-signin-button">
-          New Account
-        </button>
-        <button type="button" btnRadio="facebook" class="btn btn-lg button-toggle-primary external-signin-button"
-          aria-label="Sign in with Facebook">
-          <img src="../../../assets/images/facebook.png" alt="Facebook">
-        </button>
-        <button type="button" btnRadio="google" class="btn btn-lg button-toggle-primary external-signin-button"
-          aria-label="Sign in with Google">
-          <img src="../../../assets/images/google.png" alt="Google">
-        </button>
-        <button type="button" btnRadio="linkedin" class="btn btn-lg button-toggle-primary external-signin-button"
-          aria-label="Sign in with LinkedIn">
-          <img src="../../../assets/images/linkedin.png" alt="LinkedIn">
-        </button>
-      </div>
+      <label class="radio">
+        <input type="radio" value="account" formControlName="signinType">
+        <span>New Account</span>
+      </label>
+      <label class="radio radio-img">
+        <input type="radio" value="facebook" formControlName="signinType">
+        <span></span>
+        <img src="../../../assets/images/facebook.png" alt="Facebook">
+      </label>
+      <label class="radio radio-img">
+        <input type="radio" value="google" formControlName="signinType">
+        <span></span>
+        <img src="../../../assets/images/google.png" alt="Google">
+      </label>
+      <label class="radio radio-img">
+        <input type="radio" value="linkedin" formControlName="signinType">
+        <span></span>
+        <img src="../../../assets/images/linkedin.png" alt="LinkedIn">
+      </label>
 
     </div>
 

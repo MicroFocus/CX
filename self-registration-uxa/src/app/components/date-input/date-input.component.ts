@@ -1,19 +1,16 @@
 import { Component, OnInit, Input, Output, EventEmitter, forwardRef } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import * as moment from 'moment';
-import _ = require('lodash');
 
 @Component({
   selector: 'app-date-input',
   templateUrl: './date-input.component.html',
   styleUrls: ['./date-input.component.less'],
-  providers: [
-    {
-      provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => DateInputComponent),
-      multi: true
-    }
-  ]
+  providers: [{
+    provide: NG_VALUE_ACCESSOR,
+    useExisting: forwardRef(() => DateInputComponent),
+    multi: true
+  }]
 })
 export class DateInputComponent implements ControlValueAccessor {
   private _value: Date;
@@ -40,11 +37,11 @@ export class DateInputComponent implements ControlValueAccessor {
     this.updateValue();
   }
 
-  private _month: DateComponent;
-  get month(): DateComponent {
+  private _month: DateInputMonth;
+  get month(): DateInputMonth {
     return this._month;
   }
-  set month(value: DateComponent) {
+  set month(value: DateInputMonth) {
     this._month = value;
     this.updateValue();
   }
@@ -62,11 +59,17 @@ export class DateInputComponent implements ControlValueAccessor {
   onChange: any;
   onTouched: any;
 
-  days = _.range(1, 31).map(day => day.toString());
-  months = moment.monthsShort().map((month, i) => ({ name: month, value: i }));
-  years = _.range(1900, moment().year())
-    .reverse()
-    .map(year => year.toString());
+  days: string[];
+  months: DateInputMonth[];
+  years: string[];
+
+  constructor() {
+    this.days = this.range(1, 31).map(day => day.toString());
+    this.months = moment.monthsShort().map((month, i) => ({ name: month, value: i }));
+    this.years = this.range(1900, moment().year())
+      .reverse()
+      .map(year => year.toString());
+  }
 
   writeValue(obj: any) {
     if (obj instanceof Date) {
@@ -100,9 +103,17 @@ export class DateInputComponent implements ControlValueAccessor {
     this._month = this.months.find(v => v.value === date.getMonth());
     this._day = date.getDate().toString();
   }
+
+  private range(from, to): number[] {
+    const result = [];
+    for (let i = from; i <= to; i += 1) {
+      result.push(i);
+    }
+    return result;
+  }
 }
 
-interface DateComponent {
+interface DateInputMonth {
   name: string;
   value: number;
 }

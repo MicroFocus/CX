@@ -1,15 +1,15 @@
+import * as angular from 'angular';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, Injector } from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
 import { UpgradeModule, downgradeComponent, setAngularJSGlobal } from '@angular/upgrade/static';
 import { PageHeaderModule } from '@ux-aspects/ux-aspects';
-import * as angular from 'angular';
 import '@ux-aspects/ux-aspects/ng1/ux-aspects-ng1';
 
 import { AppComponent } from './app.component';
 import { SelfRegistrationModule } from './self-registration/self-registration.module';
 import { SelfRegistrationComponent } from './self-registration/self-registration.component';
-import { ReactiveFormsModule } from '@angular/forms';
 
 const routes: Routes = [
   {
@@ -32,7 +32,9 @@ const routes: Routes = [
     ReactiveFormsModule,
     RouterModule.forRoot(routes),
     UpgradeModule,
+
     PageHeaderModule,
+
     SelfRegistrationModule
   ],
   providers: [
