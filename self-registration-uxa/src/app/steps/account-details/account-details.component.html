@@ -1,0 +1,74 @@
+<p class="step-summary">Enter your sign-in information, or choose a secure external sign-in provider.</p>
+
+<form role="form" class="form-horizontal" [formGroup]="detailsForm" novalidate>
+
+  <div class="form-group">
+
+    <div class="col-sm-12">
+
+      <label class="radio">
+        <input type="radio" value="account" formControlName="signinType">
+        <span>New Account</span>
+      </label>
+      <label class="radio radio-img">
+        <input type="radio" value="facebook" formControlName="signinType">
+        <span></span>
+        <img src="../../../assets/images/facebook.png" alt="Facebook">
+      </label>
+      <label class="radio radio-img">
+        <input type="radio" value="google" formControlName="signinType">
+        <span></span>
+        <img src="../../../assets/images/google.png" alt="Google">
+      </label>
+      <label class="radio radio-img">
+        <input type="radio" value="linkedin" formControlName="signinType">
+        <span></span>
+        <img src="../../../assets/images/linkedin.png" alt="LinkedIn">
+      </label>
+
+    </div>
+
+  </div>
+
+  <div [hidden]="signinType !== 'account'" class="form-group form-fields" formGroupName="account">
+
+    <div class="col-sm-12">
+
+      <div class="form-group">
+
+        <div class="col-sm-3">
+          <label for="id" class="control-label">User ID</label>
+        </div>
+        <div class="col-sm-9">
+          <input type="text" class="form-control" placeholder="User ID" formControlName="id">
+        </div>
+
+      </div>
+
+      <div class="form-group">
+
+        <div class="col-sm-3">
+          <label for="password" class="control-label">Password</label>
+        </div>
+        <div class="col-sm-9">
+          <input type="password" class="form-control" placeholder="Password" formControlName="password">
+        </div>
+
+      </div>
+
+      <div class="form-group">
+
+        <div class="col-sm-3">
+          <label for="passwordConfirm" class="control-label">Confirm Password</label>
+        </div>
+        <div class="col-sm-9">
+          <input type="password" class="form-control" placeholder="Confirm Password" formControlName="passwordConfirm">
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</form>

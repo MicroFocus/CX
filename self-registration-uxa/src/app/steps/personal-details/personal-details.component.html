@@ -1,0 +1,128 @@
+<p class="step-summary">Enter your information.</p>
+
+<form role="form" class="form-horizontal form-fields" [formGroup]="detailsForm" novalidate>
+
+  <div class="form-group" [class.has-error]="hasError('title')">
+
+    <div class="col-sm-3">
+      <label for="title" class="control-label">Title <span class="form-control-validation">*</span></label>
+    </div>
+    <div class="col-sm-9">
+
+      <div>
+        <label class="radio inline">
+          <input type="radio" value="Ms" formControlName="title">
+          <span>Ms</span>
+        </label>
+        <label class="radio inline">
+          <input type="radio" value="Mr" formControlName="title">
+          <span>Mr</span>
+        </label>
+        <label class="radio inline">
+          <input type="radio" value="Dr" formControlName="title">
+          <span>Dr</span>
+        </label>
+      </div>
+
+      <span class="validation-error-text" [hidden]="!hasError('title')">Required</span>
+
+    </div>
+
+  </div>
+
+  <div class="form-group" [class.has-error]="hasError('givenName')">
+
+    <div class="col-sm-3">
+      <label for="givenName" class="control-label">Name <span class="form-control-validation">*</span></label>
+    </div>
+    <div class="col-sm-9">
+
+      <input type="text" class="form-control" placeholder="Given name" formControlName="givenName">
+
+      <span class="validation-error-text" [hidden]="!hasError('givenName')">Required</span>
+
+    </div>
+
+  </div>
+
+  <div class="form-group" [class.has-error]="hasError('familyName')">
+
+    <div class="col-sm-3"></div>
+    <div class="col-sm-9">
+
+      <input type="text" class="form-control" placeholder="Family name" formControlName="familyName">
+
+      <span class="validation-error-text" [hidden]="!hasError('familyName')">Required</span>
+
+    </div>
+
+  </div>
+
+  <div class="form-group" [class.has-error]="hasError('jobTitle')">
+
+    <div class="col-sm-3">
+      <label for="jobTitle" class="control-label">Job Title</label>
+    </div>
+    <div class="col-sm-9">
+      <input type="text" class="form-control" placeholder="Title" formControlName="jobTitle">
+    </div>
+
+  </div>
+
+  <div class="form-group" [class.has-error]="hasError('email')">
+
+    <div class="col-sm-3">
+      <label for="email" class="control-label">Email <span class="form-control-validation">*</span></label>
+    </div>
+    <div class="col-sm-9">
+
+      <input type="email" class="form-control" placeholder="Email" formControlName="email">
+
+      <span class="validation-error-text" [hidden]="!hasError('email')">Email address in the form <em>user@example.com</em> is required</span>
+
+    </div>
+
+  </div>
+
+  <div class="form-group" [class.has-error]="hasError('birthDate')">
+
+    <div class="col-sm-3">
+      <label for="birthDate" class="control-label">Birth Date <span class="form-control-validation">*</span></label>
+    </div>
+    <div class="col-sm-9">
+
+      <app-date-input formControlName="birthDate"></app-date-input>
+
+      <span class="validation-error-text" [hidden]="!hasError('birthDate')">Valid date required</span>
+
+    </div>
+
+  </div>
+
+  <div class="form-group" [class.has-error]="hasError('zip')">
+
+    <div class="col-sm-3">
+      <label for="zip" class="control-label">Zip Code <span class="form-control-validation">*</span></label>
+    </div>
+    <div class="col-sm-9">
+
+      <input type="text" class="form-control" placeholder="Zip Code" formControlName="zip">
+
+      <span class="validation-error-text" [hidden]="!hasError('zip')">Required</span>
+
+    </div>
+
+  </div>
+
+  <div class="form-group" [class.has-error]="hasError('office')">
+
+    <div class="col-sm-3">
+      <label for="office" class="control-label">Office <span class="form-control-validation">*</span></label>
+    </div>
+    <div class="col-sm-9">
+      <ux-select [value]="office" [options]="offices" placeholder="Office" formControlName="office"></ux-select>
+    </div>
+
+  </div>
+
+</form>

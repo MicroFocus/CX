@@ -1,0 +1,24 @@
+<div class="ux-side-menu" [class.open]="open" [class.minimized]="!open">
+
+  <div class="ux-side-menu-content">
+
+    <button type="button" class="ux-side-menu-minimize-button" (click)="open = !open">
+      <span class="hpe-icon hpe-previous"></span>
+    </button>
+
+    <nav class="ux-side-nav">
+
+      <ul class="nav">
+        <li *ngFor="let item of navigation" routerLinkActive="active">
+
+          <a [routerLink]="item.path">
+            <span class="hpe-icon" [ngClass]="item.icon"></span>
+            <span class="nav-title">{{ item.title }}</span>
+          </a>
+        </li>
+      </ul>
+
+    </nav>
+  </div>
+
+</div>

@@ -1,0 +1,16 @@
+// Styling for full-height wizard
+body .page-content .ebox.wizard-ebox {
+  height: ~'calc(100vh - 104px)';
+  padding: 0;
+
+  ux-wizard {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+
+    .wizard-body {
+      flex: 1 1 auto;
+      overflow: auto;
+    }
+  }
+}
