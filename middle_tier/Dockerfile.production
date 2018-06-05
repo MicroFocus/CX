@@ -1,4 +1,4 @@
-FROM ubuntu
+FROM ubuntu:16.04
 WORKDIR /opt/middle_tier
 
 RUN apt-get update && apt-get install -qy \

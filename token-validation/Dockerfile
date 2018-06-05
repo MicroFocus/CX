@@ -1,4 +1,4 @@
-FROM ubuntu
+FROM ubuntu:16.04
 
 # Install Node.js and other dependencies
 RUN apt-get update && \
