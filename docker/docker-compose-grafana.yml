@@ -1,5 +1,5 @@
 # docker-compose.yml
-version: '2'
+version: '3'
 services:
     prometheus:
         image: prom/prometheus
@@ -20,7 +20,6 @@ services:
           - postgres_data:/var/lib/postgresql
         environment:
           - 'POSTGRES_USER=grafana'
-          # CHANGE THE PASSWORD!
           - 'POSTGRES_PASSWORD=grafana'
           - 'POSTGRES_DB=grafana'
           - 'POSTGRES_ENCODING=UNICODE'
@@ -37,14 +36,21 @@ services:
           dockerfile: Dockerfile
         volumes:
           - grafana_data:/var/lib/grafana
-          - ./grafana/provisioning/:/etc/grafana/provisioning/
 #        env_file:
 #          - ./grafana/config.monitoring
         environment:
-          - GF_SECURITY_ADMIN_PASSWORD=n0v3ll
-         # - GF_INSTALL_PLUGINS=grafana-clock-panel,grafana-simple-json-datasource
-          - GF_SERVER_ROOT_URL=%(protocol)s://%(domain)s/grafana/
-
+           GF_SECURITY_ADMIN_PASSWORD: n0v3ll
+           GF_INSTALL_PLUGINS: "grafana-clock-panel,grafana-worldmap-panel"
+           GF_SERVER_ROOT_URL: "%(protocol)s://%(domain)s/grafana/"
+           IGHOST: ${IGHOST:-http://127.0.0.1}
+           IGARA_DB_URL: ${IGARA_DB_URL:-postgres:5432}
+           IGARA_DB_PASSWORD: ${IGARA_DB_PASSWORD:-grafana}
+           IGARA_DB_USER: ${IGARA_DB_USER:-grafana}
+           IGARA_DB_NAME: ${IGARA_DB_NAME:-grafana}
+           IGOPS_DB_URL: ${IGOPS_DB_URL:-postgres:5432}
+           IGOPS_DB_PASSWORD: ${IGOPS_DB_PASSWORD:-grafana}
+           IGOPS_DB_USER: ${IGOPS_DB_USER:-grafana}
+           IGOPS_DB_NAME: ${IGOPS_DB_NAME:-grafana}
         depends_on:
           - prometheus
           - postgres

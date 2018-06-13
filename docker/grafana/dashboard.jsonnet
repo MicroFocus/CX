@@ -20,7 +20,7 @@ dashboard.new(
         )
         .addTarget(
             prometheus.target(
-                "time()-process_start_time_seconds{env=\"$env\",job=\"$job\",instance=\"$instance\"}",
+                "(time() - process_start_time_seconds{job=\"prometheus\", instance=~\"$node\"})",
             )
         )
     )
