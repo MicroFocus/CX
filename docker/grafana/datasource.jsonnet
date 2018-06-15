@@ -27,7 +27,8 @@ local IGOPS_DB_NAME = std.extVar("IGOPS_DB_NAME");
 			"database": "grafana",
 			"is_default": false,
 			"jsonData": {"sslmode":"disable"},
-			"secure_json_fields": ""
+			"secure_json_fields": "",
+			"editable": true
 		},
 		{
 			"name": "DS_IGOPS",
@@ -40,7 +41,8 @@ local IGOPS_DB_NAME = std.extVar("IGOPS_DB_NAME");
 			"database": IGOPS_DB_NAME,
 			"is_default": false,
 			"jsonData": {"sslmode":"disable"},
-			"secureJsonData": {"password":IGOPS_DB_PASSWORD}
+			"secureJsonData": {"password":IGOPS_DB_PASSWORD},
+			"editable": true
 		},
 		{
 			"name": "DS_IGARA",
@@ -53,7 +55,8 @@ local IGOPS_DB_NAME = std.extVar("IGOPS_DB_NAME");
 			"database": IGARA_DB_NAME,
 			"is_default": false,
 			"jsonData": {"sslmode":"disable"},
-			"secureJsonData": {"password":IGARA_DB_PASSWORD}
+			"secureJsonData": {"password":IGARA_DB_PASSWORD},
+			"editable": true
 		},
 		{
 			"name": "Prometheus",
