@@ -144,11 +144,6 @@ ALTER TABLE risk_factor_score_id_seq OWNER TO postgres;
 ALTER SEQUENCE risk_factor_score_id_seq OWNED BY risk_factor_score.id;
 
 
---
--- Name: risk_level_v; Type: VIEW; Schema: public; Owner: postgres
---
-
-ALTER TABLE risk_level_v OWNER TO postgres;
 
 --
 -- Name: risk_score; Type: TABLE; Schema: public; Owner: postgres
@@ -4346,7 +4341,7 @@ AVG	\N	\N	30	1	USER.permRiskScore	2018-06-18 15:22:34.564-04	2018-06-14 12:52:59
 AVG	\N	\N	10	2	USER.permRiskScore	2018-06-18 15:22:34.568-04	2018-06-14 12:52:59.394-04	f	38	\N	\N	\N	5
 \.
 
-update risk_factor_score_cfg set update_time= update_time + (select now() - max(f.update_time) from risk_score f);
+update risk_factor_score_cfg set update_time= update_time + (select now() - max(f.update_time) from risk_factor_score_cfg f);
 
 --
 -- Name: risk_factor_score_cfg_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
@@ -6609,7 +6604,6 @@ CREATE INDEX ixops_risk_score_task ON risk_score_task USING btree (ops_sequence)
 
 
 
-GRANT SELECT ON TABLE risk_level_v TO ig_report_role;
 
 
 --

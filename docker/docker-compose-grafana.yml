@@ -15,10 +15,12 @@ services:
         ports:
             - '9100:9100'
     postgres:
-        image: postgres
+        image: postgres:9.6
         volumes:
           - postgres_data:/var/lib/postgresql
           - ./grafana/postgres/init:/docker-entrypoint-initdb.d
+        ports: 
+          - '15432:5432'
         environment:
           - 'POSTGRES_USER=grafana'
           - 'POSTGRES_PASSWORD=grafana'

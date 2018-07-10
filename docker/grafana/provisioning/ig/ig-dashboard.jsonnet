@@ -1647,36 +1647,36 @@ local DS_IGARA = "DS_IGARA";
     "list": [
       {
         "current": {
-          "value": "${VAR_IGHOST}",
-          "text": "${VAR_IGHOST}"
+          "value": IGHOST,
+          "text": IGHOST
         },
         "hide": 2,
         "label": "Identity Governance URL",
         "name": "IGHOST",
         "options": [
           {
-            "value": "${VAR_IGHOST}",
-            "text": "${VAR_IGHOST}"
+            "value": IGHOST,
+            "text": IGHOST
           }
         ],
-        "query": "${VAR_IGHOST}",
+        "query": IGHOST,
         "type": "constant"
       },
       {
         "current": {
-          "value": "${VAR_GHOST}",
-          "text": "${VAR_GHOST}"
+          "value": GHOST,
+          "text": GHOST
         },
         "hide": 2,
         "label": "Grafana server URL",
         "name": "GHOST",
         "options": [
           {
-            "value": "${VAR_GHOST}",
-            "text": "${VAR_GHOST}"
+            "value": GHOST,
+            "text": GHOST
           }
         ],
-        "query": "${VAR_GHOST}",
+        "query": GHOST,
         "type": "constant"
       }
     ]
@@ -1711,7 +1711,7 @@ local DS_IGARA = "DS_IGARA";
     ]
   },
   "timezone": "",
-  "title": "Identity Governance Insights (dev1)",
-  "uid": "M8adTlnmz",
+  "title": "Identity Governance Insights",
+  "uid": "M9adTlnmz",
   "version": 13
 }
