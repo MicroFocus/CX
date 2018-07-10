@@ -18,6 +18,7 @@ services:
         image: postgres
         volumes:
           - postgres_data:/var/lib/postgresql
+          - ./grafana/postgres/init:/docker-entrypoint-initdb.d
         environment:
           - 'POSTGRES_USER=grafana'
           - 'POSTGRES_PASSWORD=grafana'
