@@ -1,7 +1,7 @@
 local IGHOST = std.extVar("IGHOST");
 local GHOST = std.extVar("GHOST");
-local DS_IGOPS = "DS_IGOPS";
-local DS_IGARA = "DS_IGARA";
+local DS_IGOPS = "PostgreSQL";
+local DS_IGARA = "PostgreSQL";
   {
   "__requires": [
     {
@@ -77,7 +77,7 @@ local DS_IGARA = "DS_IGARA";
         "#f4d598",
         "#ea6460"
       ],
-      "datasource": "DS_IGOPS",
+      "datasource": DS_IGOPS,
       "format": "none",
       "gauge": {
         "maxValue": 100,
@@ -153,7 +153,7 @@ local DS_IGARA = "DS_IGARA";
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "DS_IGOPS",
+      "datasource": DS_IGOPS,
       "fill": 1,
       "gridPos": {
         "h": 5,
@@ -247,7 +247,7 @@ local DS_IGARA = "DS_IGARA";
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "DS_IGARA",
+      "datasource": DS_IGARA,
       "description": "Number of applications with risk score in each level",
       "fill": 1,
       "gridPos": {
@@ -371,7 +371,7 @@ local DS_IGARA = "DS_IGARA";
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "DS_IGARA",
+      "datasource": DS_IGARA,
       "description": "Number of users with risk score in each level",
       "fill": 1,
       "gridPos": {
@@ -504,7 +504,7 @@ local DS_IGARA = "DS_IGARA";
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "DS_IGARA",
+      "datasource": DS_IGARA,
       "description": "Changes in number of users, accounts, groups, permissions, applications and assignments over time",
       "fill": 1,
       "gridPos": {
@@ -640,7 +640,7 @@ local DS_IGARA = "DS_IGARA";
         "rgb(189, 230, 176)",
         "#b7dbab"
       ],
-      "datasource": "DS_IGARA",
+      "datasource": DS_IGARA,
       "description": "Number of identities managed by Identity Governance",
       "format": "none",
       "gauge": {
@@ -730,7 +730,7 @@ local DS_IGARA = "DS_IGARA";
         "#f4d598",
         "#f4d598"
       ],
-      "datasource": "DS_IGARA",
+      "datasource": DS_IGARA,
       "description": "Number of groups managed by Identity Governance",
       "format": "none",
       "gauge": {
@@ -819,7 +819,7 @@ local DS_IGARA = "DS_IGARA";
         "rgb(192, 227, 248)",
         "#cffaff"
       ],
-      "datasource": "DS_IGARA",
+      "datasource": DS_IGARA,
       "description": "Number of applications managed by Identity Governance",
       "format": "none",
       "gauge": {
@@ -908,7 +908,7 @@ local DS_IGARA = "DS_IGARA";
         "#ef843c",
         "#ef843c"
       ],
-      "datasource": "DS_IGARA",
+      "datasource": DS_IGARA,
       "description": "Number of accounts managed by Identity Governance",
       "format": "none",
       "gauge": {
@@ -997,7 +997,7 @@ local DS_IGARA = "DS_IGARA";
         "#ea6460",
         "#ea6460"
       ],
-      "datasource": "DS_IGARA",
+      "datasource": DS_IGARA,
       "description": "Number of permissions managed by Identity Governance",
       "format": "none",
       "gauge": {
@@ -1087,7 +1087,7 @@ local DS_IGARA = "DS_IGARA";
         "#64b0c8",
         "#0a437c"
       ],
-      "datasource": "DS_IGARA",
+      "datasource": DS_IGARA,
       "description": "Number of assignments managed by Identity Governance",
       "format": "none",
       "gauge": {
@@ -1185,7 +1185,7 @@ local DS_IGARA = "DS_IGARA";
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "DS_IGARA",
+      "datasource": DS_IGARA,
       "description": "Number of identities added, removed or modified in Identity Governance catalog over the time",
       "fill": 1,
       "gridPos": {
@@ -1294,7 +1294,7 @@ local DS_IGARA = "DS_IGARA";
         "#9ac48a",
         "#9ac48a"
       ],
-      "datasource": "DS_IGARA",
+      "datasource": DS_IGARA,
       "decimals": null,
       "description": "Number of identities added to catalog in the last 24 hours",
       "format": "none",
@@ -1382,7 +1382,7 @@ local DS_IGARA = "DS_IGARA";
         "#b7dbab",
         "#e5a8e2"
       ],
-      "datasource": "DS_IGARA",
+      "datasource": DS_IGARA,
       "decimals": 0,
       "description": "Number of identities added to catalog in the last 24 hours by location",
       "esMetric": "Count",
@@ -1396,7 +1396,7 @@ local DS_IGARA = "DS_IGARA";
       "hideZero": true,
       "id": 27,
       "initialZoom": 1,
-      "jsonUrl": "$GHOST/static/democities.json",
+      "jsonUrl": "http://localhost/static/democities.json",
       "links": [],
       "locationData": "json endpoint",
       "mapCenter": "North America",
@@ -1431,7 +1431,7 @@ local DS_IGARA = "DS_IGARA";
         "#f4d598",
         "#f4d598"
       ],
-      "datasource": "DS_IGARA",
+      "datasource": DS_IGARA,
       "decimals": null,
       "description": "Number of identities removed from catalog in the last 24 hours",
       "format": "none",
@@ -1512,7 +1512,7 @@ local DS_IGARA = "DS_IGARA";
         "#b7dbab",
         "#f9d9f9"
       ],
-      "datasource": "DS_IGARA",
+      "datasource": DS_IGARA,
       "decimals": 0,
       "description": "Number of identities removed from catalog in the last 24 hours by location",
       "esMetric": "Count",
@@ -1526,7 +1526,7 @@ local DS_IGARA = "DS_IGARA";
       "hideZero": true,
       "id": 28,
       "initialZoom": 1,
-      "jsonUrl": "$GHOST/static/democities.json",
+      "jsonUrl": "http://localhost/static/democities.json",
       "links": [],
       "locationData": "json endpoint",
       "mapCenter": "North America",
@@ -1562,7 +1562,7 @@ local DS_IGARA = "DS_IGARA";
         "#82b5d8",
         "#64b0c8"
       ],
-      "datasource": "DS_IGARA",
+      "datasource": DS_IGARA,
       "decimals": null,
       "description": "Number of identities with profile changes in the last 24 hours",
       "format": "none",

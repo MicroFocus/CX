@@ -27,7 +27,7 @@ local IGOPS_DB_NAME = std.extVar("IGOPS_DB_NAME");
 			"database": "grafana",
 			"is_default": false,
 			"jsonData": {"sslmode":"disable"},
-			"secure_json_fields": "",
+			"secureJsonData": {"password":"grafana"},
 			"editable": true
 		},
 		{

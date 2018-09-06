@@ -5,6 +5,7 @@ jsonnet -J /tmp/grafonnet-lib  /tmp/dashboard.jsonnet -o /data/dashboards/dashbo
 # maybe we should automate this action?
 mkdir -p /data/dashboards/ig
 jsonnet /tmp/provisioning/ig/ig-dashboard.jsonnet -V IGHOST -V GHOST -o /data/dashboards/ig/ig-dashboard.json
+jsonnet /tmp/provisioning/ig/ig-dataprod-dashboard.jsonet -V IGHOST -V GHOST -o /data/dashboards/ig/ig-dataprod-dashboard.json
 
 mkdir -p /data/dashboards/aaf
 jsonnet /tmp/provisioning/aaf/aaf-dashboard.jsonnet -V IGHOST -V GHOST -o /data/dashboards/aaf/aaf-dashboard.json
