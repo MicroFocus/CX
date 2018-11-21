@@ -1,0 +1,64 @@
+<div>
+  <tabset>
+    <tab heading="Identity" id="tab1">
+      <table class="table-sm">
+        <thead>
+          <tr>
+            <th scope="col" *ngFor="let header of headerIdentityResults">{{header}}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let result of tabResults">
+            <td *ngFor="let key of headerIdentityResults">{{result[key]}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </tab>
+    <tab heading="Location">
+      <table class="table-sm">
+        <thead>
+          <tr>
+            <th scope="col" *ngFor="let header of headerLocationResults">{{header}}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let result of tabResults">
+            <td *ngFor="let key of headerLocationResults">{{result[key]}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </tab>
+    <tab heading="Organisation">
+      <table class="table-sm">
+        <thead>
+          <tr>
+            <th scope="col" *ngFor="let header of headerOrganisationResults">{{header}}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let result of tabResults">
+            <td *ngFor="let key of headerOrganisationResults">{{result[key]}}</td>
+          </tr>
+        </tbody>
+      </table>      
+    </tab>
+    <tab heading="All values">
+      <table class="table-sm">
+        <table class="table-sm">
+          <thead>
+            <tr>
+              <th scope="col" *ngFor="let header of headerAllResults">{{header}}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let result of tabResults">
+              <td *ngFor="let key of headerAllResults">{{result[key]}}</td>
+            </tr>
+          </tbody>
+        </table>      
+        </table>      
+    </tab>
+  </tabset>
+</div>
+
+
