@@ -1,0 +1,51 @@
+<form [formGroup]="searchForm" (ngSubmit)="onSubmit()">
+  <div class="form-group">
+    <label>
+      Search for:
+      <select [hidden]="searchForExternal" formControlName="searchFor" class="form-control" (change)="searchForChanged($event.target.value)" >
+        <option selected>Open this select menu</option>
+        <option value="Application">Application</option>
+        <option value="Building">Building</option>
+        <option value="User">User</option>
+      </select>
+      <select [hidden]="!searchForExternal" formControlName="searchFor" class="form-control" (change)="searchForChanged($event.target.value)" >
+        <option selected>Open this select menu</option>
+        <option value="External User">External User</option>
+        <option value="Partner">Partner</option>
+      </select>
+    </label>
+  </div>
+  <div class="form-group">
+    <div class="row">
+      <div class="col-sm-4">
+        <label class="form-control-label" for="itemCategory">Item Category:</label>
+        <select formControlName="itemCategory" class="form-control" id="itemCategory">
+          <option>Select</option>
+          <option *ngFor='let category of itemCategories'>{{ category }}</option>
+        </select>
+      </div>
+      <div class="col-sm-4">
+        <label for="expression">Expression</label>
+        <select formControlName="expression" class="form-control" id="expression">
+          <option>Select</option>
+          <option value="1">starts with</option>
+          <option value="2">contains</option>
+          <option value="3">equals</option>
+        </select>
+      </div>
+      <div class="col-sm-4">
+        <label for="searchTerm">Search Term</label>
+        <input type="text" formControlName="searchTerm" class="form-control" id="searchTerm">
+      </div>
+    </div>
+  </div>
+  <div class="form-group">
+    <button type="submit" [disabled]="!searchForm.valid" class="btn btn-primary">Submit</button>
+  </div>
+</form>
+<app-identity-results [hidden]="!showResults"
+  [headerIdentityResults]="identityHeaders"
+  [headerLocationResults]="locationHeaders"
+  [headerOrganisationResults]="organisationHeaders"
+  [headerAllResults]="allHeaders"
+  [tabResults]="allResults"></app-identity-results>
