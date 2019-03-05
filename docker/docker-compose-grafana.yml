@@ -1,0 +1,64 @@
+# docker-compose.yml
+version: '3'
+services:
+    prometheus:
+        image: prom/prometheus
+        volumes:
+#            - ./prometheus.yml:/etc/prometheus/prometheus.yml
+            - prometheus_data:/prometheus
+#        command:
+#            - '--config.file=/etc/prometheus/prometheus.yml'
+        ports:
+            - '9090:9090'
+    node-exporter:
+        image: prom/node-exporter
+        ports:
+            - '9100:9100'
+    postgres:
+        image: postgres:9.6
+        volumes:
+          - postgres_data:/var/lib/postgresql
+          - ./grafana/postgres/init:/docker-entrypoint-initdb.d
+        ports: 
+          - '15432:5432'
+        environment:
+          - 'POSTGRES_USER=grafana'
+          - 'POSTGRES_PASSWORD=grafana'
+          - 'POSTGRES_DB=grafana'
+          - 'POSTGRES_ENCODING=UNICODE'
+
+    postgres-exporter:
+        image: wrouesnel/postgres_exporter
+        ports:
+            - '9187:9187'
+        environment:
+          - DATA_SOURCE_NAME=postgresql://grafana:grafana@postgres:5432/?sslmode=disable
+    grafana:
+        build:
+          context: grafana
+          dockerfile: Dockerfile
+        volumes:
+          - grafana_data:/var/lib/grafana
+        env_file:
+          - ./.env.grafana
+        environment:
+           GF_SECURITY_ADMIN_PASSWORD: n0v3ll
+           GF_INSTALL_PLUGINS: "grafana-clock-panel,grafana-worldmap-panel"
+           GF_SERVER_ROOT_URL: "%(protocol)s://%(domain)s/grafana/"
+        depends_on:
+          - prometheus
+          - postgres
+        ports:
+          - "3000:3000"
+    nginx:
+        build: nginx-grafana
+        ports:
+           - "80:80"
+        command: /bin/bash -c "nginx -g 'daemon off;'"
+        depends_on:
+           - grafana
+
+volumes:
+        prometheus_data: {}
+        grafana_data: {}
+        postgres_data: {}

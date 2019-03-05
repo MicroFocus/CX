@@ -1,0 +1,104 @@
+[
+  {
+    "key": "Chicago",
+    "latitude": 41.881832,
+    "longitude": -87.623177,
+    "name": "Chicago"
+},
+   {
+    "key": "Chicago",
+    "latitude": 41.881832,
+    "longitude": -71.05674,
+    "name": "Chicago"
+},
+{
+  "key": "Boston",
+  "latitude": 42.35866,
+  "longitude": -87.623177,
+  "name": "Boston"
+},
+{
+  "key": "boston",
+  "latitude": 42.35866,
+  "longitude": -87.623177,
+  "name": "Boston"
+},
+{
+  "key": "Cambridge",
+  "latitude": 42.37651,
+  "longitude": -71.11836,
+  "name": "Cambridge"
+},
+{
+  "key": "cambridge",
+  "latitude": 42.37651,
+  "longitude": -71.11836,
+  "name": "Cambridge"
+},
+    {
+	"key": "Houston",
+    "name": "Houston",
+    "latitude": 29.81997438,
+    "longitude": -95.33997929
+  },
+	{
+	"key": "houston",
+    "name": "Houston",
+    "latitude": 29.81997438,
+    "longitude": -95.33997929
+  },
+	{
+	"key": "New York",
+    "name": "New York",
+    "latitude": 40.74997906,
+    "longitude": -73.98001693
+  },
+	{
+	"key": "new york",
+    "name": "New York",
+    "latitude": 40.74997906,
+    "longitude": -73.98001693
+  },
+	{
+	"key": "newyork",
+    "name": "New York",
+    "latitude": 40.74997906,
+    "longitude": -73.98001693
+  },
+	{
+		"key": "Las Vegas",
+    "name": "Las Vegas",
+    "latitude": 36.20999778,
+    "longitude": -115.2200061
+  },
+	{
+		"key": "las vegas",
+    "name": "Las Vegas",
+    "latitude": 36.20999778,
+    "longitude": -115.2200061
+  },
+{
+		"key": "lasvegas",
+    "name": "Las Vegas",
+    "latitude": 36.20999778,
+    "longitude": -115.2200061
+  },
+{
+	"key": "San Francisco",
+    "name": "San Francisco",
+    "latitude": -31.43003375,
+    "longitude": -62.08996749
+  },
+{
+	"key": "san francisco",
+    "name": "San Francisco",
+    "latitude": -31.43003375,
+    "longitude": -62.08996749
+  },
+{
+	"key": "sanfrancisco",
+    "name": "San Francisco",
+    "latitude": -31.43003375,
+    "longitude": -62.08996749
+  }
+]
