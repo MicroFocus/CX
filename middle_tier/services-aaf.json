@@ -1,0 +1,27 @@
+{
+  "services": [
+    {
+      "id": "aaf",
+      "name": "AAF service wrapper",
+      "description": "",
+      "virtual": [
+        {
+          "response_function_name": "AAFResource.create_endpoint",
+          "function_source_uri": "plugins.aaf.endpoint",
+          "path": "endpoints/\\w+/sessions",
+          "method": "POST"
+        }
+      ],
+      "proxy": {
+        "listen_path": "/v1/",
+        "target_url": "https://192.168.56.1:444/api/v1"
+      },
+      "data": {
+        "endpoint_id": "42424242424242424242424242424242",
+        "endpoint_secret": "12345678",
+        "target_url": "https://192.168.56.1:444"
+      }
+    }
+  ]
+}
+
