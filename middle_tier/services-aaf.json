@@ -8,7 +8,7 @@
         {
           "response_function_name": "AAFResource.create_endpoint",
           "function_source_uri": "plugins.aaf.endpoint",
-          "path": "endpoints/\\w+/sessions",
+          "path": "cx/sessions",
           "method": "POST"
         }
       ],
