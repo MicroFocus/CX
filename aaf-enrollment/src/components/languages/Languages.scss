@@ -1,0 +1,25 @@
+@import '../../themes/themes';
+
+.languages-list {
+  tr {
+    td {
+      padding-left: 40px;
+
+      bdi {
+        vertical-align: middle;
+      }
+    }
+
+    &.current {
+      color: $link-text-color-hover;
+      td {
+        padding: $table-cell-padding;
+      }
+    }
+
+    &:focus, &:hover {
+      color: $link-text-color-hover;
+      cursor: pointer;
+    }
+  }
+}

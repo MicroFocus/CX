@@ -1,0 +1,138 @@
+@import '../../../themes/themes';
+
+.fingerprint-scan-dialog {
+  text-align: center;
+
+  .capture-animation {
+    height: 100px;
+  }
+
+  .description {
+    margin-top: 5px;
+    margin-bottom: 15px;
+  }
+
+  .fingerprint-icon {
+    color: #808080;
+    font-size: 100px;
+  }
+
+  .ias-actions {
+    margin-top: 20px;
+  }
+
+  .mark-icon {
+    color: $color-gray-5;
+    font-size: 40px;
+
+    &.complete {
+      color: $check-enrolled;
+    }
+  }
+
+  .required-scans-message {
+    font-size: 16px;
+    margin-bottom: 10px;
+  }
+}
+
+.hand-map {
+  margin-bottom: 15px;
+  margin-top: 20px;
+  min-height: 220px;
+  position: relative;
+  width: 400px;
+
+  img {
+    opacity: .35;
+    width: 100%;
+  }
+
+  .fingerprint-test-button {
+    position: absolute;
+    top: 190px;
+    width: 100%;
+    text-align: center;
+  }
+
+  .left-hand-text,
+  .right-hand-text {
+    color: #808080;
+    font-size: 13px;
+    position: absolute;
+    text-align: center;
+    top: 155px;
+    width: 100px;
+  }
+
+  .left-hand-text {
+    left: 63px;
+  }
+
+  .right-hand-text {
+    right: 63px;
+  }
+
+  .fingerprint {
+    color: #808080;
+    position: absolute;
+
+    &:focus,
+    &:hover {
+      color: $color-primary-2;
+      cursor: pointer
+    }
+
+    &.enrolled {
+      color: $check-enrolled;
+
+      &:focus,
+      &:hover {
+        color: $color-accent-4;
+
+        .fingerprint-secondary-icons {
+          .ias-icon-check_thick {
+            color: $color-accent-4;
+
+            &:before {
+              content: '\E907';
+            }
+          }
+        }
+      }
+    }
+
+    &.scan {
+      color: $color-primary-2;
+    }
+
+    .fingerprint-icon {
+      font-size: 33px;
+    }
+
+    .fingerprint-secondary-icons {
+      left: 6px;
+      position: absolute;
+      top: -19px;
+
+      i {
+        font-size: 22px;
+      }
+
+      .ias-icon-check_thick {
+        color: $check-enrolled;
+      }
+    }
+  }
+}
+
+@media (min-width: 768px) {
+  .ias-dialog {
+    .ias-dialog-container {
+      &.fingerprint-scan-dialog {
+        max-width: 325px;
+      }
+    }
+  }
+}
+

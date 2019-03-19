@@ -1,0 +1,69 @@
+// Note: These variables are overridden by _common.scss: make sure none here are declared there.
+
+// COLORS
+$color-white-1: #fff;
+$color-black-1: #000;
+$color-black-2: #1f1f1f;
+
+$color-gray-1: #434c50;
+$color-gray-2: #575b5d;
+$color-gray-3: #6a6f71;
+$color-gray-4: #808080;
+$color-gray-5: #dae1e1;
+$color-gray-6: #eef2f2;
+$color-gray-7: #f6f9f8;
+
+$color-primary-1: #0067ad;
+$color-primary-2: #007cd0;
+$color-primary-3: #0090da;
+$color-primary-4: #01a9e7;
+$color-primary-5: #29ceff;
+
+$color-accent-1: #ffd92d;
+$color-accent-2: #fff6ce;
+$color-accent-3: #f17e12;
+$color-accent-4: #e50000;
+$color-accent-5: #37c26a;
+$color-accent-6: #e4f9ff;
+
+// COLOR PALETTE
+$body-bg-color: $color-white-1;
+
+// TYPOGRAPHY
+$text-color-disabled: $color-gray-5;
+
+$title-text-color: $color-gray-4;
+
+// COMPONENTS
+$app-bar-text-color: $color-gray-7;
+
+$dialog-scrim-color: rgba(128, 128, 128, .7);
+$dialog-content-color: $color-black-2;
+
+$link-bg-color-hover: $color-gray-6;
+$list-item-bg-color-hover: $color-gray-6;
+$list-header-text-color: $color-gray-4;
+
+$menu-bg-color: $color-gray-1;
+$menu-bg-color-hover: $color-gray-3;
+$menu-border-color: $color-gray-2;
+$menu-text-color: $color-gray-7;
+
+$side-nav-bg-color: $body-bg-color;
+$side-nav-bg-color-hover: $color-gray-6;
+$side-nav-header-text-color: $list-header-text-color;
+
+$status-message-body-text-color: $color-gray-4;
+
+$table-row-bg-color-hover: $color-gray-6;
+
+$tag-bg-color: #eef2f2;
+$tag-bg-color-hover: #eef2f2;
+$tag-border-color-hover: #01a9e7;
+$tag-text-color: #434c50;
+$tag-text-color-hover: #01a9e7;
+$tag-action-bg-color-hover: #f6f9f8;
+$tag-action-border-color-hover: #01a9e7;
+
+$tabset-bottom-border-color: $color-gray-3;
+$tabset-tab-bg-color-selected: $color-white-1;

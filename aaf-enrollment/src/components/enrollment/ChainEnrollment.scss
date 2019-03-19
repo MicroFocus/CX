@@ -1,0 +1,78 @@
+@import '../../themes/themes';
+
+.chain-nav,
+.chain-nav-description {
+  background-color: $nav-bg-color;
+  padding-left: $content-padding;
+  padding-right: $content-padding;
+}
+
+.chain-nav {
+  align-items: center;
+  display: flex;
+  flex-flow: row nowrap;
+  overflow: auto;
+
+  > a {
+    background-color: transparent;
+    border: solid transparent;
+    border-radius: 0;
+    border-width: 1px $nav-item-border-horizontal-width $nav-item-border-vertical-width;
+    box-sizing: border-box;
+    color: $color-gray-4;
+    display: block;
+    flex: none;
+    padding: 3px 10px 6px;
+    margin: 0;
+
+    i {
+      font-size: 30px;
+    }
+
+    > * {
+      vertical-align: middle;
+    }
+
+    &:focus,
+    &:hover {
+      background-color: $nav-item-bg-color-hover;
+      border-color: $nav-item-border-color-hover;
+      color: $nav-item-color-hover;
+    }
+
+    &.ias-active {
+      &:focus {
+        background-color: $nav-bg-color;
+      }
+
+      &:hover {
+        background-color: $nav-item-bg-color-hover;
+      }
+
+      border-bottom-color: $nav-item-border-bottom-color-active;
+      border-left-color: $nav-item-border-side-color-active;
+      border-right-color: $nav-item-border-side-color-active;
+      border-top-color: $nav-item-border-side-color-active;
+      color: $nav-item-color-active;
+    }
+
+    &.enrolled {
+      color: $color-primary-2;
+    }
+  }
+}
+
+.chain-nav-description {
+  color: #555;
+  font-size: 16px;
+  padding-bottom: 4px;
+  padding-top: 10px;
+}
+
+[dir="rtl"] {
+  .chain-nav {
+    > a {
+      margin: 0;
+    }
+  }
+}

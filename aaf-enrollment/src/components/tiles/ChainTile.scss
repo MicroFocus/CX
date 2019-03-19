@@ -1,0 +1,125 @@
+@import '../../themes/themes';
+
+.chain-tile {
+  box-sizing: content-box;
+  color: $tile-text-color;
+  cursor: pointer;
+  display: inline-block;
+  font-size: $tile-description-font-size;
+  line-height: $tile-description-line-height;
+  text-align: left;
+
+  &:focus,
+  &:hover {
+    color: $tile-text-color;
+    outline: none;
+
+    > h3 {
+      color: $color-primary-2;
+    }
+
+    .chain-tile-content {
+      .chain-link {
+        border-top-color: $button-border-color-hover;
+      }
+
+      .ias-tile {
+        background-color: $tile-bg-color-hover;
+        border-color: $button-border-color-hover;
+      }
+    }
+  }
+
+  &.enrolled {
+    &:focus,
+    &:hover {
+      .chain-tile-content {
+        .ias-tile {
+          background-color: $tile-bg-color;
+        }
+      }
+    }
+
+    .chain-tile-content {
+      .chain-link {
+        border-top-color: $color-gray-4;
+      }
+
+      .ias-tile {
+        border-color: $color-gray-3;
+
+        &:focus,
+        &:hover {
+          background-color: $tile-bg-color-hover;
+          border-color: $button-border-color-hover;
+
+          > .ias-icon {
+            color: #007cd0;
+          }
+        }
+      }
+    }
+  }
+
+  > h3 {
+    color: $color-black-1;
+    font-size: 16px;
+    margin: 0 0 10px 10px;
+  }
+
+  .chain-tile-content {
+    display: inline-flex;
+    flex-flow: row nowrap;
+    justify-content: flex-start;
+    position: relative;
+
+    .chain-link {
+      border-top: 6px solid $color-gray-4;
+      left: 0;
+      right: 0;
+      top: 65px;
+      position: absolute;
+    }
+
+    .ias-tile {
+      border: 2px solid $color-gray-4;
+      background-color: $tile-bg-color;
+      border-radius: 5px;
+      flex-grow: 0;
+      margin-right: 15px;
+
+      &:focus,
+      &:hover {
+        > .ias-icon {
+          color: $color-gray-3;
+        }
+
+        &.enrolled {
+          > .ias-icon {
+            color: #007cd0;
+          }
+        }
+      }
+
+      &.ias-large {
+        height: 110px;
+        width: 110px;
+
+        > .ias-icon {
+          font-size: 55px;
+        }
+      }
+
+      &:last-child {
+        margin-right: 0;
+      }
+    }
+  }
+}
+
+.ias-grid {
+  .chain-tile {
+    margin-right: 30px;
+    margin-bottom: 30px;
+  }
+}

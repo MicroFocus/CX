@@ -1,0 +1,73 @@
+@import '../../themes/themes';
+
+.ias-tile {
+  h3 {
+    white-space: normal;
+  }
+
+  .ias-actions {
+    right: $tile-padding;
+    top: $tile-padding;
+    color: $check-enrolled;
+  }
+
+  &.ias-large {
+    height: 125px;
+    width: 125px;
+
+    > .ias-icon {
+      color: $color-gray-3;
+      font-size: 70px;
+      margin-bottom: 0;
+    }
+
+    > .ias-tile-content {
+      width: 125px;
+
+      > h3 {
+        line-height: 16px;
+      }
+    }
+  }
+
+  &.enrolled {
+    > .ias-icon {
+      color: #007cd0;
+    }
+  }
+
+  &:focus,
+  &:hover {
+    > .ias-icon {
+      color: #007cd0;
+    }
+  }
+
+  &.opaque {
+    background-color: transparent;
+    border: 1px dashed #dae1e1;
+
+    &:focus,
+    &:hover {
+      border: 1px solid #01a9e7;
+
+      > .ias-icon {
+        color: #007cd0;
+      }
+
+      h3 {
+        color: #007cd0;
+      }
+    }
+
+    > .ias-icon {
+      color: #dae1e1;
+    }
+
+    h3 {
+      color: #dae1e1;
+    }
+  }
+
+
+}

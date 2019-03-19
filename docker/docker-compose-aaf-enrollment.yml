@@ -12,12 +12,12 @@
      ports:
        - "5000:5000"
    nginx:
-     build: nginx-aaf-enrollment
+     build: 
+        context: ..
+        dockerfile: docker/nginx-aaf-enrollment/Dockerfile
      ports:
        - "443:443"
      command: /bin/bash -c "nginx -g 'daemon off;'"
-     volumes:
-       - ../aaf-enrollment/build:/usr/src/app
      depends_on:
        - web
    redis:
