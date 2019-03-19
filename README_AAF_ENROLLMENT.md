@@ -2,10 +2,6 @@
 
 This project shows how to run NEW AAF enrollment ui as part of CX infrastructure.
 
-NEW enrollment UI is not located in this repo, so you should put it locally to aaf-enrollment directory and build. For details please look to README.md from new enrollment UI repo.
-
-
-
 ## Running the Application
 
 Before running the app, please change services-aaf.json file in the middle_tier directory:
