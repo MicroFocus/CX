@@ -1,0 +1,9 @@
+@media (min-width: 768px) {
+  .ias-dialog {
+    .ias-dialog-container {
+      &.facial-test-dialog {
+        max-width: 400px;
+      }
+    }
+  }
+}

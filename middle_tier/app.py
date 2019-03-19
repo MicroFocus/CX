@@ -72,7 +72,7 @@ def unhandled_exception(e):
 @application.route('/<service_name>/', defaults={'sub_url': ''}, methods=['GET', 'POST', 'PUT', 'DELETE', 'PATCH'])
 def home(service_name, sub_url):
     global loader
-    url = "/" + service_name + "/" + sub_url
+    url = "/" + service_name + "/" + sub_url + "?"+ request.query_string.decode("utf-8")
     service_request = Request(url, request.method, request.args, request.headers, request.get_data(as_text=True))
     service = loader.find_service(service_request)
     application.logger.debug("Service: %s", str(service))

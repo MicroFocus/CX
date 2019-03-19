@@ -1,0 +1,64 @@
+@import '../themes/themes';
+
+button + button {
+  margin-left: 5px;
+}
+
+input:not([type="checkbox"]) {
+  width: 280px;
+}
+
+label span {
+  color: $text-color;
+  font-size: 15px;
+  margin-left: 5px;
+  vertical-align: baseline;
+}
+
+.description {
+  max-width: 650px;
+  color: #808080;
+
+  li {
+    margin-bottom: 8px;
+  }
+}
+
+.ias-menu {
+  button + button {
+    margin-left: 0;
+  }
+}
+
+.ias-accordion-group {
+  max-width: 650px;
+}
+
+.ias-menu-content {
+  min-width: 120px;
+
+  .menu-separator {
+    height: 0;
+    margin: 5px 0;
+    border-top: 1px solid #626e72;
+  }
+}
+
+.status-indicator {
+  margin: 5px 0;
+}
+
+
+// TODO: should this happen? Need main & a child of main--content-padding issue. https://microfocus.github.io/ux-ias/#/
+/*
+#root {
+  display: flex;
+  flex-flow: column nowrap;
+  height: 100%;
+}
+
+main {
+  flex-grow: 1;
+  overflow: auto;
+  position: relative;
+}*/

@@ -1,4 +1,5 @@
 import json
+import os
 
 from exceptions import MiddleTierException
 from services.service import Service
@@ -12,7 +13,7 @@ class NotFoundSecurityServiceException(MiddleTierException):
     pass
 
 
-CONFIG_PATH = "/opt/middle_tier/services.json"
+CONFIG_PATH = os.getenv("CONFIG_PATH") or "/opt/middle_tier/services.json"
 
 
 class ServiceLoader(object):

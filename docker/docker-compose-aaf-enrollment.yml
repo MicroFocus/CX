@@ -1,0 +1,25 @@
+ version: '2'
+ services:
+   web:
+     build:
+       context: ../middle_tier
+       dockerfile: Dockerfile.development
+     environment:
+       - "CONFIG_PATH=/opt/middle_tier/services-aaf.json"
+     volumes:
+       - ./logs:/opt/logs
+       - ../middle_tier:/opt/middle_tier
+     ports:
+       - "5000:5000"
+   nginx:
+     build: 
+        context: ..
+        dockerfile: docker/nginx-aaf-enrollment/Dockerfile
+     ports:
+       - "443:443"
+     command: /bin/bash -c "nginx -g 'daemon off;'"
+     depends_on:
+       - web
+   redis:
+     image: "redis:alpine"
+

@@ -1,0 +1,37 @@
+@import '../../themes/themes';
+
+h2 {
+  margin-top: 0;
+}
+
+.chains-grid-label,
+.methods-grid-label {
+  font-size: 16px;
+  margin-top: 20px;
+}
+
+.chains-grid-label {
+  margin-bottom: 15px;
+}
+
+.ias-grid {
+  margin-top: 10px;
+}
+
+.add-chain-container {
+  box-sizing: content-box;
+
+  .ias-tile {
+    height: 110px;
+    margin-top: 30px;
+    width: 110px;
+
+    > .ias-icon {
+      font-size: 55px;
+    }
+  }
+}
+
+.consent-block {
+  margin-top: 40px;
+}

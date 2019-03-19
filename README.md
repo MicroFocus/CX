@@ -29,7 +29,7 @@ There are currently five CX projects:
 *   **self-registration-2** shows you how to create a single page application for registering new users.  This sample uses Bootstrap and Font Awesome to show you how to create a different look and feel with CX.
 *   **ig-overview** shows you how to use CX to connect to REST endpoints that support OAuth2 and OSP to make authenticated REST calls to Micro Focus products like [Identity Governance](https://www.netiq.com/products/identity-governance/).
 *   **token-validation** shows you how use the CX security proxy to validate tokens and secure your custom REST endpoints.
-
+*   **aaf-enrollment** shows you how use the CX app to run new enrollment ui and run proxy for AAF intance 
 
 To use CX clone or download the repository.  Each of those projects has a separate README file with instructions.
 
