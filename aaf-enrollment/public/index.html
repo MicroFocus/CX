@@ -13,7 +13,6 @@
     <link rel="apple-touch-icon" sizes="76x76" href="%PUBLIC_URL%/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="%PUBLIC_URL%/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="%PUBLIC_URL%/favicon-16x16.png">
-    <script type="text/javascript" src="%PUBLIC_URL%/vendor/qrcodejs/qrcode.js"></script>
     <!--
       Notice the use of %PUBLIC_URL% in the tags above.
       It will be replaced with the URL of the `public` folder during the build.
@@ -43,15 +42,17 @@
         ...
       </header>
 
-      <main>
-        <div class="ias-content-padding">
-          ...
-        </div>
-      </main>
+      <div className="scrollable-content">
+        <main>
+          <div class="ias-content-padding">
+            ...
+          </div>
+        </main>
 
-      <footer>
-        ...
-      </footer>
+        <footer>
+          ...
+        </footer>
+      </div>
     -->
   </body>
 </html>

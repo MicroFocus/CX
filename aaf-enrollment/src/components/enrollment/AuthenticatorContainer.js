@@ -82,9 +82,8 @@ class AuthenticatorContainer extends React.PureComponent {
     // - Will return false for methods which must wait for actions before completing the enroll process
     // - Will return true for auto-enrolled methods which can be saved even if no data has been entered
     authenticationInfoSavable() {
-        const savableFunction = this.methodComponentRef.current.authenticationInfoSavable;
-        if (savableFunction) {
-            return savableFunction();
+        if (this.methodComponentRef.current.authenticationInfoSavable) {
+            return this.methodComponentRef.current.authenticationInfoSavable();
         }
         else {  // This is equivalent to authenticationInfoChanged when the method is not implemented
             return this.authenticationInfoChanged();
@@ -320,7 +319,7 @@ class AuthenticatorContainer extends React.PureComponent {
                     this.clearAsyncEnroll();
                     callback(response);
                 }
-            }).catch(this.clearAsyncEnroll);    // TODO: error callback?
+            }).catch(this.clearAsyncEnroll);
         };
 
         if (executeImmediately) {

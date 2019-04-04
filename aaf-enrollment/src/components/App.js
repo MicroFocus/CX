@@ -23,26 +23,28 @@ class App extends React.PureComponent {
                 <React.Fragment>
                     <Header />
 
-                    <main>
-                        <Switch>
-                            <PrivateRoute path="/" exact component={EnrolledMethods} />
-                            <PrivateRoute path="/available/:type" exact component={AvailableMethods} />
-                            <PrivateRoute
-                                path="/chains/:chainUri/:methodUri/:templateUri"
-                                component={ChainEnrollment}
-                            />
-                            <PrivateRoute path="/chains/:chainUri/:methodUri" component={ChainEnrollment} />
-                            <PrivateRoute path="/chains/:chainUri" component={ChainEnrollment} />
-                            <Route path="/languages" exact component={Languages} />
-                            <Route path="/login" exact component={Login} />
-                            <PrivateRoute path="/:methodUri/:templateType" exact component={MethodEnrollment} />
-                            <PrivateRoute path="/:methodUri" exact component={MethodEnrollment} />
+                    <div className="scrollable-content">
+                        <main>
+                            <Switch>
+                                <PrivateRoute path="/" exact component={EnrolledMethods} />
+                                <PrivateRoute path="/available/:type" exact component={AvailableMethods} />
+                                <PrivateRoute
+                                    path="/chains/:chainUri/:methodUri/:templateUri"
+                                    component={ChainEnrollment}
+                                />
+                                <PrivateRoute path="/chains/:chainUri/:methodUri" component={ChainEnrollment} />
+                                <PrivateRoute path="/chains/:chainUri" component={ChainEnrollment} />
+                                <Route path="/languages" exact component={Languages} />
+                                <Route path="/login" exact component={Login} />
+                                <PrivateRoute path="/:methodUri/:templateType" exact component={MethodEnrollment} />
+                                <PrivateRoute path="/:methodUri" exact component={MethodEnrollment} />
 
-                            <Redirect to={HOMEPAGE_URL} />
-                        </Switch>
-                    </main>
+                                <Redirect to={HOMEPAGE_URL} />
+                            </Switch>
+                        </main>
 
-                    <Route path="/login" component={Footer} />
+                        <Route path="/login" component={Footer} />
+                    </div>
 
                     <ToastContainer />
                     <NavigationDialog />

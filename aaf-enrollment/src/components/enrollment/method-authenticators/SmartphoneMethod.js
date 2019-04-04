@@ -2,6 +2,7 @@ import React from 'react';
 import Authenticator from '../Authenticator';
 import QRCodeComponent from '../../../ux/QRCodeComponent';
 import { STATUS_TYPE } from '../../../ux/ux';
+import TestAuthenticatorButton from '../test-authenticator/TestAuthenticatorButton';
 
 class SmartphoneMethod extends React.PureComponent {
     constructor(props) {
@@ -11,6 +12,14 @@ class SmartphoneMethod extends React.PureComponent {
             isEnrolling: false,
             qrData: ''
         };
+    }
+
+    authenticationInfoChanged() {
+        return this.state.isEnrolling;
+    }
+
+    authenticationInfoSavable() {
+        return false;
     }
 
     doEnroll() {
@@ -48,6 +57,10 @@ class SmartphoneMethod extends React.PureComponent {
             });
     };
 
+    handleQRClick = () => {
+        this.doEnroll();
+    };
+
     scheduleAutoSubmit() {
         this.props.setAsyncEnroll((response) => {
             // guaranteed to have response.status !== MORE_DATA
@@ -70,14 +83,6 @@ class SmartphoneMethod extends React.PureComponent {
         });
     }
 
-    authenticationInfoChanged() {
-        return this.state.isEnrolling;
-    }
-
-    handleQRClick = () => {
-        this.doEnroll();
-    };
-
     render() {
         const qrElement = this.state.qrData ? <QRCodeComponent text={this.state.qrData} /> : null;
         return (
@@ -98,7 +103,7 @@ on your smartphone is required.`}
 
                 {/* TODO: Display the QR Code and wait by calling doEnroll continuously */}
                 {qrElement}
-                {/* TODO: Add Test for all methods with no form data*/}
+
                 <div className="description">
                     <ul>
                         <li>As a backup method, the AdvAuth mobile app provides an OTP
@@ -106,6 +111,7 @@ on your smartphone is required.`}
                         </li>
                     </ul>
                 </div>
+                <TestAuthenticatorButton {...this.props.test} />
             </Authenticator>
         );
     }

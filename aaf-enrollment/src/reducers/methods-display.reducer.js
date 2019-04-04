@@ -95,7 +95,10 @@ function indexData(state) {
 
     const addAvailableTemplate = (methodId, categoryId) => {
         if (availableIndexedTemplates[methodId]) {
-            availableIndexedTemplates[methodId].availableCategoryIds.push(categoryId);
+            const availableCategoryIds = availableIndexedTemplates[methodId].availableCategoryIds;
+            if (availableCategoryIds.indexOf(categoryId) === -1) {  // Only add category if not done yet
+                availableCategoryIds.push(categoryId);
+            }
         }
         else {
             availableIndexedTemplates[methodId] = generateAvailableTemplate(methodId, categoryId);

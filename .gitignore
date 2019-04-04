@@ -1,6 +1,5 @@
 **/.DS_Store
-/cx-app/src/cx-app/cx/self-registration/.idea
+**/.idea
 docker/logs/middle_tier.log
 **/__pycache__
 self-registration/ts-node-*
-/self-registration/.idea

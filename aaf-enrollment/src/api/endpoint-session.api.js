@@ -4,10 +4,10 @@ import {apiFetch, API_STATUS} from './json-fetch';
 
 let endpointSessionId = loadStorageItem(storageItems.ENDPOINT_SESSION_ID);
 
-// Import forgeSha256 only in development. See https://webpack.js.org/plugins/define-plugin/#usage
-let forgeSha256 = null;
+// Import shajs only in development. See https://webpack.js.org/plugins/define-plugin/#usage
+let sha256 = null;
 if (process.env.NODE_ENV === 'development') {
-    forgeSha256 = require('../utils/forge-sha256').default;
+    sha256 = require('sha.js/sha256');
 }
 
 function beginEndpointSession() {
@@ -29,9 +29,9 @@ function beginEndpointSession() {
 
         // Generate endpoint secret hash
         const saltedEndpointId = endpointId + salt;
-        const endpointIdHash = forgeSha256(saltedEndpointId);
+        const endpointIdHash = (new sha256()).update(saltedEndpointId).digest('hex');
         const saltedEndpoindSecret = endpointSecret + endpointIdHash;
-        const endpointSecretHash = forgeSha256(saltedEndpoindSecret);
+        const endpointSecretHash = (new sha256()).update(saltedEndpoindSecret).digest('hex');
         promise = apiFetch('POST', `endpoints/${endpointId}/sessions`, {
             data: {
                 salt,
