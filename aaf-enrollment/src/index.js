@@ -12,6 +12,7 @@ import thunk from 'redux-thunk';
 import {loadStorageItem, storageItems} from './utils/local-storage';
 import {loadLoginSession} from './actions/authentication.actions';
 import * as types from './actions/action-types';
+require('qrcodejs/qrcode.min.js');  // Needed to generate QR codes. Loads in global scope via webpack script-loader.
 
 // Use redux-logger only if specified in environment. See https://webpack.js.org/plugins/define-plugin/#usage
 let middleware = null;

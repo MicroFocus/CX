@@ -54,7 +54,7 @@ class FacialMethod extends React.PureComponent {
         facial.captureFace(this.domIds, this.capturFaceCallBack)
             .then((faceImg) => {
                 console.log("Face Detected");
-                this.stopCapture();
+                facial.stopCapture();
                 this.props.showStatus(facial.FACE_DETECTED_MSG(), STATUS_TYPE.INFO);
                 this.setState({
                     capture: false,

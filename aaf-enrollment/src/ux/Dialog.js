@@ -1,4 +1,3 @@
-import './Dialog.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
 import * as ReactDOM from 'react-dom';
@@ -62,12 +61,12 @@ export default class Dialog extends React.PureComponent {
         const dialog = (
             <div className="ias-dialog" onClick={this.handleBackdropClick}>
                 <div className={containerClass}>
-                    {title}
                     <div className="ias-dialog-content">
+                        {title}
                         {this.props.children}
+                        {dialogCloseButton}
+                        {actionButtons}
                     </div>
-                    {dialogCloseButton}
-                    {actionButtons}
                 </div>
             </div>
         );
