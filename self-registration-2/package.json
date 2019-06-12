@@ -4,7 +4,7 @@
   "description": "",
   "main": "src/main.ts",
   "engines": {
-    "node": ">=6.2",
+    "node": ">=6.2 <9",
     "npm": ">=3.9"
   },
   "scripts": {
@@ -13,6 +13,7 @@
   },
   "dependencies": {},
   "devDependencies": {
+    "@microfocus/ng-gulp": "0.7.5",
     "@types/angular": "1.5.8",
     "@types/angular-mocks": "1.5.8",
     "@types/angular-ui-router": "1.1.36",
@@ -26,7 +27,6 @@
     "bootstrap-datepicker": "^1.7.0",
     "font-awesome": "4.7.0",
     "gulp": "3.9.1",
-    "jquery": "3.2.1",
-    "ng-gulp": "jedwardhawkins/ng-gulp.git#v0.7.2"
+    "jquery": "3.2.1"
   }
 }

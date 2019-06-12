@@ -1,7 +1,7 @@
 {
   "name": "self-registration-uxa",
   "version": "1.0.0",
-  "license": "ISC",
+  "license": "MIT",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",

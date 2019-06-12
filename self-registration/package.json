@@ -23,7 +23,7 @@
     },
     "keywords": [],
     "author": "",
-    "license": "ISC",
+    "license": "MIT",
     "dependencies": {
         "@microfocus/ias-icons": "1.0.0-alpha",
         "@microfocus/ng-ias": "1.0.0-alpha",

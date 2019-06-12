@@ -1,5 +1,5 @@
 var gulp = require('gulp');
-var ngGulp = require('ng-gulp');
+var ngGulp = require('@microfocus/ng-gulp');
 var path = require('path');
 
 var cwd = process.cwd();
