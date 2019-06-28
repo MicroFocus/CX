@@ -4,7 +4,7 @@
   "description": "",
   "main": "src/main.ts",
   "engines": {
-    "node": ">=6.2 <9",
+    "node": ">=6.2",
     "npm": ">=3.9"
   },
   "author": "Joe Hawkins <jedwardhawkins@gmail.com>",
