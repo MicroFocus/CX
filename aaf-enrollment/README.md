@@ -16,7 +16,7 @@ The easiest way to run this application is with the Docker container. In the CX/
 docker-compose -f docker-compose-aaf-enrollment.yml up --force-recreate --build -d
 ```
 
-Once the Docker container starts the application will be running at https://localhost/myaccount.
+Once the Docker container starts the application will be running at https://localhost/account.
 
 ### Routing within Application
 
