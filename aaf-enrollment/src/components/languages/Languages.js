@@ -2,6 +2,7 @@ import './Languages.scss';
 import React from 'react';
 import {connect} from 'react-redux';
 import {goBack} from '../../actions/navigation.actions';
+import t from '../../i18n/locale-keys';
 
 class Languages extends React.PureComponent {
     state = {
@@ -56,12 +57,13 @@ class Languages extends React.PureComponent {
         return (
             <div className="ias-content-padding">
                 <div className="ias-header">
-                    <h2>Select Language</h2>
+                    <h2>{t.languageSelect()}</h2>
                     <span className="ias-fill" />
                     <button
                         className="ias-button ias-icon-button"
+                        id="Close_Languages_Button"
                         onClick={this.handleClose}
-                        title="Close"
+                        title={t.buttonClose()}
                         type="button"
                     >
                         <i className="ias-icon ias-icon-close_thin" />

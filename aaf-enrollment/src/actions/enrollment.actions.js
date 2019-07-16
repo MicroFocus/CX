@@ -57,8 +57,16 @@ export const modifyUserTemplate = (enrollProcessId, templateId, comment) => (dis
         .catch(createToastFromJsonErrors);
 };
 
-export const getTotpQrCode = (isBase32Secret) => (dispatch, getStore) => {
+export const getTotpQrCode = (isBase32Secret) => (dispatch) => {
     return api.getTotpQrCode(isBase32Secret)
+        .catch(catchCommonErrors(dispatch))
+        .catch(createToastFromJsonErrors);
+};
+
+export const getWinHelloInfo = () => (dispatch, getStore) => {
+    const {userId, loginSessionId} = getStore().authentication;
+
+    return api.getWinHelloInfo(userId, loginSessionId)
         .catch(catchCommonErrors(dispatch))
         .catch(createToastFromJsonErrors);
 };

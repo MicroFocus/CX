@@ -1,7 +1,7 @@
 import React from 'react';
 import Authenticator from '../Authenticator';
 import ShowHidePassword from '../../ShowHidePassword';
-import TestAuthenticatorButton from '../test-authenticator/TestAuthenticatorButton';
+import t from '../../../i18n/locale-keys';
 
 class SecurityQuestionsMethod extends React.PureComponent {
     constructor(props) {
@@ -41,9 +41,6 @@ class SecurityQuestionsMethod extends React.PureComponent {
                     throw response.msg;
                 }
             });
-            // TODO: Here we don't need to, but in other methods, put a .catch() so we can reset our internal
-            // state if the enroll process expires. Right now it skips our .then() so we can't just check for
-            // it there.
     };
 
     handleChange = (questionKey, event) => {
@@ -61,24 +58,22 @@ class SecurityQuestionsMethod extends React.PureComponent {
             const answer = answers[questionKey];
             return (
                 <ShowHidePassword
+                    disabled={this.props.readonlyMode}
                     name={`answer_id_${questionKey}`}
                     onChange={(event) => this.handleChange(questionKey, event)}
                     key={questionKey}
                     label={question}
-                    placeholder="Answer"
+                    placeholder={t.secQuestAnswer()}
                     value={answer}
                 />
             );
         });
         return (
             <Authenticator
-                description="The Security Questions method allows the administrator to define questions and number
-                required for authentication. Define unique answers for all the questions. Authenticate by answering
-                the required number of security questions with your unique answers."
+                description={t.secQuestMethodDescription()}
                 {...this.props}
             >
                 {questionElements}
-                <TestAuthenticatorButton {...this.props.test} />
             </Authenticator>
         );
     }

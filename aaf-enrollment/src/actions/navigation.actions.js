@@ -2,6 +2,7 @@ import * as types from './action-types';
 import {logoutUser} from './authentication.actions';
 import history from '../history';
 import {generateQueryString, parseQueryString} from '../utils/url-functions';
+import t from '../i18n/locale-keys';
 
 /* This file initiates route navigation actions. Before any navigation takes place, action creators check for unsaved
  * work on the page. If unsaved work is present, the navigation is suspended, whereupon the app shows a dialog asking
@@ -190,7 +191,7 @@ const ensureWorkSaved = (actionFunction) => function(dispatch, getStore) {
     }
 
     if (unsavedChanges) {
-        const title = 'Changes exist';
+        const title = t.unsavedWorkWarningTitle();
         showNavigationDialog(title, unsavedChanges, callActionFunction)(dispatch);
     }
     else {

@@ -1,26 +1,26 @@
 import {indexedChainType, templateType} from '../../types/types';
 import React from 'react';
-
 import {
-    abortEnrollProcess,
-    beginEnrollProcess,
-    createUserTemplate,
-    deleteUserTemplate,
-    doEnroll,
-    getDefaultRecipient,
-    getTotpQrCode,
-    modifyUserTemplate
+    abortEnrollProcess, beginEnrollProcess, createUserTemplate, deleteUserTemplate, doEnroll, getDefaultRecipient,
+    getTotpQrCode, getWinHelloInfo, modifyUserTemplate
 } from '../../actions/enrollment.actions';
 import {connect} from 'react-redux';
 import {
     getAndResetRedirectQuery, gotoEnrollmentDashboard, removeUnloadFormListener, setUnloadFormListener,
-    showNavigationDialog,
+    showNavigationDialog, viewChainAuthenticator
 } from '../../actions/navigation.actions';
 import MethodAuthenticator from './MethodAuthenticator';
 import PropTypes from 'prop-types';
 import {createToast, STATUS_TYPE} from '../../ux/ux';
 import TestAuthenticator from './test-authenticator/TestAuthenticator';
 import {methodIds} from '../../data/MethodData';
+// Use trashable-react to get rid of pending promises when component unmounts.
+// To use this feature, we wrap API calls that return Promises inside this.props.registerPromise.
+// Note that children of this component (such as WindowsHelloMethod) do not need to call makeComponentTrashable to
+// take advantage of this functionality; registerPromise is automatically passed to them via props.
+import makeComponentTrashable from 'trashable-react';
+import {fetchIndexedData} from '../../actions/methods-display.actions';
+import t from '../../i18n/locale-keys';
 
 const ASYNC_ENROLL_INTERVAL = 3000;
 
@@ -54,17 +54,17 @@ class AuthenticatorContainer extends React.PureComponent {
             this.categoryFixed = (template.availableCategoryIds.length <= 1);
         }
 
-        const comment = template.isEnrolled ? template.comment : ('My ' + template.methodTitle);
+        const comment = template.isEnrolled ? template.comment : t.authenticatorPossessive(template.methodTitle);
 
         // For WebAuthentication method, parse and remove query strings from redirect
-        this.query = null;
+        let query = null;
         let testAuthenticator = false;
         if (this.props.template.methodId === methodIds.WEBAUTH) {
-            this.query = this.props.getAndResetRedirectQuery();
-            testAuthenticator = !!this.query.finish_test;
+            query = this.props.getAndResetRedirectQuery();
+            testAuthenticator = !!query.finish_test;
 
-            if (!this.categoryFixed && this.query.category_id_input) {
-                categoryIdInput = this.query.category_id_input;
+            if (!this.categoryFixed && query.category_id_input) {
+                categoryIdInput = query.category_id_input;
             }
         }
 
@@ -72,12 +72,18 @@ class AuthenticatorContainer extends React.PureComponent {
             categoryIdInput,
             comment,
             commentDirty: false,
+            query,
             statusMessage: null,
             testAuthenticator
         };
     }
 
+    authenticationInfoChanged() {
+        return this.methodComponentRef.current.authenticationInfoChanged();
+    }
+
     // Answers "Can authentication info be saved by clicking Done?"
+    // (Note: Authentication info means password, etc. saved in doEnroll call. Template is saved separately.)
     // There are two use cases when this will yield a different result than calling authenticationInfoChanged:
     // - Will return false for methods which must wait for actions before completing the enroll process
     // - Will return true for auto-enrolled methods which can be saved even if no data has been entered
@@ -88,10 +94,6 @@ class AuthenticatorContainer extends React.PureComponent {
         else {  // This is equivalent to authenticationInfoChanged when the method is not implemented
             return this.authenticationInfoChanged();
         }
-    }
-
-    authenticationInfoChanged() {
-        return this.methodComponentRef.current.authenticationInfoChanged();
     }
 
     // Check whether authenticator is unsaved so we can warn user before leaving the page
@@ -107,7 +109,9 @@ class AuthenticatorContainer extends React.PureComponent {
     // Start a new enroll process. Abort any current one first.
     beginEnrollProcess = () => {
         const executeBeginEnroll = () => {
-            return this.props.beginEnrollProcess(this.props.template.methodId)
+            return this.props.registerPromise(
+                    this.props.beginEnrollProcess(this.props.template.methodId)
+                )
                 .then(({enrollProcessId}) => {
                     this.enrollProcessId = enrollProcessId;
                     this.enrollProcessStatus = ENROLL_PROCESS_STATUS.STARTED;
@@ -116,7 +120,9 @@ class AuthenticatorContainer extends React.PureComponent {
         };
 
         if (this.enrollProcessId) {
-            return this.props.abortEnrollProcess(this.enrollProcessId)
+            return this.props.registerPromise(
+                    this.props.abortEnrollProcess(this.enrollProcessId)
+                )
                 .then(executeBeginEnroll);
         }
         else {
@@ -145,8 +151,8 @@ class AuthenticatorContainer extends React.PureComponent {
         }
 
         this.props.setUnloadFormListener(() => {
-            if (this.authenticatorUnsaved()) {
-                return 'Changes will be lost if you leave this page.';
+            if (!this.isReadonlyMode() && this.authenticatorUnsaved()) {
+                return t.unsavedWorkWarning();
             }
 
             return false;
@@ -167,7 +173,9 @@ class AuthenticatorContainer extends React.PureComponent {
         const templateIdToModify = includeTemplateId ? this.props.template.id : null;   // For methods like HOTP:1
 
         const executeEnroll = () => {
-            return this.props.doEnroll(this.enrollProcessId, data, keepCamelCase, templateIdToModify)
+            return this.props.registerPromise(
+                    this.props.doEnroll(this.enrollProcessId, data, keepCamelCase, templateIdToModify)
+                )
                 .catch(this.catchUnhandledEnrollError)
                 .then(response => {
                     this.enrollProcessStatus = response.status;
@@ -212,14 +220,16 @@ class AuthenticatorContainer extends React.PureComponent {
 
     handleDelete = () => {
         const {id, methodTitle} = this.props.template;
-        const title = 'Delete authenticator';
-        const message = 'Are you sure you want to delete this authenticator?';
+        const title = t.authenticatorDeleteWarningTitle();
+        const message = t.authenticatorDeleteWarning();
         this.props.showNavigationDialog(title, message, () => {
-            this.props.deleteUserTemplate(id)
+            this.props.registerPromise(
+                    this.props.deleteUserTemplate(id)
+                )
                 .then(() => {
                     this.authenticatorDeleted = true;
                     this.props.gotoEnrollmentDashboard();
-                    const description = `Authenticator "${methodTitle}" has been deleted.`;
+                    const description = t.authenticatorDeleted(methodTitle);
                     createToast({ type: STATUS_TYPE.INFO, description });
                 }, () => {});
         });
@@ -227,12 +237,46 @@ class AuthenticatorContainer extends React.PureComponent {
 
     handleSubmit = (event) => {
         event.preventDefault();
-        this.saveAuthenticator(this.props.gotoEnrollmentDashboard);
+
+        this.saveAuthenticator(() => {
+            // After saving authenticator, go to next method in chain sequence, or dashboard if no chain sequence
+            const {chain, gotoEnrollmentDashboard} = this.props;
+            if (chain) {
+                const {chainSequenceIndex} = this.props;
+                const chainSequenceLength = chain.templates.length;
+                if (chainSequenceIndex === chainSequenceLength - 1) {   // Last method in sequence, go to dashboard
+                    gotoEnrollmentDashboard();
+                }
+                else {
+                    const newChainSequenceIndex = this.props.chainSequenceIndex + 1;
+                    const newTemplate = chain.templates[newChainSequenceIndex];
+                    this.props.fetchIndexedData();
+                    this.props.viewChainAuthenticator(chain, newTemplate);
+                }
+            }
+            else {
+                gotoEnrollmentDashboard();
+            }
+        });
     };
+
+    // Indicates if the authenticator information cannot be enrolled. Only occurs when a template is enrolled
+    // and re-enrollment is disabled.
+    isReadonlyMode() {
+        if (!this.props.policies || !this.props.template.isEnrolled) {
+            return false;
+        }
+
+        return this.props.policies.templateOptions.data.disableReenrollment;
+    }
 
     resetEnrollState = () => {
         this.enrollProcessId = null;
         this.enrollProcessStatus = ENROLL_PROCESS_STATUS.NONE;
+    };
+
+    resetQuery = () => {
+        this.setState({query: {}});
     };
 
     resetStatus = () => {
@@ -240,11 +284,20 @@ class AuthenticatorContainer extends React.PureComponent {
     };
 
     // Save the authenticator (if needed), then return control to provided callback so navigation can continue.
+    // - If existing authenticator cannot be edited, just save the template (if comment changed)
     // - If authentication info already saved, just save the template
     // - Otherwise, if authentication info is savable, save it, then save the template
     // - Otherwise, if only the comment has changed for an enrolled template, just save the template
     saveAuthenticator = (callback) => {
-        if (this.enrollProcessComplete()) {
+        if (this.isReadonlyMode() && this.props.template.isEnrolled) {
+            if (this.state.commentDirty) {
+                this.saveUserTemplate(callback);
+            }
+            else {
+                callback();
+            }
+        }
+        else if (this.enrollProcessComplete()) {
             this.saveUserTemplate(callback);
         }
         else if (this.authenticationInfoSavable()) {
@@ -253,12 +306,9 @@ class AuthenticatorContainer extends React.PureComponent {
                 .catch((error) => {
                     // Do not proceed with navigation if there is an enroll error
                     // There are many errors caught here. Only display errors that occurred due to FAILED enroll.
-                    // For other errors, go to the homepage if the error has not been handled.
+                    // All other errors are handled and reported higher up in the Promise chain.
                     if (typeof error === 'string') {
                         this.showStatus(error, STATUS_TYPE.ERROR);
-                    }
-                    else if (!error.errorHandled) {
-                        this.props.gotoEnrollmentDashboard();
                     }
                 });
         }
@@ -277,33 +327,31 @@ class AuthenticatorContainer extends React.PureComponent {
 
         const executeApiCall = () => {
             if (template.isEnrolled) {
-                return this.props.modifyUserTemplate(enrollProcessId, template.id, this.state.comment);
+                return this.props.registerPromise(
+                    this.props.modifyUserTemplate(enrollProcessId, template.id, this.state.comment)
+                );
             }
             else {
-                return this.props.createUserTemplate(enrollProcessId, this.state.categoryIdInput, this.state.comment);
+                return this.props.registerPromise(
+                    this.props.createUserTemplate(enrollProcessId, this.state.categoryIdInput, this.state.comment)
+                );
             }
         };
 
-        // Once the template is saved, reset state and execute callback to allow navigation to continue.
-        // If an error was handled, do nothing instead.
+        // Once the template is saved, reset state.
+        // If the save was successful, notify user, then execute callback to allow navigation to continue.
         const executeApiCallback = (data, saveSuccessful) => {
-            if (saveSuccessful) {
-                this.authenticatorSaved = true;
-                const {methodTitle} = this.props.template;
-                const description = `Authenticator "${methodTitle}" has been saved.`;
-                createToast({ type: STATUS_TYPE.OK, description });
-            }
-            else if (data && data.errorHandled) {
-                return;
-            }
-
             if (enrollProcessComplete) {
                 this.resetEnrollState();
             }
 
-            // TODO: if an error is handled, should we execute the callback below? It might show the unsaved dialog
-            //  and an error message at the same time.
-            callback();
+            if (saveSuccessful) {
+                this.authenticatorSaved = true;
+                const {methodTitle} = this.props.template;
+                const description = t.authenticatorSaved(methodTitle);
+                createToast({ type: STATUS_TYPE.OK, description });
+                callback();
+            }
         };
 
         executeApiCall().then(
@@ -321,6 +369,8 @@ class AuthenticatorContainer extends React.PureComponent {
                 }
             }).catch(this.clearAsyncEnroll);
         };
+
+        this.clearAsyncEnroll();    // Don't allow multiple asnyc enroll intervals.
 
         if (executeImmediately) {
             executeAsyncEnroll();
@@ -353,7 +403,7 @@ class AuthenticatorContainer extends React.PureComponent {
 
         const methodId = template.methodId;
         const test = {
-            show: template.isEnrolled,
+            show: template.isFullyEnrolled,
             onClick: this.toggleTestAuthenticator
         };
 
@@ -368,7 +418,6 @@ class AuthenticatorContainer extends React.PureComponent {
                     doEnrollWithBeginProcess={this.doEnrollWithBeginProcess}
                     enrollProcessComplete={this.enrollProcessComplete}
                     getEnrollProcessId={this.getEnrollProcessId}
-                    getTotpQrCode={this.props.getTotpQrCode}
                     methodId={methodId}
                     onCategoryChange={this.handleCategoryChange}
                     onChainNavigation={this.saveAuthenticator}
@@ -376,7 +425,8 @@ class AuthenticatorContainer extends React.PureComponent {
                     onCommentChange={this.handleCommentChange}
                     onDelete={this.handleDelete}
                     onSubmit={this.handleSubmit}
-                    query={this.query}
+                    query={this.state.query}
+                    readonlyMode={this.isReadonlyMode()}
                     ref={this.methodComponentRef}
                     resetEnrollState={this.resetEnrollState}
                     resetStatus={this.resetStatus}
@@ -391,7 +441,8 @@ class AuthenticatorContainer extends React.PureComponent {
                 />
                 <TestAuthenticator
                     onClose={this.toggleTestAuthenticator}
-                    query={this.query}
+                    query={this.state.query}
+                    resetQuery={this.resetQuery}
                     show={this.state.testAuthenticator}
                     template={template}
                 />
@@ -406,8 +457,9 @@ AuthenticatorContainer.propTypes = {
     template: templateType.isRequired
 };
 
-const mapStateToProps = ({ authentication, methodsDisplay: {categories, policies} }) =>
-    ({ authentication, categories, policies });
+const mapStateToProps = ({
+    authentication, methodsDisplay: {categories, indexedData: {alwaysHideCategories}, policies}
+}) => ({ alwaysHideCategories, authentication, categories, policies });
 
 const mapDispatchToProps = {
     abortEnrollProcess,
@@ -415,14 +467,18 @@ const mapDispatchToProps = {
     createUserTemplate,
     deleteUserTemplate,
     doEnroll,
+    fetchIndexedData,
     getAndResetRedirectQuery,
     getDefaultRecipient,
-    gotoEnrollmentDashboard,
     getTotpQrCode,
+    getWinHelloInfo,
+    gotoEnrollmentDashboard,
     modifyUserTemplate,
     removeUnloadFormListener,
     setUnloadFormListener,
-    showNavigationDialog
+    showNavigationDialog,
+    viewChainAuthenticator
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(AuthenticatorContainer);
+const connectedComponent = connect(mapStateToProps, mapDispatchToProps)(AuthenticatorContainer);
+export default makeComponentTrashable(connectedComponent);

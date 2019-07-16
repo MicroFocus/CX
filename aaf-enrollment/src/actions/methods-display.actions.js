@@ -1,14 +1,10 @@
 import * as types from './action-types';
 import * as api from '../api/api';
 import {catchCommonErrors, createToastFromJsonErrors} from './error-handlers.actions';
+import t from '../i18n/locale-keys';
 
 const charCodeForUppercaseA = 'A'.charCodeAt(0);
 const charCodeForUppercaseZ = 'Z'.charCodeAt(0);
-
-const defaultCategory = {
-    name: 'Default',
-    id: ''
-};
 
 export const fetchCategories = () => (dispatch, getStore) => {
     dispatch({ type: types.FETCH_CATEGORIES_REQUEST });
@@ -16,6 +12,7 @@ export const fetchCategories = () => (dispatch, getStore) => {
     const {loginSessionId} = getStore().authentication;
     return api.getCategories(loginSessionId).then(({categories}) => {
             // Add default category, since data from server does not include it
+            const defaultCategory = { name: t.authenticatorDefaultCategory(), id: '' };
             categories.unshift({...defaultCategory});
             dispatch({ type: types.FETCH_CATEGORIES_SUCCESS, categories });
         })

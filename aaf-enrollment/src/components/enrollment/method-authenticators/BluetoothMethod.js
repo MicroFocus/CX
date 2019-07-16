@@ -1,47 +1,41 @@
-/* eslint-disable */
 import './BluetoothMethod.scss';
 import React from 'react';
 import Authenticator from '../Authenticator';
-import jsonFetch from '../../../api/json-fetch';
 import {STATUS_TYPE} from '../../../ux/ux';
-import TestAuthenticatorButton from '../test-authenticator/TestAuthenticatorButton';
-
-//TODO convert this to our localization
-const _ = (value) => {
-    return value;
-};
-
-//TODO: convert this localization file
-const __ = (value) => {
-    return value;
-};
-
-//TODO: convert this localization file
-const _k = (value, value2) => {
-    return value + value2;
-};
-
-const BT_SERVICE_ENDPOINT = 'https://127.0.0.1:8441/api/v1/bluetooth';
-
-const SERVICE_NOT_AVAILABLE = function() {
-    return _k('Bluetooth service is not available', 'method.bluetooth.service_is_not_available');
-};
+import t from '../../../i18n/locale-keys';
+import {bluetoothGetDevices} from '../../../api/devices/bluetooth-devices.api';
 
 class BluetoothMethod extends React.PureComponent {
     state = {
-        address: '',
-        name: '',
         dataDirty: false,
-        loading: true,
         devices: [],
-        originalHash: '',
-        data: ''
+        loading: false,
+        selectedDevice: null
     };
 
+    authenticationInfoChanged() {
+        return this.state.dataDirty;
+    }
+
+    componentDidMount() {
+        this.getDevices();
+    }
+
+    findDeviceWithHash(devices, hash) {
+        let device;
+        for (let deviceIndex = 0; deviceIndex < devices.length; deviceIndex++) {
+            device = devices[deviceIndex];
+            if (device.hash === hash) {
+                return device;
+            }
+        }
+
+        return null;
+    }
+
     finishEnroll() {
-        const {address, hash, name} = this.state.data;
-        if (address !== '' && hash !== '' && name !== '') {
-            return this.props.doEnrollWithBeginProcess({address, hash, name})
+        const {address, hash, name} = this.state.selectedDevice;
+        return this.props.doEnrollWithBeginProcess({address, hash, name})
             .then((response) => {
                 if (response.status !== 'FAILED') {
                     return Promise.resolve(response);
@@ -50,197 +44,181 @@ class BluetoothMethod extends React.PureComponent {
                     throw response.msg;
                 }
             });
-        }
-        else {
-            return Promise.reject('No data input.');
-        }
     };
 
-    authenticationInfoChanged() {
-        return this.state.dataDirty;
-    }
+    getDevices = () => {
+        this.setState({
+            devices: [],
+            loading: true
+        });
 
-    render() {
-        const isEnrolled = this.props.template.isEnrolled;
-        const data = this.props.template.data;
-
-        const isEnrolledAvailable = this.state.devices && this.state.devices
-            .map((d) => { return d.hash; })
-            .indexOf(this.state.originalHash) > -1;
-        const isEnrolledItemDirty = this.state.hasOwnProperty('originalHash') && this.data ? this.state.originalHash !== data.hash : false;
-        const enrolledItem = (isEnrolled && !isEnrolledAvailable && !isEnrolledItemDirty) ?(
-            <div className="ias-tags">
-                <div className="ias-tag" tabIndex="0">
-                    <span className="ias-tag-content device">
-                        <i className="ias-icon ias-icon-help_thick" />
-                        <span>
-                        { (data && data.name) ? data.name : _('Unknown device')}
-                        ({_('Enrolled, but not connected')})
-                        </span>
-                    </span>
-                </div>
-            </div>) : null;
-
-        const show = this.state.loading;
-        const indicator = show ? <img className="loading-img" alt="" src="/loading_anim_50.gif" /> : null;
-
-        return (
-            <Authenticator
-                description="The bluetooth method authenticates using a secure bluetooth device."
-                {...this.props}
-            >
-                <div className="bluetooth-method">
-                <div className="ias-tags">
-                    {this.state.devices.map((device) => {
-                        return (
-                            <div className="ias-tag" tabIndex="0" key={device.address} onClick={this.selectDevice.bind(this, device)}>
-                                <span className="ias-tag-content device">
-                                    {this.state.originalHash === device.hash ?
-                                        <i className="ias-icon ias-icon-status_ok_fill" /> : <i className="ias-icon ias-icon-status_ok_thick" />}
-                                    <span>
-                                    {device.name ? device.name : _('Unknown device')}
-                                    </span>
-                                    <span>{this.state.originalHash === device.hash && isEnrolled ? _('(Enrolled)') : null}</span>
-
-                                </span>
-                            </div>
-                        );
-                    })}
-                </div>
-                {indicator}
-                {enrolledItem}
-                <div className="col-md-3 text-right">
-                        <button className="ias-button btn-default"  disabled={this.state.loading}
-                            onClick={this.handleRefresh}
-                        >
-                            <span>{_('Refresh')}</span>
-                        </button>
-
-                        <TestAuthenticatorButton {...this.props.test} />
-                </div>
-                </div>
-            </Authenticator>
-        );
-    }
-
-    deviceList = () => {
-        const fetchOptions = {
-            url: BT_SERVICE_ENDPOINT + '/getdevices',
-            method: 'GET',
-        };
-
-       return jsonFetch(fetchOptions)
-            .then(data => {
-                console.log('getting the deviceList', data);
-                if (data.devices) {
-                    this.setState({
-                        devices: data.devices
-                    });
+        this.props.registerPromise(
+                bluetoothGetDevices()
+            ).then(({devices}) => {
+                if (!devices) {
+                    return Promise.reject(t.bluetoothServiceError());
                 }
-                return data;
-            })
-            .catch((error) => {
-                const {data, status, statusText, url} = error;
-                console.log("catch error", error);
-                this.props.showStatus(SERVICE_NOT_AVAILABLE(), STATUS_TYPE.ERROR);
+
+                this.setState({loading: false});
+
+                if (this.props.readonlyMode) {
+                    return;
+                }
+
+                this.updateDeviceList(devices);
+            }).catch((error) => {
+                this.setState({loading: false});
+
+                // Different error types: .msg (server), .message (JS exception), string (application threw)
+                const message = error.msg || error.message || error;
+                this.props.showStatus(message, STATUS_TYPE.ERROR);
             });
     };
-
-    deviceListClear = () => {
-        this.updateState();
-        return Promise.resolve();
-    }
-
-    updateState = () => {
-        this.setState({
-            devices: []
-        });
-    }
-
-    componentDidMount() {
-        console.log("componentDidMount");
-
-        const hash = this.props.template.data ? this.props.template.data.hash : null;
-        this.setState({
-            originalHash: hash
-        });
-
-        this.handleGetBlueTooth();
-    }
-
-    componentWillUnmount() {
-    }
 
     selectDevice(device) {
         this.setState({
-            data: device,
+            selectedDevice: device,
             dataDirty: true
         });
-        if (!this.state.originalHash) {
-            this.setState({
-                originalHash: this.state.data.hash
-            });
+    }
+
+    updateDeviceList(devices) {
+        if (devices.length) {
+            this.props.showStatus(t.bluetoothSelectDevice(), STATUS_TYPE.INFO);
         }
-    }
+        else {
+            this.props.showStatus(t.bluetoothNoDevices(), STATUS_TYPE.ERROR);
+            return;
+        }
 
-    hideSave = () => {
-        return this.state.loading || !this.state.data.hash;
-    }
+        // Update selected device info to match data received, if the same device is found
+        let selectedDevice = this.state.selectedDevice;
+        if (selectedDevice) {
+            const updatedSelectedDevice = this.findDeviceWithHash(devices, selectedDevice.hash);
+            if (updatedSelectedDevice) {
+                selectedDevice = updatedSelectedDevice;
+            }
+        }
 
-    handleRefresh = () => {
-        this.setState({
-            loading: true
-        });
-        this.deviceListClear().then(() => {
-            this.deviceList(this).then((data) => {
-                console.log('Data is: ', data);
-                this.setState({
-                    loading: false,
+        // Add the enrolled device, if not found in data received.
+        // If it is found in data received, mark it as enrolled; if no device is selected, select the enrolled device.
+        const {data, isEnrolled} = this.props.template;
+        if (isEnrolled) {
+            const enrolledDevice = this.findDeviceWithHash(devices, data.hash);
+            if (!enrolledDevice) {
+                devices.push({
+                    ...data,
+                    enrolled: true,
+                    undetected: true
                 });
-
-                if(data.devices) {
-                    this.setState({
-                        devices: data.devices
-                    });
+            }
+            else {
+                enrolledDevice.enrolled = true;
+                if (!selectedDevice) {
+                    selectedDevice = enrolledDevice;
                 }
-            });
-        });
+            }
+        }
+
+        // Update state
+        const newState = {devices};
+        if (selectedDevice) {
+            newState.selectedDevice = selectedDevice;
+        }
+        this.setState(newState);
     }
 
-    handleGetBlueTooth = () => {
-        console.log("handleGetBlueTooth");
-        this.deviceListClear().then(() => {
-            this.deviceList().then((data) => {
+    renderDeviceListItem(device) {
+        const {hash, name, enrolled, undetected} = device;
+        const {selectedDevice} = this.state;
 
-                console.log("getting the device list",data);
-                if (data.result === 'BLUETOOTH_DISABLED') {
-                    this.props.showStatus(_('Bluetooth is turned off'), STATUS_TYPE.WARN);
-                } else if (data === undefined || data.status === undefined) {
-                  this.props.showStatus(_('Select the device from the list to enroll or click test to check the enrolled device'), STATUS_TYPE.WARN);
-                } else if (data.status === 'BT_OFF') {
-                    this.props.showStatus(_('Bluetooth is turned off'), STATUS_TYPE.WARN);
-                }
+        const tagName = name || t.unknownDevice();
 
-                let enrolledIndex = -1;
-                if (data.devices !== undefined) {
-                    enrolledIndex = data.devices.map(function(d)
-                        { return d.hash; })
-                        .indexOf(this.state.data.hash);
-                }
+        let iconName;
+        let info;
+        if (enrolled && undetected) {
+            iconName = 'help_thick';
+            info = t.bluetoothEnrolledUnconnected();
+        }
+        else {
+            const deviceIsSelected = selectedDevice && (hash === selectedDevice.hash);
+            if (deviceIsSelected) {
+                iconName = 'status_ok_fill';
+            }
+            else {
+                iconName = 'control_stop_thick';
+            }
+            info = enrolled ? t.bluetoothEnrolled() : null;
+        }
 
-                this.setState({
-                    loading: false
-                });
+        const canSelect = (!this.props.readonlyMode && !undetected);
+        const onClick = canSelect ? () => this.selectDevice(device) : null;
+        const tabIndex = canSelect ? '0' : null;
+        const onKeyPress = canSelect ? (event) => {
+            if (event.key === 'Enter' || event.key === ' ') {
+                onClick();
+            }
+        } : null;
 
-                if (enrolledIndex > -1) {
-                    this.setState({
-                        data: data.devices[enrolledIndex]
-                    });
-                }
-            });
-        });
+        const tagClass = 'ias-tag' + (!canSelect ? ' ias-disabled' : '');
+
+        return (
+            <div className={tagClass} key={hash} onClick={onClick} onKeyPress={onKeyPress} tabIndex={tabIndex}>
+                <span className="ias-tag-content">
+                    <i className={`ias-icon ias-icon-${iconName}`} />
+                    <span>{tagName}</span>
+                    <span>{info}</span>
+                </span>
+            </div>
+        );
+    }
+
+    renderDeviceList() {
+        const deviceElements = this.state.devices.map((device) => this.renderDeviceListItem(device));
+
+        return (
+            <div className="bluetooth-device-list">
+                <div className="ias-tags">
+                    {deviceElements}
+                </div>
+            </div>
+        );
+    }
+
+    render() {
+        const deviceList = this.renderDeviceList();
+        let loadingIndicator = null;
+        if (this.state.loading) {
+            loadingIndicator = (
+                <div className="bluetooth-loading-img">
+                    <img
+                        alt={t.loading()}
+                        className="loading-img"
+                        src={process.env.PUBLIC_URL + '/loading_anim_50.gif'}
+                    />
+                </div>
+            );
+        }
+
+        return (
+            <Authenticator
+                description={t.bluetoothMethodDescription()}
+                {...this.props}
+            >
+                {deviceList}
+                {loadingIndicator}
+                <button
+                    className="ias-button"
+                    disabled={this.state.loading}
+                    id="Get_Devices_Button"
+                    onClick={this.getDevices}
+                    type="button"
+                >
+                    {t.bluetoothGetDevices()}
+                </button>
+            </Authenticator>
+        );
     }
 }
 
 export default BluetoothMethod;
-

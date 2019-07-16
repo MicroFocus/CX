@@ -6,6 +6,7 @@ import {openCompanyPage, signOut, viewLanguagesPage} from '../../actions/navigat
 import {AUTHENTICATION_STATES} from '../../reducers/authentication.reducer';
 import {deleteUser} from '../../actions/authentication.actions';
 import {STATUS_TYPE} from '../../ux/StatusIndicator';
+import t from '../../i18n/locale-keys';
 
 const HELP_HREF = 'https://www.netiq.com/documentation/advanced-authentication-62/server-user-guide/data' +
     '/authenticators_management.html';
@@ -42,7 +43,7 @@ class Header extends React.PureComponent {
 
         //do deletion
         this.props.deleteUser().then(() => {
-            createToast({type: STATUS_TYPE.OK, description: 'Your authentication methods have been deleted.'});
+            createToast({type: STATUS_TYPE.OK, description: t.authenticatorsDeleted()});
         });
     };
 
@@ -58,8 +59,13 @@ class Header extends React.PureComponent {
         }
 
         return (
-              <button type="button" className="ias-button" onClick={this.handleRemoveEnrolledMethodsClick}>
-                  Delete all Enrollments
+              <button
+                  className="ias-button"
+                  id="Delete_Enrollments_Button"
+                  onClick={this.handleRemoveEnrolledMethodsClick}
+                  type="button"
+              >
+                  {t.authenticatorsDelete()}
               </button>
         );
     }
@@ -67,12 +73,14 @@ class Header extends React.PureComponent {
     render() {
         const loggedIn = (this.props.authentication.status === AUTHENTICATION_STATES.LOGGED_IN);
         const deleteMeButton = loggedIn ? this.renderDeleteMeButton() : null;
-        const menuTitle = loggedIn ? this.props.authentication.username : 'Menu';
+        const menuTitle = loggedIn ? this.props.authentication.username : t.menu();
         const additionalMenuOptions = loggedIn ? (
             <React.Fragment>
                 {deleteMeButton}
                 <div className="menu-separator" />
-                <button type="button" className="ias-button" onClick={this.handleSignOutClick}>Sign out</button>
+                <button type="button" className="ias-button" id="Sign_Out_Button" onClick={this.handleSignOutClick}>
+                    {t.signOut()}
+                </button>
             </React.Fragment>
         ) : null;
 
@@ -80,28 +88,47 @@ class Header extends React.PureComponent {
             <header>
                 <div className="ias-app-bar micro-bg-color">
                     <div className="ias-avatar" onClick={this.props.openCompanyPage}>
-                        <img alt="Company logo" className="micro-logo" src="/IAS_AA_100.png" />
+                        <img
+                            alt={t.companyLogo()}
+                            className="micro-logo"
+                            src={process.env.PUBLIC_URL + '/IAS_AA_100.png'}
+                        />
                     </div>
-                    <h3 className="ias-heading" onClick={this.props.openCompanyPage}>Advanced Authentication</h3>
+                    <h3 className="ias-heading" onClick={this.props.openCompanyPage}>{t.productName()}</h3>
                     <span className="ias-fill" />
 
                     <Menu
                         iasAlign="end"
                         toggleElement={(
-                            <button className="ias-button ias-menu-toggle" type="button">
+                            <button className="ias-button ias-menu-toggle" id="Menu_Toggle_Button" type="button">
                                 <span>{menuTitle}</span>
                                 <i className="ias-icon ias-icon-down_thick" />
                             </button>
                         )}
                     >
-                        <button type="button" className="ias-button" onClick={this.handleLanguagesClick}>
-                            Language
+                        <button
+                            className="ias-button"
+                            id="Language_Button"
+                            onClick={this.handleLanguagesClick}
+                            type="button"
+                        >
+                            {t.language()}
                         </button>
-                        <button type="button" className="ias-button" onClick={this.toggleAboutDialog}>About</button>
-                        <a type="button" className="ias-button" href={HELP_HREF} target="_blank">Help</a>
+                        <button className="ias-button" id="About_Button" onClick={this.toggleAboutDialog} type="button">
+                            {t.about()}
+                        </button>
+                        <a
+                            type="button"
+                            className="ias-button"
+                            href={HELP_HREF}
+                            rel="noopener noreferrer"
+                            target="_blank"
+                        >
+                            {t.help()}
+                        </a>
                         {additionalMenuOptions}
                         <div className="menu-separator" />
-                        <h3 className="ias-menu-footer">BUILD NAAF 6.0</h3>
+                        <h3 className="ias-menu-footer">{t.productBuild().toLocaleUpperCase()}</h3>
                     </Menu>
                 </div>
                 <Dialog
@@ -110,11 +137,11 @@ class Header extends React.PureComponent {
                     open={this.state.confirmDeleteDialogOpen}
                     title={
                         <div className="ias-dialog-label">
-                            Delete All Enrollments
+                            {t.authenticatorsDeleteWarningTitle()}
                         </div>
                     }
                 >
-                    <p>Are you sure you want to remove Authentication Enrollments?</p>
+                    <p>{t.authenticatorsDeleteWarning()}</p>
                 </Dialog>
                 <Dialog
                     exitOnBackdropClick
@@ -127,36 +154,33 @@ class Header extends React.PureComponent {
                             <div className="brand-family-box">
                                 <div className="security-logo-box">
                                     <img
-                                        alt="Security product group"
+                                        alt={t.productGroup()}
                                         className="security-logo"
-                                        src="/security_120.png"
+                                        src={process.env.PUBLIC_URL + '/security_120.png'}
                                     />
                                 </div>
                             </div>
                             <div id="detail-column">
                                 <div className="brand-color-box">
                                     <img
-                                        alt="Micro Focus logo"
+                                        alt={t.aboutCompanyLogo()}
                                         className="microfocus-logo"
-                                        src="/mf_logo_white_200.png"
+                                        src={process.env.PUBLIC_URL + '/mf_logo_white_200.png'}
                                     />
                                     <img
-                                        alt="Identity, Access, and Security group logo"
+                                        alt={t.aboutGroupLogo()}
                                         className="ias-logo"
-                                        src="/IAS_AA_100.png"
+                                        src={process.env.PUBLIC_URL + '/IAS_AA_100.png'}
                                     />
                                 </div>
                                 <div className="ias-about-details">
-                                    <div className="ias-about-product-title">Advanced Authentication</div>
-                                    <div className="product-description">Advanced Auth Enrollment UI v1.0</div>
+                                    <div className="ias-about-product-title">{t.productName()}</div>
+                                    <div className="product-description">{t.uiTitle()}</div>
                                     <div className="product-description">
-                                        Advanced Authentication is a product created by Micro Focus to provide users the
-                                        ability to
-                                        enroll in advanced login methods for authentication and to use those when
-                                        signing in to their organization's site.
+                                        {t.aboutDescription()}
                                     </div>
                                     <p>
-                                        <label>© 2013-2018 NetIQ Inc. All rights reserved.</label>
+                                        <label>{t.aboutCopyright()}</label>
                                     </p>
                                 </div>
                             </div>

@@ -8,8 +8,9 @@ import {
     getChainAuthenticatorLink, getMethodIdFromUri, HOMEPAGE_URL, normalizeChainUri, viewChainAuthenticator
 } from '../../actions/navigation.actions';
 import {parseQueryString} from '../../utils/url-functions';
-import {getTemplateKey} from '../../utils/key-generator';
+import {getChainTemplateKey} from '../../utils/key-generator';
 import {fetchIndexedData, fetchPolicies} from '../../actions/methods-display.actions';
+import t from '../../i18n/locale-keys';
 
 class ChainEnrollment extends React.PureComponent {
     constructor(props) {
@@ -43,14 +44,14 @@ class ChainEnrollment extends React.PureComponent {
     }
 
     // Get template. Must be part of chain and match the methodUri. If no methodUri is provided, redirect to the first
-    // unenrolled template in the chain. If they
+    // unenrolled template in the chain, or first template if all are enrolled.
     getTemplate(chain, methodUri) {
         if (methodUri) {
             const methodId = getMethodIdFromUri(methodUri);
             for (let index = 0; index < chain.templates.length; index++) {
                 const template = chain.templates[index];
                 if (template.methodId === methodId) {
-                    return template;
+                    return {index, template};
                 }
             }
 
@@ -60,11 +61,11 @@ class ChainEnrollment extends React.PureComponent {
             for (let index = 0; index < chain.templates.length; index++) {
                 const template = chain.templates[index];
                 if (template.isEnrolled === false) {
-                    return template;
+                    return {index, template};
                 }
             }
 
-            return chain.templates[0];
+            return {index: 0, template: chain.templates[0]};
         }
     }
 
@@ -74,12 +75,12 @@ class ChainEnrollment extends React.PureComponent {
         });
     };
 
-    renderContent(chain, template) {
+    renderContent(chain, chainSequenceIndex, template) {
         const navLinks = chain.templates.map((chainTemplate) => {
             const {methodId, methodTitle, isEnrolled} = chainTemplate;
             const icon = methods[methodId].icon;
             let linkClass = (template.methodId === methodId) ? 'ias-active' : '';
-            const title = isEnrolled ? methodTitle + ' (Enrolled)' : methodTitle;
+            const title = isEnrolled ? t.authenticatorEnrolledNavBarTitle(methodTitle) : methodTitle;
             if (isEnrolled) {
                 linkClass += ' enrolled';
             }
@@ -89,23 +90,25 @@ class ChainEnrollment extends React.PureComponent {
                 });
             };
 
+            const key = `chain-nav-${methodId}`;
+
             return (
-                <a className={linkClass} key={`chain-nav-${methodId}`} onClick={handleClick} title={title}>
+                <button className={linkClass} id={key} key={key} onClick={handleClick} title={title}>
                     <i className={`ias-active ias-icon ias-icon-${icon}`} />
-                </a>
+                </button>
             );
         });
 
         const setBeforeNavigationListener = this.setBeforeNavigationListener;
 
 
-        const methodProps = { chain, setBeforeNavigationListener, template};
-        const authenticatorContainerKey = getTemplateKey(template);
+        const methodProps = { chain, chainSequenceIndex, setBeforeNavigationListener, template};
+        const authenticatorContainerKey = getChainTemplateKey(chain, template);
 
         return (
             <React.Fragment>
                 <div className="chain-nav-description">
-                    Enroll these methods to enable the sequence authentication
+                    {t.chainEnrollmentInstructions()}
                 </div>
                 <div className="chain-nav">
                     {navLinks}
@@ -153,7 +156,7 @@ class ChainEnrollment extends React.PureComponent {
         }
 
         const methodUri = params.methodUri;
-        const template = this.getTemplate(chain, methodUri);
+        const {index: chainSequenceIndex, template} = this.getTemplate(chain, methodUri);
         if (!template) {
             return <Redirect to={HOMEPAGE_URL} />;
         }
@@ -162,7 +165,7 @@ class ChainEnrollment extends React.PureComponent {
             return <Redirect to={getChainAuthenticatorLink(chain, template)} />;
         }
 
-        return this.renderContent(chain, template);
+        return this.renderContent(chain, chainSequenceIndex, template);
     }
 }
 

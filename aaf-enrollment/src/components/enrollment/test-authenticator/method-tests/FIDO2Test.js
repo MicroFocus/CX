@@ -1,20 +1,12 @@
-/* eslint-disable */
-
 import React from 'react';
-import {STATUS_TYPE, StatusIndicator} from '../../../../ux/ux';
-import FIDO2Handler from '../../../../api/fido2';
+import {STATUS_TYPE} from '../../../../ux/ux';
+import FIDO2Handler from '../../../../api/devices/fido2-device.api';
 import {WebAuthnApp} from 'webauthn-simple-app';
-
-//TODO convert this to our localization
-const _ = (value) => {
-    return value;
-};
 
 class FIDO2Test extends React.PureComponent {
     constructor(props) {
         super(props);
 
-        console.log(this.props);
         this.fido2Handler = new FIDO2Handler(this.props.showStatus);
         this.props.setTestButtonAvailability(false);
     }
@@ -25,7 +17,8 @@ class FIDO2Test extends React.PureComponent {
             this.props.doTestLogon()
             .then((response) =>{
                 if (response.status === 'MORE_DATA') {
-                    this.handleMoreData(response);
+                    this.props.showStatus(response.msg, STATUS_TYPE.INFO);
+                    this.startLogon();
                 }
             });
         }
@@ -37,40 +30,29 @@ class FIDO2Test extends React.PureComponent {
         WAConfig.loginChallengeEndpoint = this.getRegisterUrl();
         WAConfig.loginResponseEndpoint = this.getRegisterUrl();
         return WAConfig;
-    }
+    };
 
-    getRegisterUrl= () => {
-        return '/fido2/' + this.props.getLogonProcessId() + '/login';
-    }
+    getRegisterUrl = () => {
+        return `/api/v1/logon_method/FIDO2:1/login/${this.props.getLogonProcessId()}`;
+    };
 
-    checkWebAuthn() {
-        // check if the browser supports webauthn
-        return this.fido2Handler.checkBrowserSupportsWebAuthn.bind(this)();
-    }
-
-    handleMoreData = (response) => {
-        console.log('handleMoreData', response);
-        this.props.showStatus(response.msg, STATUS_TYPE.INFO);
-        this.startLogon();
-    }
-
-    startLogon =() => {
+    startLogon = () => {
         const WAConfig = this.getWebAuthnConfig();
         const waApp = new WebAuthnApp(WAConfig);
-        return waApp.login()
-            .then((result) => {
-                console.log(result);
+        return this.props.registerPromise(
+                waApp.login()
+            ).then((result) => {
                 if (result.status === 'ok') {
-                    this.props.doTestLogon();
-                } else {
+                    this.props.setAsyncLogon(() => {}, true);
+                }
+                else {
                     this.props.markTestComplete(false, result.errorMessage);
                 }
             })
             .catch((err) => {
-                console.log('startLogin', err.message);
                 this.props.markTestComplete(false, err.message);
             });
-    }
+    };
 
     render() {
         return null;

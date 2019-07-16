@@ -3,7 +3,8 @@ import Authenticator from '../Authenticator';
 import ShowHidePassword from '../../ShowHidePassword';
 import {Accordion} from '../../../ux/ux';
 import {generateFormChangeHandler} from '../../../utils/form-handler';
-import TestAuthenticatorButton from '../test-authenticator/TestAuthenticatorButton';
+import TextField from '../../TextField';
+import t from '../../../i18n/locale-keys';
 
 const HOTP_SYNC_NUM_VALUES = 3;
 
@@ -13,8 +14,7 @@ class HOTPMethod extends React.PureComponent {
         console.log(props.template);
 
         const initialFormState = {
-            // TODO: Right now the server doesn't accept the tokenSerial field. Add back once server supports.
-            // tokenSerial: '',
+            serial: '',
             tokenPublicId: '',
             secret: ''
         };
@@ -44,7 +44,8 @@ class HOTPMethod extends React.PureComponent {
         return this.props.doEnrollWithBeginProcess(enrollData, false, isEnrolled).then(response => {
             if (response.status !== 'FAILED') {
                 return Promise.resolve(response);
-            } else {
+            }
+            else {
                 throw response.msg;
             }
         });
@@ -55,18 +56,17 @@ class HOTPMethod extends React.PureComponent {
 
         for (let id = 1; id <= HOTP_SYNC_NUM_VALUES; id++) {
             syncTokenInputs.push(
-                <div className="ias-input-container" key={`hotp-input-${id}`}>
-                    <input
-                        autoComplete="off"
-                        id={`HOTP${id}_Input_Field`}
-                        name={`hotp${id}`}
-                        onChange={this.handleChange}
-                        onKeyPress={this.handleKeyPress}
-                        placeholder={'Value ' + id}
-                        type="text"
-                        value={this.state.form[`hotp${id}`]}
-                    />
-                </div>
+                <TextField
+                    autoComplete="off"
+                    disabled={this.props.readonlyMode}
+                    id={`HOTP${id}_Input_Field`}
+                    key={`hotp-input-${id}`}
+                    name={`hotp${id}`}
+                    onChange={this.handleChange}
+                    onKeyPress={this.handleKeyPress}
+                    placeholder={t.hotpValue(id)}
+                    value={this.state.form[`hotp${id}`]}
+                />
             );
         }
 
@@ -93,7 +93,7 @@ class HOTPMethod extends React.PureComponent {
                 if (data.serial) {
                     firstEnrollInputs.push((
                         <div className="ias-input-container" key="serial">
-                            <label>OATH Token Serial<span>{data.serial}</span></label>
+                            <label>{t.oathSerialNumber()}<span>{data.serial}</span></label>
                         </div>
                     ));
                 }
@@ -101,7 +101,7 @@ class HOTPMethod extends React.PureComponent {
                 if (data.tokenPublicId) {
                     firstEnrollInputs.push((
                         <div className="ias-input-container" key="token-public-id">
-                            <label>YubiKey Token ID<span>{data.tokenPublicId}</span></label>
+                            <label>{t.hotpYubikeyId()}<span>{data.tokenPublicId}</span></label>
                         </div>
                     ));
                 }
@@ -110,31 +110,28 @@ class HOTPMethod extends React.PureComponent {
         else {
             firstEnrollInputs = (
                 <React.Fragment>
-                    {/*<div className="ias-input-container">
-                        <label htmlFor="Token_Serial_Field">OATH Token Serial</label>
-                        <input
-                            id="Token_Serial_Field"
-                            name="tokenSerial"
-                            onChange={this.handleChange}
-                            type="text"
-                            value={this.state.form.tokenSerial}
-                        />
-                    </div>*/}
-                    <div className="ias-input-container">
-                        <label htmlFor="YubiKey_ID_Field">YubiKey Token ID</label>
-                        <input
-                            id="YubiKey_ID_Field"
-                            name="tokenPublicId"
-                            onChange={this.handleChange}
-                            type="text"
-                            value={this.state.form.tokenPublicId}
-                        />
-                    </div>
+                    <TextField
+                        disabled={this.props.readonlyMode}
+                        id="Token_Serial_Field"
+                        label={t.oathSerial()}
+                        name="serial"
+                        onChange={this.handleChange}
+                        value={this.state.form.serial}
+                    />
+                    <TextField
+                        disabled={this.props.readonlyMode}
+                        id="YubiKey_ID_Field"
+                        label={t.hotpYubikeyId()}
+                        name="tokenPublicId"
+                        onChange={this.handleChange}
+                        value={this.state.form.tokenPublicId}
+                    />
                     <ShowHidePassword
+                        disabled={this.props.readonlyMode}
                         id="Secret_Input_Field"
                         name="secret"
                         onChange={this.handleChange}
-                        label="Secret (if you know)"
+                        label={t.hotpSecret()}
                         value={this.state.form.secret}
                     />
                 </React.Fragment>
@@ -142,18 +139,12 @@ class HOTPMethod extends React.PureComponent {
         }
         return (
             <Authenticator
-                description={`The HMAC-based One-time Password (HOTP) method uses a counter that is in sync with your
-                    device and the server. Specify an OATH token serial number, usually provided by your system
-                    administrator. If the token counter is out of sync, synchronize it by specifying the
-                    ${HOTP_SYNC_NUM_VALUES} HOTP below.`}
+                description={t.hotpMethodDescription(HOTP_SYNC_NUM_VALUES)}
                 {...this.props}
             >
                 {firstEnrollInputs}
-                <div className="ias-input-container">
-                    <TestAuthenticatorButton {...this.props.test} />
-                </div>
-                <Accordion startOpen={!isEnrolled} title="Synchronize the token counter">
-                    <p> Generate and specify {HOTP_SYNC_NUM_VALUES} consecutive HOTP values</p>
+                <Accordion startOpen title={t.hotpSynchronize()}>
+                    <p>{t.hotpInstructions(HOTP_SYNC_NUM_VALUES)}</p>
                     {syncTokenInputs}
                 </Accordion>
             </Authenticator>

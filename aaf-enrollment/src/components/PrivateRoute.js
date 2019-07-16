@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
 import {LoadingIndicator} from '../ux/ux';
+import t from '../i18n/locale-keys';
 
 const PrivateRoute = ({ authenticationStatus, component: Component, render, signOutInProcess, ...rest }) => (
     <Route {...rest} render={props => {
@@ -15,7 +16,7 @@ const PrivateRoute = ({ authenticationStatus, component: Component, render, sign
                     return render(props);
                 }
             case AUTHENTICATION_STATES.UNINITIALIZED:
-                return <LoadingIndicator />;
+                return <LoadingIndicator message={t.loading()} />;
             default:
                 // Redirect logged-out users to the login page. We want to make it easy for them to access the current
                 // page once they have logged in. If they logged out intentionally, they can do this via the browser

@@ -4,10 +4,11 @@ import {apiFetch, API_STATUS} from './json-fetch';
 
 let endpointSessionId = loadStorageItem(storageItems.ENDPOINT_SESSION_ID);
 
-// Import shajs only in development. See https://webpack.js.org/plugins/define-plugin/#usage
-let sha256 = null;
+// Import shajs only in development. Code here that will not be used is excluded from build via
+// Webpack define plugin - see https://webpack.js.org/plugins/define-plugin/#usage
+let Sha256 = null;
 if (process.env.NODE_ENV === 'development') {
-    sha256 = require('sha.js/sha256');
+    Sha256 = require('sha.js/sha256');
 }
 
 function beginEndpointSession() {
@@ -29,9 +30,9 @@ function beginEndpointSession() {
 
         // Generate endpoint secret hash
         const saltedEndpointId = endpointId + salt;
-        const endpointIdHash = (new sha256()).update(saltedEndpointId).digest('hex');
-        const saltedEndpoindSecret = endpointSecret + endpointIdHash;
-        const endpointSecretHash = (new sha256()).update(saltedEndpoindSecret).digest('hex');
+        const endpointIdHash = (new Sha256()).update(saltedEndpointId).digest('hex');
+        const saltedEndpointSecret = endpointSecret + endpointIdHash;
+        const endpointSecretHash = (new Sha256()).update(saltedEndpointSecret).digest('hex');
         promise = apiFetch('POST', `endpoints/${endpointId}/sessions`, {
             data: {
                 salt,

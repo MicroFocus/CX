@@ -113,6 +113,11 @@ export const doEnroll = {
     success: doEnrollSuccess
 };
 
+export const getWinHelloInfo = {
+    account_name: 'aastin',
+    is_ad_user: true
+};
+
 export const modifyUserTemplate = {
     templateDoesNotExist: modifyEnrollTemplateDoesNotExist,
     success: null

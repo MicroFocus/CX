@@ -1,9 +1,5 @@
 @import '../../themes/themes';
 
-.login-form {
-  margin-left: 25px;
-}
-
 .authentication-method i, .authentication-method span {
   vertical-align: middle;
 }
@@ -12,29 +8,6 @@
   color: #007cd0;
   font-size: 30px;
   margin-right: 5px;
-}
-
-.show-hide-password.ias-button.ias-icon-button {
-  margin-left: 5px;
-  padding: 6px;
-}
-
-.show-hide-password i {
-  font-size: 20px;
-}
-
-.login-help {
-  font-size: 13px;
-  margin-left: 80px;
-}
-
-.ias-menu-content {
-  span {
-    color: #b8b8b8;
-    display: block;
-    font-size: 12px;
-    margin: 5px 0 8px;
-  }
 }
 
 .chain-select {
@@ -63,4 +36,22 @@
     font-size: inherit;
     margin-left: 5px;
   }
+}
+
+.ias-menu-content {
+  span {
+    color: #b8b8b8;
+    display: block;
+    font-size: 12px;
+    margin: 5px 0 8px;
+  }
+}
+
+.login-form {
+  margin-left: 25px;
+}
+
+.login-help {
+  font-size: 13px;
+  margin-left: 80px;
 }

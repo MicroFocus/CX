@@ -1,19 +1,22 @@
 @import '../themes/themes';
 
-#root {
-  display: flex;
-  flex-flow: column nowrap;
-  height: 100%;
+button + button {
+  margin-left: 5px;
+}
 
-  .scrollable-content {
-    flex-grow: 1;
-    overflow: auto;
-    position: relative;
-  }
+input:not([type="checkbox"]) {
+  width: 280px;
+}
+
+label span {
+  color: $text-color;
+  font-size: 15px;
+  margin-left: 5px;
+  vertical-align: baseline;
 }
 
 .description {
-  max-width: 650px;
+  max-width: $max-readable-width;
   color: #808080;
 
   li {
@@ -22,7 +25,7 @@
 }
 
 .ias-accordion-group {
-  max-width: 650px;
+  max-width: $max-readable-width;
 }
 
 .ias-menu {
@@ -45,17 +48,14 @@
   margin: 5px 0;
 }
 
-button + button {
-  margin-left: 5px;
-}
+#root {
+  display: flex;
+  flex-flow: column nowrap;
+  height: 100%;
 
-input:not([type="checkbox"]) {
-  width: 280px;
-}
-
-label span {
-  color: $text-color;
-  font-size: 15px;
-  margin-left: 5px;
-  vertical-align: baseline;
+  .scrollable-content {
+    flex-grow: 1;
+    overflow: auto;
+    position: relative;
+  }
 }

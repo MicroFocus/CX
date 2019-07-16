@@ -6,13 +6,11 @@ import {clearStorageItem, saveStorageItem, storageItems} from '../utils/local-st
 import {catchLostServerConnection, createToastFromJsonErrors} from './error-handlers.actions';
 import history from '../history';
 import {fetchPolicies} from './methods-display.actions';
-import {methodIds as methodTitles} from '../data/MethodData';
+import {methodIds} from '../data/MethodData';
+import t from '../i18n/locale-keys';
 
-let checkLoginSessionIntervalID = null;
-let executeSetLoginSessionTimeout = () => {};
-let loginSessionTimeoutID = null;
 const CHECK_LOGIN_SESSION_INTERVAL = 60 * 1000;
-const IMPLEMENTED_AUTH_METHODS = [methodTitles.PASSWORD, methodTitles.LDAP_PASSWORD];   // OSP will replace
+const IMPLEMENTED_AUTH_METHODS = [methodIds.PASSWORD, methodIds.LDAP_PASSWORD];   // OSP will replace
 let LOGIN_SESSION_TIMEOUT_MS;
 if (process.env.NODE_ENV === 'development') {
     LOGIN_SESSION_TIMEOUT_MS = 4 * 60 * 60 * 1000;  // 4 hours in development
@@ -20,6 +18,9 @@ if (process.env.NODE_ENV === 'development') {
 else {
     LOGIN_SESSION_TIMEOUT_MS = 5 * 60 * 1000;  // 5 min in production
 }
+
+let checkLoginSessionIntervalID = null;
+let lastActivityTime = new Date();      // Keep track of last activity time so we can logout user if idle too long
 
 export function authenticateUser(username, methodId, formData) {
     return (dispatch, getStore) => {
@@ -76,11 +77,18 @@ export function handleExpiredLoginSession(dispatch) {
     dispatch({type: types.CLEAR_USER_INFO});
     createToast({
         type: STATUS_TYPE.ERROR,
-        description: 'Login session expired'
+        description: t.loginSessionExpired()
     });
 }
 
 const checkLoginSession = (dispatch, getStore) => {
+    // Expire login session if it has been too long since time of last activity.
+    const currentTime = new Date();
+    if (currentTime - lastActivityTime > LOGIN_SESSION_TIMEOUT_MS) {
+        handleExpiredLoginSession(dispatch);
+        return;
+    }
+
     const loginSessionId = getStore().authentication.loginSessionId;
     api.readLoginSessionInfo(loginSessionId)
         .catch((failedResponseData) => {
@@ -98,21 +106,11 @@ function clearCheckLoginSessionInterval() {
         clearInterval(checkLoginSessionIntervalID);
         checkLoginSessionIntervalID = null;
     }
-    clearLoginSessionTimeout();
-}
-
-function clearLoginSessionTimeout() {
-    if (loginSessionTimeoutID) {
-        clearTimeout(loginSessionTimeoutID);
-        loginSessionTimeoutID = null;
-    }
 }
 
 export function clearUser() {
     return (dispatch) => dispatch({ type: types.CLEAR_USER_INFO });
 }
-
-export const extendLoginSessionTimeout = () => executeSetLoginSessionTimeout();
 
 export const logoutUser = () => (dispatch, getStore) => {
     const loginSessionId = getStore().authentication.loginSessionId;
@@ -120,7 +118,7 @@ export const logoutUser = () => (dispatch, getStore) => {
         clearCheckLoginSessionInterval();
         clearStorageItem(storageItems.LOGIN_SESSION_ID);
         dispatch({ type: types.CLEAR_USER_INFO });
-        createToast({ type: STATUS_TYPE.OK, description: 'Sign out successful' });
+        createToast({ type: STATUS_TYPE.OK, description: t.userSignOutSuccessful() });
     });
 };
 
@@ -133,7 +131,7 @@ export function loadLoginChains(username) {
                 if (data.userIsLocked) {
                     createToast({
                         type: STATUS_TYPE.ERROR,
-                        description: 'User is locked out.'
+                        description: t.userLockedOut()
                     });
                 }
                 else {
@@ -179,25 +177,16 @@ export function selectLoginChainIndex(index) {
     return (dispatch) => dispatch({type: types.UPDATE_LOGIN_CHAIN, index});
 }
 
-// Whenever we set or clear the checkLoginSessionInterval, we will do the same for loginSessionTimeout,
-// so we don't stay logged in forever.
 function setCheckLoginSessionInterval(dispatch, getStore) {
     if (!checkLoginSessionIntervalID) {
         checkLoginSessionIntervalID = setInterval(() => checkLoginSession(dispatch, getStore),
             CHECK_LOGIN_SESSION_INTERVAL);
-        setLoginSessionTimeout(dispatch);
     }
 }
 
-function setLoginSessionTimeout(dispatch) {
-    executeSetLoginSessionTimeout = () => {
-        clearLoginSessionTimeout();
-        loginSessionTimeoutID = setTimeout(() => handleExpiredLoginSession(dispatch),
-            LOGIN_SESSION_TIMEOUT_MS);
-    };
-
-    executeSetLoginSessionTimeout();
-}
+const updateLastActivityTime = () => {
+    lastActivityTime = new Date();
+};
 
 export function updateLoginFormData(key, value) {
     return (dispatch) => dispatch({type: types.UPDATE_LOGIN_FORM_DATA, key, value});
@@ -207,9 +196,5 @@ export function updateUsername(username) {
     return (dispatch) => dispatch({type: types.UPDATE_USERNAME, username});
 }
 
-// Any navigation on the page should extend the time the user stays logged in
-history.listen(() => {
-    if (loginSessionTimeoutID) {
-        extendLoginSessionTimeout();
-    }
-});
+// Update last activity time whenever user navigates
+history.listen(updateLastActivityTime);

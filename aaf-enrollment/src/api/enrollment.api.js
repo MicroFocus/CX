@@ -1,5 +1,6 @@
 import {apiFetch} from './json-fetch';
 import { decamelizeKeys } from 'humps';
+import {ensureEndpointSession} from './endpoint-session.api';
 
 export function abortEnrollProcess(enrollProcessId, loginSessionId) {
     return apiFetch('DELETE', `enroll/${enrollProcessId}`, {
@@ -61,6 +62,24 @@ export function getDefaultRecipient(userId, loginSessionId, methodId) {
         }
     });
 }
+
+export const getTotpQrCode = ensureEndpointSession((endpointSessionId) => (isBase32Secret) => {
+    return apiFetch('POST', 'logon_method/TOTP:1', {
+        data: {
+            generateAuthenticator: true,
+            isBase32Secret,
+            endpointSessionId
+        }
+    });
+});
+
+export const getWinHelloInfo = (userId, loginSessionId) => {
+    return apiFetch('POST', `logon_method/WINHELLO:1/account_details/${userId}`, {
+        params: {
+            loginSessionId
+        }
+    });
+};
 
 export function modifyUserTemplate(userId, loginSessionId, enrollProcessId, templateId, comment) {
     const data = {

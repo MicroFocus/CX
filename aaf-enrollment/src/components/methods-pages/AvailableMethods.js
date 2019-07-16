@@ -13,6 +13,7 @@ import MethodTile from '../tiles/MethodTile';
 import {fetchIndexedData} from '../../actions/methods-display.actions';
 import {Redirect} from 'react-router-dom';
 import {unenrollableMethods} from '../../data/MethodData';
+import t from '../../i18n/locale-keys';
 
 class AvailableMethods extends React.PureComponent {
     constructor(props) {
@@ -22,21 +23,20 @@ class AvailableMethods extends React.PureComponent {
     }
 
     getChainsContent() {
-        const { categories, indexedChains, nonDefaultCategoriesEnrolled, viewChainAuthenticator } = this.props;
+        const { alwaysHideCategories, categories, indexedChains, nonDefaultCategoriesEnrolled,
+            viewChainAuthenticator } = this.props;
 
         return (
-            <React.Fragment>
-                <div className="chains-grid-label">Sequence Methods</div>
-                <div className="ias-grid">
-                    <ChainTileList
-                        categories={categories}
-                        enrolled={false}
-                        indexedChains={indexedChains}
-                        nonDefaultCategoriesEnrolled={nonDefaultCategoriesEnrolled}
-                        viewChainAuthenticator={viewChainAuthenticator}
-                    />
-                </div>
-            </React.Fragment>
+            <div className="ias-grid">
+                <ChainTileList
+                    alwaysHideCategories={alwaysHideCategories}
+                    categories={categories}
+                    enrolled={false}
+                    indexedChains={indexedChains}
+                    nonDefaultCategoriesEnrolled={nonDefaultCategoriesEnrolled}
+                    viewChainAuthenticator={viewChainAuthenticator}
+                />
+            </div>
         );
     }
 
@@ -61,12 +61,9 @@ class AvailableMethods extends React.PureComponent {
         });
 
         return (
-            <React.Fragment>
-                <div className="methods-grid-label">Single Methods</div>
-                <div className="ias-grid">
-                    {methodElements}
-                </div>
-            </React.Fragment>
+            <div className="ias-grid">
+                {methodElements}
+            </div>
         );
     }
 
@@ -79,13 +76,19 @@ class AvailableMethods extends React.PureComponent {
         const { type } = match.params;
 
         let content = null;
+        let description = null;
+        let title = null;
         if (availableIndexedTemplates && indexedChains) {
             switch (type) {
                 case AVAILABLE_METHODS_TYPES.CHAINS:
                     content = this.getChainsContent();
+                    description = t.availableChainsSelectDescription();
+                    title = t.availableChainsSelectTitle();
                     break;
                 case AVAILABLE_METHODS_TYPES.METHODS:
                     content = this.getMethodsContent();
+                    description = t.availableMethodsSelectDescription();
+                    title = t.availableMethodsSelectTitle();
                     break;
                 default:
                     content = <Redirect to={HOMEPAGE_URL} />;
@@ -95,20 +98,20 @@ class AvailableMethods extends React.PureComponent {
         return (
             <div className="ias-content-padding">
                 <div className="ias-header">
-                    <h2>Available Authentication Methods for Enrollment</h2>
+                    <h2>{title}</h2>
                     <span className="ias-fill" />
                     <button
                         className="ias-button ias-icon-button"
+                        id="Close_Button"
                         onClick={this.handleClose}
-                        title="Close"
+                        title={t.buttonClose()}
                         type="button"
                     >
                         <i className="ias-icon ias-icon-close_thin" />
                     </button>
                 </div>
                 <p className="description">
-                    Select an authentication method for enrollment. Once enrolled, the method can be used for sign in.
-                    OTP methods are one-time password authenticators.
+                    {description}
                 </p>
                 {content}
             </div>

@@ -12,7 +12,9 @@ export function loadStorageItem(name) {
         return localStorage.getItem(name) || undefined;
     }
     catch (err) {
-        return undefined;   // Ignore read errors
+        // Ignore read errors
+        console.error('Local storage read error:', err);
+        return undefined;
     }
 }
 
@@ -22,6 +24,7 @@ export function saveStorageItem(name, value) {
     }
     catch (err) {
         // Ignore write errors
+        console.error('Local storage write error:', err);
     }
 }
 
@@ -31,5 +34,6 @@ export function clearStorageItem(name) {
     }
     catch (err) {
         // Ignore write errors
+        console.error('Local storage write error:', err);
     }
 }

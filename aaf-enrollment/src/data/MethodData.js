@@ -2,6 +2,7 @@ export const methodIds = {
     BANKID: 'BANKID:1',
     BLUETOOTH: 'BLUETOOTH:1',
     CARD: 'CARD:1',
+    DEVICE_AUTH: 'DEVICE_AUTH:1',
     EMAIL_OTP: 'EMAIL_OTP:1',
     EMERG_PASSWORD: 'EMERG_PASSWORD:1',
     FACE: 'FACE:1',
@@ -27,16 +28,22 @@ export const methodIds = {
 
 export const unenrollableMethods = [ methodIds.EMERG_PASSWORD, methodIds.OAUTH2];
 
+export const autocreatedMethods = [ methodIds.EMAIL_OTP, methodIds.LDAP_PASSWORD, methodIds.RADIUS, methodIds.SMS_OTP,
+    methodIds.SWISSCOM, methodIds.VOICE_OTP ];
+
+// Store icons for the methods. Also store methodTitles, but this is not used in application except on login page
+// temporarily until OSP replaces it. (This is why the titles aren't localized.)
 export const methods = {
     [methodIds.BANKID]: { methodTitle: 'BankID', icon: 'bankid' },
     [methodIds.BLUETOOTH]: { methodTitle: 'Bluetooth', icon: 'bluetooth' },
     [methodIds.CARD]: { methodTitle: 'Card', icon: 'card_chip' },
+    [methodIds.DEVICE_AUTH]: { methodTitle: 'Device Authentication', icon: 'device_monitor_thin' },
     [methodIds.EMAIL_OTP]: { methodTitle: 'Email OTP', icon: 'email_thin' },
     [methodIds.EMERG_PASSWORD]: { methodTitle: 'Emergency Password', icon: 'password_emergency' },
     [methodIds.FACE]: { methodTitle: 'Facial Recognition', icon: 'facial_recognition' },
-    [methodIds.FIDO2]: { methodTitle: 'FIDO 2.0', icon: 'world_thin' },     // TODO: get icon approved by Lynn
+    [methodIds.FIDO2]: { methodTitle: 'FIDO 2.0', icon: 'secure_web' },
     [methodIds.FINGER]: { methodTitle: 'Fingerprint', icon: 'fingerprint_thin' },
-    [methodIds.HOTP]: { methodTitle: 'HOTP', icon: 'secure_identity' },        // TODO: get icon approved by Lynn
+    [methodIds.HOTP]: { methodTitle: 'HOTP', icon: 'numeric_code' },
     [methodIds.LDAP_PASSWORD]: { methodTitle: 'LDAP Password', icon: 'password_ldap' },
     [methodIds.OAUTH2]: { methodTitle: 'Oauth2', icon: 'secure_identity' },
     [methodIds.PASSWORD]: { methodTitle: 'Password', icon: 'password_thin' },
@@ -48,8 +55,8 @@ export const methods = {
     [methodIds.SWISSCOM]: { methodTitle: 'Swisscom Mobile ID', icon: 'swisscom_mobile_id' },
     [methodIds.TOTP]: { methodTitle: 'Time-based OTP (TOTP)', icon: 'time_thick' },
     [methodIds.U2F]: { methodTitle: 'U2F', icon: 'usb' },
-    [methodIds.VOICE]: { methodTitle: 'Voice', icon: 'microphone' },
-    [methodIds.VOICE_OTP]: { methodTitle: 'Voice OTP', icon: 'microphone' },
+    [methodIds.VOICE]: { methodTitle: 'Voice', icon: 'phone_keypad' },
+    [methodIds.VOICE_OTP]: { methodTitle: 'Voice OTP', icon: 'phone_thick' },
     [methodIds.WEBAUTH]: { methodTitle: 'Web Authentication', icon: 'world_thin' },
     [methodIds.WINHELLO]: { methodTitle: 'Windows Hello', icon: 'sys_windows ' }
 };

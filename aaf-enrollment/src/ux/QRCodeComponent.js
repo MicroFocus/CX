@@ -28,12 +28,12 @@ class QRCodeComponent extends React.PureComponent {
             height: 256,
             colorDark: '#000000',
             colorLight: '#ffffff',
-            correctLevel: window.QRCode.CorrectLevel.M,
-        }
+            correctLevel: window.QRCode.CorrectLevel.M
+        };
     }
 
     render() {
-        return <div ref={this.qrcoderef} className="qr-container" />;
+        return <div ref={this.qrcoderef} className="authenticator-section qr-container" />;
     }
 };
 

@@ -1,5 +1,6 @@
 import React from 'react';
 import ShowHidePassword from '../../../ShowHidePassword';
+import t from '../../../../i18n/locale-keys';
 
 class SecurityQuestionsTest extends React.PureComponent {
     constructor(props) {
@@ -38,16 +39,17 @@ class SecurityQuestionsTest extends React.PureComponent {
     render() {
         const {form: {answers}, questions} = this.state;
 
-        const questionElements = Object.keys(questions).map((questionKey) => {
+        const questionElements = Object.keys(questions).map((questionKey, questionIndex) => {
             const question = questions[questionKey];
             const answer = answers[questionKey];
             return (
                 <ShowHidePassword
+                    autoFocus={(questionIndex === 0)}
                     name={`answer_id_${questionKey}`}
                     onChange={(event) => this.handleChange(questionKey, event)}
                     key={questionKey}
                     label={question}
-                    placeholder="Answer"
+                    placeholder={t.secQuestAnswer()}
                     value={answer}
                 />
             );

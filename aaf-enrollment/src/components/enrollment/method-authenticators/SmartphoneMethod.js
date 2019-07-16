@@ -1,8 +1,8 @@
 import React from 'react';
 import Authenticator from '../Authenticator';
 import QRCodeComponent from '../../../ux/QRCodeComponent';
-import { STATUS_TYPE } from '../../../ux/ux';
-import TestAuthenticatorButton from '../test-authenticator/TestAuthenticatorButton';
+import {STATUS_TYPE} from '../../../ux/ux';
+import t from '../../../i18n/locale-keys';
 
 class SmartphoneMethod extends React.PureComponent {
     constructor(props) {
@@ -12,6 +12,9 @@ class SmartphoneMethod extends React.PureComponent {
             isEnrolling: false,
             qrData: ''
         };
+
+        // If offline authentication is disabled, we will hide the part of the description mentioning it.
+        this.disableOffline = this.props.policies.smartphoneMethod.data.disableOffline;
     }
 
     authenticationInfoChanged() {
@@ -22,96 +25,74 @@ class SmartphoneMethod extends React.PureComponent {
         return false;
     }
 
-    doEnroll() {
-        return this.props.doEnrollWithBeginProcess()
+    handleQRClick = () => {
+        this.setState({ isEnrolling: true });
+
+        this.props.doEnrollWithBeginProcess()
             .then((response) => {
                 if (response.status === 'MORE_DATA') {
                     this.scheduleAutoSubmit();
-
-                    if (response.qrdata) {
-                        return new Promise((resolve) => {
-                            this.setState((state) => {
-                                return {qrData: response.qrdata,
-                                        isEnrolling: true
-                                };
-                            }, () => resolve(response));
-                        });
-                    }
-                    else {
-                        return Promise.resolve(response);
-                    }
-                }
-                else if (response.status === 'FAILED') {
-                    this.props.showStatus(response.msg, STATUS_TYPE.ERROR);
-                    return new Promise((resolve) => {
-                        this.setState((state) => {
-                            return {qrData: response.qrdata,
-                                    isEnrolling: false
-                            };
-                        }, () => resolve(response));
-                    });
+                    this.setState({ qrData: response.qrdata });
                 }
                 else {
-                    throw response.msg;
+                    this.props.showStatus(response.msg, STATUS_TYPE.ERROR);
                 }
             });
     };
 
-    handleQRClick = () => {
-        this.doEnroll();
-    };
-
-    scheduleAutoSubmit() {
+    scheduleAutoSubmit = () => {
         this.props.setAsyncEnroll((response) => {
-            // guaranteed to have response.status !== MORE_DATA
-            if (response.status === 'FAILED') {
-                this.props.showStatus(response.msg, STATUS_TYPE.ERROR);
-                return new Promise((resolve) => {
-                    this.setState((state) => {
-                        return {qrData: response.qrdata,
-                                isEnrolling: false
-                        };
-                    }, () => resolve(response));
-                });
-            }
-            else if (response.status === 'OK') {
-                this.props.showStatus(response.msg, STATUS_TYPE.OK);
+            if (response.status === 'OK') {
+                // Unlike other methods with async enrollment, the Smartphone enrollment only returns an empty string
+                // on success instead of the expected 'Enrollment is complete' message.
+                // To avoid this problem, let's set a success message if string is blank.
+                const message = response.msg || t.enrollmentComplete();
+                this.props.showStatus(message, STATUS_TYPE.OK);
             }
             else {
-                throw response.msg;
+                this.props.showStatus(response.msg, STATUS_TYPE.ERROR);
+                this.setState({ isEnrolling: false });
             }
         });
-    }
+    };
 
     render() {
         const qrElement = this.state.qrData ? <QRCodeComponent text={this.state.qrData} /> : null;
-        return (
-            <Authenticator
-                description={`The Smartphone method allows authentication with your smartphone.
-It is an out-of-band authentication. The NetIQ Advanced Authentication application
-sends a push message to your smartphone, which you can "Accept" or "Reject."
-Installing the NetIQ Advanced Authentication mobile app (AdvAuth app)
-on your smartphone is required.`}
-                {...this.props}
-            >
-                <div className="description">
-                    To enroll, get a QR code then scan it using the AdvAuth mobile app:
-                </div>
-                <div className="authenticator-section">
-                    <button type="button" className="ias-button" onClick={this.handleQRClick}>Get QR Code</button>
-                </div>
 
-                {/* TODO: Display the QR Code and wait by calling doEnroll continuously */}
-                {qrElement}
-
+        let offlineDescription = null;
+        if (!this.disableOffline) {
+            offlineDescription = (
                 <div className="description">
                     <ul>
-                        <li>As a backup method, the AdvAuth mobile app provides an OTP
-                            code if internet connection is not available on your smartphone.
+                        <li>{t.smartphoneBackupMethodInfo()}
                         </li>
                     </ul>
                 </div>
-                <TestAuthenticatorButton {...this.props.test} />
+            );
+        }
+
+        return (
+            <Authenticator
+                description={t.smartphoneMethodDescription()}
+                {...this.props}
+            >
+                <div className="description">
+                    {t.smartphoneEnrollInstructions()}
+                </div>
+                <div className="authenticator-section">
+                    <button
+                        className="ias-button"
+                        disabled={this.state.isEnrolling || this.props.readonlyMode}
+                        id="QR_Code_Button"
+                        onClick={this.handleQRClick}
+                        type="button"
+                    >
+                        {t.buttonGetQRCode()}
+                    </button>
+                </div>
+
+                {qrElement}
+                {offlineDescription}
             </Authenticator>
         );
     }

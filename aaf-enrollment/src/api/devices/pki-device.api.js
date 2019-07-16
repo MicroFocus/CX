@@ -1,13 +1,10 @@
-import jsonFetch from './json-fetch';
-import CommonCardHandler from './commonCardHandler';
+import jsonFetch from '../json-fetch';
+import CommonCardHandler from './common-card-devices.api';
+import t from '../../i18n/locale-keys';
 
-const PKI_SERVICE_URL = CommonCardHandler.PKI_SERVICE_URL;
 const PKI_GENERATE_KEYPAIR_SUFFIX = '/generatekeypair';
 const PKI_GET_CERTIFICATES_SUFFIX = '/getcertificates';
 const PKI_SIGN_CHALLENGE_SUFFIX = '/signchallenge';
-
-const _ = (string) => string;  // TODO: localize
-const _k = (string) => string;  // TODO: localize
 
 function callPKIService(urlSuffix, method, data) {
     const originalPromise = jsonFetch({
@@ -15,25 +12,25 @@ function callPKIService(urlSuffix, method, data) {
         data,
         decamelize: true,
         method,
-        url: PKI_SERVICE_URL + urlSuffix
+        url: CommonCardHandler.PKI_SERVICE_URL + urlSuffix
     });
 
     const promise = originalPromise.catch((failedResponseData) => {
         if (failedResponseData.status) {
-            return Promise.reject('PKI service error');
+            return Promise.reject(t.pkiServiceError());
         }
 
-        return Promise.reject('PKI service is not available');
+        return Promise.reject(t.pkiServiceUnavailable());
     }).then((data) => {
         const {result} = data;
         if (result) {
             if (result === 'WRONG_PIN') {
-                return Promise.reject(_k('Incorrect PIN'));
+                return Promise.reject(t.pkiWrongPin());
             }
             else if (result === 'KEY_NOT_FOUND') {
-                return Promise.reject(_('Key not found. It must be a wrong card'));
+                return Promise.reject(t.pkiKeyNotFound());
             }
-            else return Promise.reject('Unexpected error code: ' + result);
+            else return Promise.reject(t.unknownErrorCode(result));
         }
 
         return data;

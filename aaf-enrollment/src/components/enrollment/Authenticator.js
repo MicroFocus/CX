@@ -1,12 +1,14 @@
 import './Authenticator.scss';
 import {IconButton} from '../../ux/ux';
-import {methods} from '../../data/MethodData';
+import {methods, autocreatedMethods} from '../../data/MethodData';
 import ChainNavigationButtons from './ChainNavigationButtons';
 import {categoriesType, indexedChainType, templateType} from '../../types/types';
 import PropTypes from 'prop-types';
 import React from 'react';
 import getCategoryName from '../../utils/category-name';
 import AuthenticatorStatus from './AuthenticatorStatus';
+import TestAuthenticatorButton from './test-authenticator/TestAuthenticatorButton';
+import t from '../../i18n/locale-keys';
 
 class Authenticator extends React.PureComponent {
     getFormContent() {
@@ -17,18 +19,21 @@ class Authenticator extends React.PureComponent {
         return (
             <React.Fragment>
                 <div className="ias-input-container">
-                    <label htmlFor="authenticator-description">Display Name</label>
+                    <label htmlFor="authenticator-description">{t.displayName()}</label>
                     <input
+                        autoComplete="off"
+                        autoFocus
                         id="authenticator-description"
                         type="text"
                         onChange={onCommentChange}
                         value={comment}
                     />
+                    <TestAuthenticatorButton {...this.props.test} />
                 </div>
 
-                <AuthenticatorStatus statusMessage={statusMessage} />
-
                 {categoryElements}
+
+                <AuthenticatorStatus statusMessage={statusMessage} />
 
                 {this.props.children}
             </React.Fragment>
@@ -36,10 +41,11 @@ class Authenticator extends React.PureComponent {
     }
 
     getCategoryElements() {
-        const { categories, categoryIdInput, categoryFixed, onCategoryChange, template } = this.props;
+        const { alwaysHideCategories, categories, categoryIdInput, categoryFixed, onCategoryChange, template }
+            = this.props;
 
-        // Do not display categories if multiple do not exist
-        if (!categories || categories.length <= 1) {
+        // Do not display categories if specified
+        if (alwaysHideCategories) {
             return null;
         }
 
@@ -65,7 +71,7 @@ class Authenticator extends React.PureComponent {
 
         return (
             <div className="ias-input-container authenticator-category">
-                <label>Category
+                <label>{t.authenticatorCategory()}
                     {labelContent}
                 </label>
             </div>
@@ -73,20 +79,20 @@ class Authenticator extends React.PureComponent {
     }
 
     getSaveButtons() {
-        const { chain, onChainNavigation, template } = this.props;
+        const { chain, chainSequenceIndex, onChainNavigation, template } = this.props;
 
         if (chain) {
             return (
                 <ChainNavigationButtons
                     chain={chain}
+                    chainSequenceIndex={chainSequenceIndex}
                     template={template}
                     onNavigation={onChainNavigation}
                 />
             );
         }
         else {
-            const buttonText = template.isEnrolled ? 'Done' : 'Save';
-            return <button className="ias-button" id="authenticatorDoneButton">{buttonText}</button>;
+            return <button className="ias-button" id="Save_Button">{t.buttonSave()}</button>;
         }
     }
 
@@ -96,24 +102,33 @@ class Authenticator extends React.PureComponent {
         const methodId = template.methodId;
         const {icon} = methods[methodId];
 
-        let enrolledOptions = null;
-        if (template.isEnrolled) {
-            enrolledOptions = (
-                <React.Fragment>
-                    <i className="ias-icon ias-icon-check_thick secondary-icon" title="Enrolled" />
-                    <IconButton
-                        className="primary-icon-button"
-                        icon="delete_thick"
-                        onClick={onDelete}
-                        title="Delete Enrollment"
-                    />
-                </React.Fragment>
-            );
+        const enrolledOptions = [];
+        if (template.isFullyEnrolled) {
+            enrolledOptions.push((
+                <i
+                    className="ias-icon ias-icon-check_thick secondary-icon"
+                    key="enrolled-check"
+                    title={t.authenticatorEnrolled()}
+                />
+            ));
+        }
+        // Only allow deletion of enrolled method if we aren't in readonly mode and the method isn't autocreated
+        if (template.isEnrolled && !this.props.readonlyMode && autocreatedMethods.indexOf(template.methodId) === -1) {
+            enrolledOptions.push((
+                <IconButton
+                    className="primary-icon-button"
+                    key="delete-button"
+                    icon="delete_thick"
+                    id="Delete_Button"
+                    onClick={onDelete}
+                    title={t.authenticatorDelete()}
+                />
+            ));
         }
 
         let formContent = null;
         if (unenrollable) {
-            formContent = <p>This method is managed by your administrator. There is nothing to configure.</p>;
+            formContent = <p>{t.authenticatorUnenrollableDescription()}</p>;
         }
         else {
             formContent = this.getFormContent();
@@ -128,7 +143,7 @@ class Authenticator extends React.PureComponent {
                     <h2>{template.methodTitle}</h2>
                     {enrolledOptions}
                     <span className="ias-fill" />
-                    <IconButton icon="close_thin" onClick={onClose} title="Close" />
+                    <IconButton icon="close_thin" onClick={onClose} title={t.buttonClose()} />
                 </div>
                 <p className="description">
                     {description}
@@ -139,8 +154,8 @@ class Authenticator extends React.PureComponent {
 
                     <div className="authenticator-buttons">
                         {saveButtons}
-                        <button className="ias-button" id="authenticatorCancelButton" onClick={onClose} type="button">
-                            Cancel
+                        <button className="ias-button" id="Cancel_Button" onClick={onClose} type="button">
+                            {t.buttonCancel()}
                         </button>
                     </div>
                 </form>
@@ -150,6 +165,7 @@ class Authenticator extends React.PureComponent {
 }
 
 Authenticator.propTypes = {
+    alwaysHideCategories: PropTypes.bool.isRequired,
     categories: categoriesType,
     categoryIdInput: PropTypes.string.isRequired,
     chain: indexedChainType,
@@ -161,6 +177,7 @@ Authenticator.propTypes = {
     onCommentChange: PropTypes.func.isRequired,
     onDelete: PropTypes.func.isRequired,
     onSubmit: PropTypes.func.isRequired,
+    readonlyMode: PropTypes.bool.isRequired,
     statusMessage: PropTypes.shape({
         description: PropTypes.string.isRequired,
         type: PropTypes.string.isRequired

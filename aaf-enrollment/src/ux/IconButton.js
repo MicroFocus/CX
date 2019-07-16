@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const IconButton = ({className, icon, onClick, title}) => {
+const IconButton = ({className, icon, id, onClick, title}) => {
     let buttonClass = 'ias-button ias-icon-button';
     if (className) {
         buttonClass += ' ' + className;
@@ -9,6 +9,7 @@ const IconButton = ({className, icon, onClick, title}) => {
     return (
         <button
             className={buttonClass}
+            id={id}
             onClick={onClick}
             title={title}
             type="button"
@@ -21,6 +22,7 @@ const IconButton = ({className, icon, onClick, title}) => {
 IconButton.propTypes = {
     className: PropTypes.string,
     icon: PropTypes.string.isRequired,
+    id: PropTypes.string,
     onClick: PropTypes.func.isRequired,
     title: PropTypes.string.isRequired
 };

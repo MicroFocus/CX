@@ -1,6 +1,7 @@
 import BankIdMethod from './method-authenticators/BankIdMethod';
 import BluetoothMethod from './method-authenticators/BluetoothMethod';
 import CardMethod from './method-authenticators/CardMethod';
+import DeviceAuthMethod from './method-authenticators/DeviceAuthMethod';
 import EmailOTPMethod from './method-authenticators/EmailOTPMethod';
 import EmergencyPasswordMethod from './method-authenticators/EmergencyPasswordMethod';
 import FacialMethod from './method-authenticators/FacialMethod';
@@ -35,6 +36,8 @@ const MethodAuthenticator = React.forwardRef(({methodId, ...rest}, ref) => {
             return <BluetoothMethod ref={ref} {...rest} />;
         case methodIds.CARD:
             return <CardMethod ref={ref} {...rest} />;
+        case methodIds.DEVICE_AUTH:
+            return <DeviceAuthMethod ref={ref} {...rest} />;
         case methodIds.EMAIL_OTP:
             return <EmailOTPMethod ref={ref} {...rest} />;
         case methodIds.EMERG_PASSWORD:

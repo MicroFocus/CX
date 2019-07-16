@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import * as ReactDOM from 'react-dom';
+import t from '../i18n/locale-keys';
 
 /* Displays a dialog that stays open when this.props.open is true.
  * - If an onCancel event handler is provided, the "Cancel" button will be shown; clicking "X" or Cancel will call it.
@@ -33,7 +34,12 @@ export default class Dialog extends React.PureComponent {
         let dialogCloseButton = null;
         if (!omitCloseButton) {
             dialogCloseButton = (
-                <button className="ias-button ias-icon-button ias-dialog-cancel-button" onClick={this.handleCancel}>
+                <button
+                    className="ias-button ias-icon-button ias-dialog-cancel-button"
+                    id="Dialog_Close_Button"
+                    onClick={this.handleCancel}
+                    title={t.buttonClose()}
+                >
                     <i className="ias-icon ias-icon-close_thick" />
                 </button>
             );
@@ -41,13 +47,20 @@ export default class Dialog extends React.PureComponent {
 
         let actionButtons = null;
         if (!omitActionButtons) {
-            const cancelButton = onCancel
-                ? <button className="ias-button ng-scope" onClick={this.handleCancel}>Cancel</button>
-                : null;
+            let cancelButton = null;
+            if (onCancel) {
+                cancelButton = (
+                    <button className="ias-button" id="Dialog_Cancel_Button" onClick={this.handleCancel}>
+                        {t.buttonCancel()}
+                    </button>
+                );
+            }
 
             actionButtons = (
                 <div className="ias-actions">
-                    <button className="ias-button ng-scope" onClick={onClose}>OK</button>
+                    <button className="ias-button" id="Dialog_OK_Button" onClick={onClose}>
+                        {t.buttonOk()}
+                    </button>
                     {cancelButton}
                 </div>
             );

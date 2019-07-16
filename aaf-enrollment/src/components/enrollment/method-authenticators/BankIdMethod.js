@@ -2,7 +2,7 @@ import React from 'react';
 import Authenticator from '../Authenticator';
 import ShowHidePassword from '../../ShowHidePassword';
 import {generateFormChangeHandler} from '../../../utils/form-handler';
-import TestAuthenticatorButton from '../test-authenticator/TestAuthenticatorButton';
+import t from '../../../i18n/locale-keys';
 
 class BankIdMethod extends React.PureComponent {
     constructor(props) {
@@ -17,17 +17,17 @@ class BankIdMethod extends React.PureComponent {
         const {form} = this.state;
         if (form.personalId !== '') {
             return this.props.doEnrollWithBeginProcess(form)
-            .then((response) => {
-                if (response.status !== 'FAILED') {
-                    return Promise.resolve(response);
-                }
-                else {
-                    throw response.msg;
-                }
-            });
+                .then((response) => {
+                    if (response.status !== 'FAILED') {
+                        return Promise.resolve(response);
+                    }
+                    else {
+                        throw response.msg;
+                    }
+                });
         }
         else {
-            return Promise.reject('No personal id entered.');
+            return Promise.reject(t.bankIdNoId());
         }
     };
 
@@ -38,21 +38,17 @@ class BankIdMethod extends React.PureComponent {
     render() {
         return (
             <Authenticator
-                description="BankID is a highly trusted digital identification service for Swedish citizens.
-          With access to Swedish BankID from Nets, you can authenticate any person online,
-          carry out secure transactions,
-          establish and maintain good customer relations, and enter into and sign legally binding agreements."
+                description={t.bankIdMethodDescription()}
                 {...this.props}
             >
                 <ShowHidePassword
-                        id="PersonalId_Input_Field"
-                        name="personalId"
-                        onChange={this.handleChange}
-                        placeholder="Personal ID (SSN)"
-                        value={this.state.form.personalId}
-                >
-                    <TestAuthenticatorButton {...this.props.test} />
-                </ShowHidePassword>
+                    disabled={this.props.readonlyMode}
+                    id="PersonalId_Input_Field"
+                    name="personalId"
+                    onChange={this.handleChange}
+                    placeholder={t.bankIdId()}
+                    value={this.state.form.personalId}
+                />
             </Authenticator>
         );
     }

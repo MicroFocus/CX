@@ -136,10 +136,6 @@ export function readLoginSessionInfo(loginSessionId) {
     }
 }
 
-export function getTotpQrCode(isBase32Secret) {
-    return null;
-}
-
 export function simulateResponse(data, isReject) {
     return new Promise((resolve, reject) => {
         const camelizedData = camelizeKeys(data);

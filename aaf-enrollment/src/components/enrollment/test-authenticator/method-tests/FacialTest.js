@@ -1,94 +1,81 @@
-/* eslint-disable */
 import React from 'react';
-import {STATUS_TYPE, StatusIndicator} from '../../../../ux/ux';
-import * as facial from '../../../../api/facial';
+import {STATUS_TYPE} from '../../../../ux/ux';
+import * as facial from '../../../../api/devices/facial-device.api';
+import t from '../../../../i18n/locale-keys';
+import FacialVideo from '../../method-authenticators/FacialVideo';
 
-//TODO convert this to our localization
-const _ = (value) => {
-    return value;
-};
+const FACIAL_VIDEO_KEY = 'Test';
 
 class FacialTest extends React.PureComponent {
     constructor(props) {
         super(props);
 
-        this._isMounted = false;
-        this.state = {capture: false};
+        this.componentIsMounted = false;
+        this.state = {
+            faceImg: null,
+            showFace: false,
+            imgSrc: ''
+        };
 
         this.props.setTestButtonAvailability(false);
-
-        this.domIds = { canvas: "canvasTest",
-                        video: "videoTest",
-                        canvasSnap: "canvasSnapTest"}
     }
 
     componentDidMount() {
-        this._isMounted = true;
+        this.componentIsMounted = true;
         facial.stopCapture();
         this.captureFaceAndSubmitAuth();
     }
 
     componentWillUnmount() {
-        this._isMounted = false;
+        this.componentIsMounted = false;
         facial.stopCapture();
     }
 
     captureFaceAndSubmitAuth() {
-        this.props.showStatus(facial.FACE_DETECTING_MSG(), STATUS_TYPE.INFO);
+        this.props.showStatus(t.faceDetecting(), STATUS_TYPE.INFO);
 
         this.setState({
-            capture: true
+            showFace: true
         });
 
-        facial.captureFace(this.domIds, this.capturFaceCallBack)
-        .then((faceImg) => {
-            facial.stopCapture();
-            this.props.showStatus(facial.FACE_DETECTED_MSG(), STATUS_TYPE.INFO);
-            this.setState({
-                data: {face_img: faceImg},
-                capture: false});
+        facial.captureFace(FACIAL_VIDEO_KEY, this.captureFaceCallBack)
+            .then((faceImg) => {
+                facial.stopCapture();
+                this.props.showStatus(t.faceDetected(), STATUS_TYPE.INFO);
+                this.setState({
+                    faceImg,
+                    showFace: false
+                });
 
-            this.props.doTestLogon({faceImg});
-        }).catch((errMsg) => {
-            facial.stopCapture();
-            this.setState({
-                data: {
-                    faceImg: null
-                },
-                capture: false,
-                img_src: ''
+                this.props.doTestLogon({faceImg});
+            }).catch((error) => {
+                facial.stopCapture();
+                if (error.status === 'timeout') {
+                    this.props.markTestComplete(false, t.facialTimeout());
+                }
+                else {
+                    this.props.markTestComplete(false, error);
+                }
+                // Since this component unmounts when test is complete, don't reset the state
             });
-        });
     }
 
-    capturFaceCallBack = (data) => {
-        if (this._isMounted) {
+    captureFaceCallBack = (data) => {
+        if (this.componentIsMounted) {
             this.setState(data);
         }
-    }
-
-    renderFaceForm() {
-        const canvasStyle = {position: 'relative', display: this.state.capture ? 'block' : 'none', zIndex: 0};
-        const videoStyle = {position: 'absolute', display: this.state.capture ? 'block' : 'none'};
-        const canvasSnapStyle = {position: 'absolute', marginTop: 50, display: 'none'};
-        const imgStyle = {marginBottom: 30};
-        return (
-            <div style={{width: '400px', height: '300px', display: 'inline-block', border: '1px dotted black'}}>
-            {this.state.img_src ? (
-                    <div style={imgStyle}><img id="faceImg" width={400} height={300} name="faceImg" src={this.state.img_src} />
-                    </div>) :
-                    (<div>
-                        <canvas id="canvasSnapTest" width={400} height={300} style={canvasSnapStyle} />
-                        <video id="videoTest" width={400} height={300} preload="none" autoPlay muted style={videoStyle} />
-                        <canvas id="canvasTest" width={400} height={300} style={canvasStyle} />
-                     </div>)}
-            </div>
-        );
-    }
-
+    };
 
     render() {
-        return this.renderFaceForm();
+        const {faceImg, showFace, imgSrc} = this.state;
+        return (
+            <FacialVideo
+                captureDone={!!faceImg}
+                facialVideoKey={FACIAL_VIDEO_KEY}
+                imgSrc={imgSrc}
+                showFace={showFace}
+            />
+        );
     }
 }
 

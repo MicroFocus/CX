@@ -1,161 +1,127 @@
-/* eslint-disable */
-import React from 'react';
-import Authenticator from '../Authenticator';
-import {STATUS_TYPE} from '../../../ux/ux';
-import TestAuthenticatorButton from '../test-authenticator/TestAuthenticatorButton';
-import {generateFormChangeHandler} from '../../../utils/form-handler';
-import * as facial from '../../../api/facial';
 import './FacialMethod.scss';
+import Authenticator from '../Authenticator';
+import FacialVideo from './FacialVideo';
+import React from 'react';
+import {STATUS_TYPE} from '../../../ux/ux';
+import t from '../../../i18n/locale-keys';
+import * as facial from '../../../api/devices/facial-device.api';
 
-//TODO convert this to our localization
-const _ = (value) => {
-    return value;
-};
-
-//TODO: convert this localization file
-const __ = (value) => {
-    return value;
-};
+const FACIAL_VIDEO_KEY = 'Enroll';
 
 class FacialMethod extends React.PureComponent {
     constructor(props) {
         super(props);
-        generateFormChangeHandler(this, {
-            faceImg: '',
-            capture: false,
-            img_src: ''
-        });
-        this._isMounted = false;
-        this.enrollSuccess = false;
 
-        this.domIds = { canvas: "canvas",
-                        video: "video",
-                        canvasSnap: "canvasSnap"}
+        this.state = {
+            captureStarted: false,
+            faceImg: null,
+            showFace: false,
+            imgSrc: ''
+        };
+
+        this.componentIsMounted = false;
     }
 
-    beforeDoEnroll = () => {
-        delete this.state.capture;
-        delete this.state.img_src;
-        return this.state;
+    authenticationInfoChanged() {
+        return this.state.captureStarted;
     }
 
-    handleRegisterDevice = (e) => {
-        if (e) {
-            e.preventDefault();
+    authenticationInfoSavable() {
+        return false;
+    }
+
+    captureFaceCallBack = (data) => {
+        if (this.componentIsMounted) {
+            this.setState(data);
         }
-        this.startCapture();
     };
 
+    componentDidMount() {
+        facial.stopCapture();
+        this.componentIsMounted = true;
+    }
+
+    componentWillUnmount() {
+        this.componentIsMounted = false;
+        facial.stopCapture();
+    }
+
     startCapture = () => {
-        this.props.showStatus(facial.FACE_DETECTING_MSG(), STATUS_TYPE.INFO);
+        this.props.showStatus(t.faceDetecting(), STATUS_TYPE.INFO);
         this.setState({
-            capture: true
+            captureStarted: true,
+            showFace: true
         });
-        facial.captureFace(this.domIds, this.capturFaceCallBack)
-            .then((faceImg) => {
-                console.log("Face Detected");
+        this.props.registerPromise(
+                facial.captureFace(FACIAL_VIDEO_KEY, this.captureFaceCallBack)
+            ).then((faceImg) => {
                 facial.stopCapture();
-                this.props.showStatus(facial.FACE_DETECTED_MSG(), STATUS_TYPE.INFO);
+                this.props.showStatus(t.faceDetected(), STATUS_TYPE.INFO);
                 this.setState({
-                    capture: false,
-                    data: {faceImg}
+                    showFace: false,
+                    faceImg
                 });
 
-                const data = {faceImg, userName: this.props.authentication.username};
-                this.props.doEnrollWithBeginProcess(data)
-                .then((data) => {
-                    if (data.status === 'OK') {
-                        this.enrollSuccess = true;
-                    } else if (data.status === 'FAILED') {
-                        this.props.showStatus(data.msg, STATUS_TYPE.WARN);
-                        facial.stopCapture();
-                    }
-                });
-            }).finally(() => {
-                this.setState({
-                    disableActions: true
-                });
+                const enrollData = {
+                    faceImg,
+                    userName: this.props.authentication.username
+                };
+
+                this.props.doEnrollWithBeginProcess(enrollData)
+                    .then((data) => {
+                        // Unlike other methods with async enrollment, the Facial enrollment only returns an empty
+                        // string on success instead of the expected 'Enrollment is complete' message.
+                        // To avoid this problem, let's set a success message if string is blank.
+                        if (data.status === 'OK') {
+                            const message = data.msg || t.enrollmentComplete();
+                            this.props.showStatus(message, STATUS_TYPE.OK);
+                        }
+                        else {
+                            this.props.showStatus(data.msg, STATUS_TYPE.ERROR);
+                        }
+                    });
             }).catch((error) => {
-                console.log("error", error);
-                if(typeof error === "string" ) {
+                if (error.status === 'timeout') {
+                    this.props.showStatus(t.facialTimeout(), STATUS_TYPE.ERROR);
+                }
+                else {
                     this.props.showStatus(error, STATUS_TYPE.ERROR);
-                } else {
-                    this.props.showStatus(error.status, STATUS_TYPE.ERROR);
                 }
 
                 facial.stopCapture();
                 this.setState({
-                    enroll: {},
-                    data: {
-                        faceImg: null
-                    },
-                    capture: false,
-                    img_src: ''
+                    faceImg: null,
+                    showFace: false,
+                    imgSrc: ''
                 });
             });
-    }
-
-    capturFaceCallBack = (data) => {
-        if (this._isMounted) {
-            this.setState(data);
-        }
-    }
-
-    componentDidMount() {
-        facial.stopCapture();
-        this._isMounted = true;
-    }
-
-    componentWillUnmount() {
-        this._isMounted = false;
-        facial.stopCapture();
-    }
-
-    finishEnroll() {
-        if (this.enrollSuccess) {
-            return Promise.resolve();
-        }
-        else {
-            return Promise.reject('No image found.');
-        }
     };
 
-    authenticationInfoChanged() {
-        return this.state.dataDirty;
-    }
-
-    renderFaceForm() {
-        const canvasStyle = {position: 'relative', display: this.state.capture ? 'block' : 'none', zIndex: 0};
-        const videoStyle = {position: 'absolute', display: this.state.capture ? 'block' : 'none'};
-        const canvasSnapStyle = {position: 'absolute', marginTop: 50, display: 'none'};
-        const imgStyle = {marginBottom: 30};
-        return (
-            <div style={{width: '400px', height: '300px', display: 'inline-block', border: '1px dotted black'}}>
-            {this.state.img_src ? (
-                    <div style={imgStyle}><img id="faceImg" width={400} height={300} name="faceImg" src={this.state.img_src} />
-                    </div>) :
-                    (<div>
-                        <canvas id="canvasSnap" width={400} height={300} style={canvasSnapStyle} />
-                        <video id="video" width={400} height={300} preload="none" autoPlay muted style={videoStyle} />
-                        <canvas id="canvas" width={400} height={300} style={canvasStyle} />
-                     </div>)}
-            </div>
-        );
-    }
-
-
     render() {
+        const {captureStarted, faceImg, showFace, imgSrc} = this.state;
+        const captureDone = !!faceImg || (this.props.template.isEnrolled && !captureStarted);
+
         return (
             <Authenticator
-                description="The Facial Recognition method enables your computer
-          webcam to take snapshots of your face for recognition. Please use sufficient
-          light when taking facial images that adequately represent your facial characteristics."
+                description={t.facialMethodDescription()}
                 {...this.props}
             >
-                {this.renderFaceForm()}
+                <FacialVideo
+                    captureDone={captureDone}
+                    facialVideoKey={FACIAL_VIDEO_KEY}
+                    imgSrc={imgSrc}
+                    showFace={showFace}
+                />
                 <div>
-                    <button className="ias-button" onClick={this.handleRegisterDevice}>Start Capture</button>
-                    <TestAuthenticatorButton {...this.props.test} />
+                    <button
+                        className="ias-button"
+                        disabled={this.props.readonlyMode || this.state.captureStarted}
+                        id="Capture_Button"
+                        onClick={this.startCapture}
+                        type="button"
+                    >
+                        {t.facialStartCapture()}
+                    </button>
                 </div>
             </Authenticator>
         );

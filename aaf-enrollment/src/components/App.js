@@ -13,6 +13,8 @@ import Login from './login/Login';
 import MethodEnrollment from '../components/enrollment/MethodEnrollment';
 import PrivateRoute from './PrivateRoute';
 import React from 'react';
+// Use the low-level Router rather than BrowserRouter so we can provide our own history object.
+// See https://reacttraining.com/react-router/core/api/Router
 import {Redirect, Router, Route, Switch} from 'react-router-dom';
 import NavigationDialog from './NavigationDialog';
 
@@ -54,6 +56,5 @@ class App extends React.PureComponent {
     }
 }
 
-// const mapStateToProps = ({ loading }) => ({ loading });
 const mapDispatchToProps = { abortPendingNavigation, continuePendingNavigation };
 export default connect(null, mapDispatchToProps)(App);

@@ -4,20 +4,6 @@ h2 {
   margin-top: 0;
 }
 
-.chains-grid-label,
-.methods-grid-label {
-  font-size: 16px;
-  margin-top: 20px;
-}
-
-.chains-grid-label {
-  margin-bottom: 15px;
-}
-
-.ias-grid {
-  margin-top: 10px;
-}
-
 .add-chain-container {
   box-sizing: content-box;
 
@@ -34,4 +20,18 @@ h2 {
 
 .consent-block {
   margin-top: 40px;
+}
+
+.chains-grid-label,
+.methods-grid-label {
+  font-size: 16px;
+  margin-top: 20px;
+}
+
+.chains-grid-label {
+  margin-bottom: 15px;
+}
+
+.ias-grid {
+  margin-top: 10px;
 }

@@ -1,14 +1,9 @@
 import React from 'react';
 import Authenticator from '../Authenticator';
-import TestAuthenticatorButton from '../test-authenticator/TestAuthenticatorButton';
-import FIDO2Handler from '../../../api/fido2';
+import FIDO2Handler from '../../../api/devices/fido2-device.api';
 import {WebAuthnApp} from 'webauthn-simple-app';
 import { STATUS_TYPE } from '../../../ux/ux';
-
-//TODO convert this to our localization
-const _ = (value) => {
-    return value;
-};
+import t from '../../../i18n/locale-keys';
 
 class FIDO2Method extends React.PureComponent {
     constructor(props) {
@@ -18,71 +13,12 @@ class FIDO2Method extends React.PureComponent {
         this.state = {dataDirty: false};
     }
 
-    finishEnroll() {
-        if (this.props.enrollProcessComplete()) {
-            return Promise.resolve();
-        }
-        else {
-            return Promise.reject('Did not complete enrollment');
-        }
-    };
-
     authenticationInfoChanged() {
         return this.state.dataDirty;
     }
 
-    render() {
-        return (
-            <Authenticator
-                description="To fill out"
-                {...this.props}
-            >
-            <button type="button" className="ias-button" onClick={this.onClickDetect}>Detect Device</button>
-                    <TestAuthenticatorButton {...this.props.test} />
-            </Authenticator>
-        );
-    }
-
-    onClickDetect = () => {
-        this.props.resetEnrollState();
-        this.doEnroll();
-    }
-
-    doEnroll = () => {
-        this.props.doEnrollWithBeginProcess({rpId: window.location.hostname})
-            .then((response) => {
-                this.setState({dataDirty: true});
-                if (response.status === 'MORE_DATA') {
-                    this.handleMoreData(response);
-                }
-                else if (response.status === 'FAILED') {
-                    this.props.showStatus(response.msg, STATUS_TYPE.ERROR);
-                }
-                else {
-                    this.props.showStatus(response.msg, STATUS_TYPE.INFO);
-                }
-        });
-    };
-
-    getWebAuthnConfig = () => {
-        const WAConfig = this.fido2Handler.webAuthnConfig;
-        WAConfig.username = this.props.authentication.username;
-        WAConfig.registerChallengeEndpoint = this.getRegisterUrl.bind(this)();
-        WAConfig.registerResponseEndpoint = this.getRegisterUrl.bind(this)();
-        return WAConfig;
-    }
-
-    beforeDoEnroll() {
-        return {...this.state, ...{data: {rpId: window.location.hostname}}};
-    }
-
-    handleMoreData(response) {
-        this.props.showStatus(response.msg, STATUS_TYPE.INFO);
-        this.startEnrollment();
-    }
-
-    getRegisterUrl= () => {
-        return '/fido2/' + this.props.getEnrollProcessId() + '/enroll';
+    authenticationInfoSavable() {
+        return false;
     }
 
     componentDidMount() {
@@ -90,21 +26,74 @@ class FIDO2Method extends React.PureComponent {
         this.fido2Handler.checkBrowserSupportsWebAuthn();
     }
 
-    handleSubmit() {
-        this.props.showStatus(_('Success'), STATUS_TYPE.OK);
-        this.props.doEnrollWithBeginProcess();
-    }
+    getRegisterUrl = () => {
+        return `/api/v1/logon_method/FIDO2:1/enroll/${this.props.getEnrollProcessId()}`;
+    };
+
+    getWebAuthnConfig = () => {
+        const WAConfig = this.fido2Handler.webAuthnConfig;
+        WAConfig.username = this.props.authentication.username;
+        WAConfig.registerChallengeEndpoint = this.getRegisterUrl();
+        WAConfig.registerResponseEndpoint = this.getRegisterUrl();
+        return WAConfig;
+    };
+
+    detectDevice = () => {
+        this.props.resetEnrollState();
+        this.setState({dataDirty: true});
+        this.props.doEnrollWithBeginProcess({rpId: window.location.hostname})
+            .then((response) => {
+                if (response.status === 'MORE_DATA') {
+                    this.props.showStatus(response.msg, STATUS_TYPE.INFO);
+                    this.startEnrollment();
+                }
+                else if (response.status === 'FAILED') {
+                    this.props.showStatus(response.msg, STATUS_TYPE.ERROR);
+                }
+                else {
+                    this.props.showStatus(response.msg, STATUS_TYPE.INFO);
+                }
+            });
+    };
 
     startEnrollment = () => {
         const WAConfig = this.getWebAuthnConfig();
         const waApp = new WebAuthnApp(WAConfig);
-        waApp.register()
-        .then((cred) => {
-            this.handleSubmit();
+        this.props.registerPromise(
+            waApp.register()
+        ).then((cred) => {
+            this.props.setAsyncEnroll((response) => {
+                if (response.status !== 'OK') {
+                    this.props.showStatus(response.msg, STATUS_TYPE.ERROR);
+                    this.props.resetEnrollState();
+                }
+                else {
+                    this.props.showStatus(response.msg, STATUS_TYPE.OK);
+                }
+            }, true);
         })
         .catch((err) => {
-            this.fido2Handler.updateError(_('Failed'));
+            this.props.showStatus(t.fido2Error(), STATUS_TYPE.ERROR);
         });
+    };
+
+    render() {
+        return (
+            <Authenticator
+                description={t.fido2MethodDescription()}
+                {...this.props}
+            >
+                <button
+                    className="ias-button"
+                    disabled={this.props.readonlyMode}
+                    id="Detect_Device_Button"
+                    onClick={this.detectDevice}
+                    type="button"
+                >
+                    {t.fido2DetectDevice()}
+                </button>
+            </Authenticator>
+        );
     }
 }
 

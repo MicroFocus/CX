@@ -1,5 +1,8 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import './ShowHidePassword.scss';
+import TextField from './TextField';
+import t from '../i18n/locale-keys';
 
 export default class ShowHidePassword extends React.PureComponent {
     state = {
@@ -13,17 +16,29 @@ export default class ShowHidePassword extends React.PureComponent {
     };
 
     render() {
-        const {autoFocus, label, name, onChange, placeholder, value} = this.props;
+        const {autoFocus, disabled, label, name, onChange, placeholder, value} = this.props;
+
+        if (disabled) {
+            return (
+                <TextField
+                    disabled
+                    id={this.props.id}
+                    label={label}
+                    placeholder={placeholder}
+                    value="*****"
+                />
+            );
+        }
+
         const id = this.props.id || name;
         const {passwordVisible} = this.state;
-
         const labelElement = label ? <label htmlFor={id}>{label}</label> : null;
         const passwordInputType = passwordVisible ? 'text' : 'password';
-        const showHidePasswordStyle = passwordVisible ? {color: 'red'} : null;
-        const showHidePasswordIcon = passwordVisible ? 'unlock_thick' : 'lock_thick';
+        const buttonStyle = passwordVisible ? {color: 'red'} : null;
+        const buttonIcon = passwordVisible ? 'unlock_thick' : 'lock_thick';
 
         return (
-            <div className="ias-input-container">
+            <div className="ias-input-container show-hide-password">
                 {labelElement}
                 <input
                     autoComplete="off"
@@ -36,15 +51,15 @@ export default class ShowHidePassword extends React.PureComponent {
                     value={value}
                 />
                 <button
-                    className="ias-button ias-icon-button show-hide-password"
-                    title="Show/Hide Password or PIN"
+                    className="ias-button ias-icon-button"
+                    disabled={!value}
+                    title={t.showHidePasswordLabel()}
                     onClick={this.showHidePassword}
-                    style={showHidePasswordStyle}
+                    style={buttonStyle}
                     type="button"
                 >
-                    <i className={'ias-icon ias-icon-' + showHidePasswordIcon} />
+                    <i className={'ias-icon ias-icon-' + buttonIcon} />
                 </button>
-                {this.props.children}
             </div>
         );
     }
@@ -52,11 +67,13 @@ export default class ShowHidePassword extends React.PureComponent {
 
 ShowHidePassword.defaultProps = {
     autoFocus: false,
+    disabled: false,
     placeholder: ''
 };
 
 ShowHidePassword.propTypes = {
     autoFocus: PropTypes.bool,
+    disabled: PropTypes.bool,
     id: PropTypes.string,
     label: PropTypes.string,
     name: PropTypes.string.isRequired,

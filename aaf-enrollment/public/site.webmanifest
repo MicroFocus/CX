@@ -1,0 +1,14 @@
+{
+    "name": "Advanced Authentication",
+    "short_name": "Advanced Auth",
+    "icons": [
+        {
+            "src": "/android-chrome-96x96.png",
+            "sizes": "96x96",
+            "type": "image/png"
+        }
+    ],
+    "theme_color": "#0073e7",
+    "background_color": "#ffffff",
+    "display": "standalone"
+}

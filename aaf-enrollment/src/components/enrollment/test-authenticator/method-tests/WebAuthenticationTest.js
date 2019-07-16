@@ -20,7 +20,9 @@ class WebAuthenticationTest extends React.PureComponent {
             const logonProcessId = loadStorageItem(LOGON_PROCESS_ID_KEY);
             clearStorageItem(LOGON_PROCESS_ID_KEY);
             setLogonState(logonProcessId);
-            setAsyncLogon(() => {}, true);
+            setAsyncLogon(() => {
+                this.props.resetQuery();
+            }, true);
             return;
         }
 

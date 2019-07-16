@@ -7,6 +7,7 @@ import MethodTile from '../tiles/MethodTile';
 import PropTypes from 'prop-types';
 import {categoriesType, templateType} from '../../types/types';
 import getCategoryName from '../../utils/category-name';
+import t from '../../i18n/locale-keys';
 
 class ChooseAuthenticator extends React.PureComponent {
     chooseAuthenticator = (template) => {
@@ -33,6 +34,7 @@ class ChooseAuthenticator extends React.PureComponent {
             return (
                 <MethodTile
                     categoryName={categoryName}
+                    id={key}
                     key={key}
                     onClick={handleClick}
                     template={template}
@@ -45,22 +47,23 @@ class ChooseAuthenticator extends React.PureComponent {
         return (
             <div className="ias-content-padding">
                 <div className="ias-header">
-                    <h2>Select Authentication Method</h2>
+                    <h2>{t.authenticatorSelectTitle()}</h2>
                     <span className="ias-fill" />
                     <button
                         className="ias-button ias-icon-button"
+                        id="Close_Button"
                         onClick={this.handleClose}
-                        title="Close"
+                        title={t.buttonClose()}
                         type="button"
                     >
                         <i className="ias-icon ias-icon-close_thin" />
                     </button>
                 </div>
                 <p className="description">
-                    Multiple enrollment methods exists. Select a method or define a new method.
+                    {t.authenticatorSelectDescription()}
                 </p>
 
-                <div className="methods-grid-label">Your Enrolled {methodTitle} Methods</div>
+                <div className="methods-grid-label">{t.authenticatorSelectSubtitle(methodTitle)}</div>
                 <div className="ias-grid">
                     {methodElements}
                 </div>

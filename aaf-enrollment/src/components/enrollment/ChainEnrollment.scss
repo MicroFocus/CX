@@ -13,7 +13,8 @@
   flex-flow: row nowrap;
   overflow: auto;
 
-  > a {
+  > a,
+  > button {
     background-color: transparent;
     border: solid transparent;
     border-radius: 0;
@@ -38,6 +39,7 @@
       background-color: $nav-item-bg-color-hover;
       border-color: $nav-item-border-color-hover;
       color: $nav-item-color-hover;
+      cursor: pointer;
     }
 
     &.ias-active {
@@ -71,7 +73,8 @@
 
 [dir="rtl"] {
   .chain-nav {
-    > a {
+    > a,
+    > button {
       margin: 0;
     }
   }

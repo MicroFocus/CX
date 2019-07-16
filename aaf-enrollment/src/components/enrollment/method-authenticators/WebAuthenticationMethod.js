@@ -1,8 +1,8 @@
 import React from 'react';
 import Authenticator from '../Authenticator';
-import TestAuthenticatorButton from '../test-authenticator/TestAuthenticatorButton';
 import {generateFormChangeHandler} from '../../../utils/form-handler';
 import {LoadingIndicator, STATUS_TYPE} from '../../../ux/ux';
+import t from '../../../i18n/locale-keys';
 
 const AUTH_STATES = {
     SELECT: 'SELECT',
@@ -72,14 +72,16 @@ class WebAuthenticationMethod extends React.PureComponent {
             <React.Fragment>
                 <div className="ias-input-container">
                     <label htmlFor="selected_idp">
-                        Identity provider
-                        <select id="selected_idp"
-                                onChange={this.handleChange}
-                                name="idpValue"
-                                value={this.state.form.idpValue}
+                        {t.identityProvider()}
+                        <select
+                            disabled={this.props.readonlyMode}
+                            id="selected_idp"
+                            onChange={this.handleChange}
+                            name="idpValue"
+                            value={this.state.form.idpValue}
                         >
                             <option disabled value="-1">
-                                Select Identity provider
+                                {t.identityProviderSelect()}
                             </option>
                             {idpOptions}
                         </select>
@@ -88,18 +90,24 @@ class WebAuthenticationMethod extends React.PureComponent {
 
                 <div className="ias-input-container">
                     <input
-                        disabled={noIdpSelected}
+                        disabled={noIdpSelected || this.props.readonlyMode}
                         id="username_hint"
                         name="usernameHint"
                         onChange={this.handleChange}
-                        placeholder="Username or email"
+                        placeholder={t.webAuthUsernameHintLabel()}
                         type="text"
                         value={this.state.form.usernameHint}
                     />
                 </div>
 
-                <button className="ias-button" disabled={noIdpSelected} onClick={this.handleStartClick} type="button">
-                    Start
+                <button
+                    className="ias-button"
+                    disabled={noIdpSelected || this.props.readonlyMode}
+                    id="Start_Web_Auth_Button"
+                    onClick={this.handleStartClick}
+                    type="button"
+                >
+                    {t.buttonStart()}
                 </button>
             </React.Fragment>
         );
@@ -155,7 +163,7 @@ class WebAuthenticationMethod extends React.PureComponent {
         const {authState} = this.state;
 
         if (authState === AUTH_STATES.WAIT_IDP) {
-            return <LoadingIndicator />;
+            return <LoadingIndicator message={t.loading()} />;
         }
 
         let enrollElements = null;
@@ -165,13 +173,10 @@ class WebAuthenticationMethod extends React.PureComponent {
 
         return (
             <Authenticator
-                description="The Web Authentication method works together with OAuth 2.0, OpenID Connect and SAML 2.0
-                             authentication providers. It allows you to use your existing ID to enroll a new
-                             authenticator."
+                description={t.webAuthMethodDescription()}
                 {...this.props}
             >
                 {enrollElements}
-                <TestAuthenticatorButton {...this.props.test} />
             </Authenticator>
         );
     }

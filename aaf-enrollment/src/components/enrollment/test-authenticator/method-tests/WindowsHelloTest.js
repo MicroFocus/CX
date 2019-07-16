@@ -1,6 +1,7 @@
 import React from 'react';
 import {STATUS_TYPE} from '../../../../ux/ux';
-import {winHelloLogon} from '../../../../api/windows-hello';
+import {winHelloLogon} from '../../../../api/devices/windows-hello-device.api';
+import t from '../../../../i18n/locale-keys';
 
 class GenericTest extends React.PureComponent {
     constructor(props) {
@@ -10,14 +11,16 @@ class GenericTest extends React.PureComponent {
         const {doTestLogon, markTestComplete, showStatus} = props;
         doTestLogon(null).then(({challenge}) => {
             if (challenge) {
-                showStatus('Please authenticate with Windows Hello', STATUS_TYPE.INFO);
-                return winHelloLogon({ challenge });
+                showStatus(t.winHelloAuthenticate(), STATUS_TYPE.INFO);
+                return this.props.registerPromise(
+                    winHelloLogon({ challenge })
+                );
             }
             else {
-                markTestComplete(false, 'No challenge provided from server.');
+                markTestComplete(false, t.winHelloNoChallenge());
             }
         }).then((data) => {
-            showStatus('Please wait', STATUS_TYPE.INFO);
+            showStatus(t.waitPlease(), STATUS_TYPE.INFO);
             const {signature, id, userSid} = data;
             const logonData = {signature, id, userSid};
             doTestLogon(logonData);

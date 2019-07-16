@@ -1,4 +1,5 @@
-import jsonFetch from './json-fetch';
+import jsonFetch from '../json-fetch';
+import t from '../../i18n/locale-keys';
 
 const WINHELLO_SERVICE_URL = 'https://127.0.0.1:8440/api/v1/wh';
 const WINHELLO_ENROLL_SUFFIX = '/enroll';
@@ -13,13 +14,13 @@ function callWinHelloService(urlSuffix, data) {
         url: WINHELLO_SERVICE_URL + urlSuffix
     }).catch((failedResponseData) => {
         if (failedResponseData.status) {
-            return Promise.reject('Windows Hello service error');
+            return Promise.reject(t.windowsHelloServiceUnavailable());
         }
 
-        return Promise.reject('Windows Hello service is not available');
+        return Promise.reject(t.windowsHelloServiceError());
     }).then((data) => {
         if (data.result === 'failed') {
-            return Promise.reject('Verification Failed');
+            return Promise.reject(t.verificationFailed());
         }
 
         return data;

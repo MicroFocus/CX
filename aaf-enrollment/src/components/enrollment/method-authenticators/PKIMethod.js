@@ -4,24 +4,11 @@ import ShowHidePassword from '../../ShowHidePassword';
 import {generateFormChangeHandler} from '../../../utils/form-handler';
 import {LoadingIndicator, STATUS_TYPE} from '../../../ux/ux';
 import moment from 'moment';
-import CommonCardHandler from '../../../api/commonCardHandler';
+import CommonCardHandler from '../../../api/devices/common-card-devices.api';
 import Certificate from 'pkijs/src/Certificate';
 import {fromBER} from 'asn1js';
-import {pkiGenerateKeypair, pkiGetCertificates} from '../../../api/pki';
-import TestAuthenticatorButton from '../test-authenticator/TestAuthenticatorButton';
-
-//var Locale = require('../common/locale');
-//var _ = Locale._;
-//TODO convert this to our localization
-const _ = (value) => {
-    return value;
-};
-
-//var _k = Locale._k;
-//TODO: convert this localization file
-const _k = (value, value2) => {
-    return value + value2;
-};
+import {pkiGenerateKeypair, pkiGetCertificates} from '../../../api/devices/pki-device.api';
+import t from '../../../i18n/locale-keys';
 
 const KEYPAIR_ID_GENERATE = 'GENERATE';
 const X509_COMMON_NAME_KEY = '2.5.4.3';
@@ -32,31 +19,29 @@ class PKIMethod extends React.PureComponent {
 
         this.cardUid = null;
         this.certs = null;
-        this.detectingCard = false;
-        this.generatingPromise = null;
-        this.pkiHandler = new CommonCardHandler(CommonCardHandler.PKI_SERVICE_URL, this.props.showStatus);
+        this.pkiHandler = new CommonCardHandler(CommonCardHandler.PKI_SERVICE_URL, props.showStatus,
+            props.registerPromise);
 
         generateFormChangeHandler(this, {
             keypairId: null,
             pin: ''
         }, {
-            generating: false,
+            generating: false,  // True if UI should show a "Generating" animation
+            gettingCertificates: false,
             parsedCerts: null
         });
     }
 
     authenticationInfoChanged() {
-        return (this.certs !== null);
+        return this.state.dataDirty;
+    }
+
+    authenticationInfoSavable() {
+        return !!this.certs;
     }
 
     componentWillUnmount() {
-        if (this.detectingCard) {
-            this.pkiHandler.abort();
-        }
-
-        if (this.generatingPromise) {
-            this.generatingPromise.abort();
-        }
+        this.pkiHandler.abortCardPromise();
     }
 
     finishEnroll() {
@@ -68,42 +53,36 @@ class PKIMethod extends React.PureComponent {
         const cardUid = this.cardUid;
 
         if (keypairId === null) {
-            return Promise.reject('Cannot enroll due to errors');
+            return Promise.reject(t.pkiEnrollFailed());
         }
         else if (keypairId === KEYPAIR_ID_GENERATE) {
             this.setState({generating: true});
-            this.generatingPromise = pkiGenerateKeypair({pin});
-            return this.generatingPromise
-                .finally(() => this.generatingPromise = null)
+            return this.props.registerPromise(
+                    pkiGenerateKeypair({pin})
+                )
                 .then((data) => {
-
                     const enrollData = {
                         cardUid,
                         exponent: data.exponent,
                         keypairId: data.keypairid,
                         modulus: data.modulus
                     };
-                    return this.props.doEnrollWithBeginProcess(enrollData)
-                        .then((response) => {
-                            return new Promise((resolve, reject) => {
-                                this.setState({generating: false}, () => {
-                                    if (response.status !== 'FAILED') {
-                                        resolve(response);
-                                    }
-                                    else {
-                                        reject(response.msg);
-                                    }
-                                });
-                            });
-                        })
-                        .catch((error) => {
-                            return new Promise((resolve, reject) => {
-                                this.setState({generating: false}, () => {
-                                    reject(error);
-                                });
-                            });
-                        });
-            });
+                    return this.props.doEnrollWithBeginProcess(enrollData);
+                })
+                .then((response) => {
+                    if (response.status !== 'FAILED') {
+                        return Promise.resolve(response);
+                    }
+                    else {
+                        throw response.msg;
+                    }
+                })
+                // We only need to reset "generating" animation if user will stay on the page. Otherwise we don't
+                // reset it because this component will be unmounted. (We would also get a memory leak.)
+                .catch((error) => {
+                    this.setState({generating: false});
+                    throw error;
+                });
         }
         else {
             let certificate = {};
@@ -135,12 +114,17 @@ class PKIMethod extends React.PureComponent {
     }
 
     getCertificates = () => {
+        this.setState({
+            dataDirty: true,
+            gettingCertificates: true
+        });
         this.pkiHandler.getStatus({
             onCard: ({cardUid}) => {
-                this.detectingCard = false;
                 this.cardUid = cardUid;
 
-                pkiGetCertificates().then(({certificates}) => {
+                this.props.registerPromise(
+                    pkiGetCertificates()
+                ).then(({certificates}) => {
                     // Use camelcase in data from server to avoid confusion in code
                     certificates.forEach((certificate) => {
                         certificate.keypairId = certificate.keypairid;
@@ -148,22 +132,22 @@ class PKIMethod extends React.PureComponent {
                     });
 
                     this.certs = certificates;
-                    this.props.showStatus(_('Use an existing certificate or generate a key pair'),
+                    this.props.showStatus(t.pkiInstructions(),
                         STATUS_TYPE.INFO);
 
                     const keypairId = (certificates.length ? certificates[0].keypairId : 'GENERATE');
 
                     this.setState({
                         form: {...this.state.form, keypairId},
+                        gettingCertificates: false,
                         parsedCerts: this.parseCerts(certificates)
                     });
                 }).catch((error) => {
+                    this.setState({gettingCertificates: false});
                     this.props.showStatus(error, STATUS_TYPE.ERROR);
                 });
             }
         });
-
-        this.detectingCard = true;
     };
 
     parseCerts(certDataArray) {
@@ -206,7 +190,7 @@ class PKIMethod extends React.PureComponent {
     renderEnrollElements() {
         const certOptions = this.state.parsedCerts.map((parsedCert) => {
             const date = moment(parsedCert.notValidAfter).format('ll');
-            const label = parsedCert.subjectCn + ` (Expiry date: ${date})`;
+            const label = t.pkiCertExpiration(parsedCert.subjectCn, date);
             return <option key={parsedCert.keypairId} value={parsedCert.keypairId}>{label}</option>;
         });
 
@@ -215,20 +199,24 @@ class PKIMethod extends React.PureComponent {
             PINElement = (
                 <div className="ias-input-container">
                     <ShowHidePassword
+                        disabled={this.props.readonlyMode}
                         id="card_pin"
                         name="pin"
                         onChange={this.handleChange}
-                        placeholder="PIN"
+                        placeholder={t.pkiPin()}
                         value={this.state.form.pin}
                     />
                 </div>
             );
         }
 
+        const keypairOption = this.props.policies.PKIMethod.data.allowKeypair
+            ? <option key="generate" value={KEYPAIR_ID_GENERATE}>{t.pkiGenerateKeypair()}</option> : null;
+
         return (
             <React.Fragment>
                 <div className="ias-input-container">
-                    <label htmlFor="PKI_Key_Select">Key
+                    <label htmlFor="PKI_Key_Select">{t.pkiKey()}
                         <select
                             id="PKI_Key_Select"
                             name="keypairId"
@@ -236,7 +224,7 @@ class PKIMethod extends React.PureComponent {
                             value={this.state.form.keypairId}
                         >
                             {certOptions}
-                            <option key="generate" value={KEYPAIR_ID_GENERATE}>Generate a key pair</option>
+                            {keypairOption}
                         </select>
                     </label>
                 </div>
@@ -246,25 +234,25 @@ class PKIMethod extends React.PureComponent {
     }
 
     render() {
-        const enrollElements = this.state.parsedCerts ? this.renderEnrollElements() : null;
-        const loadingElement = this.state.generating ? <LoadingIndicator message="Generating" /> : null;
+        const {gettingCertificates, generating, parsedCerts} = this.state;
+        const enrollElements = parsedCerts ? this.renderEnrollElements() : null;
+        const loadingElement = generating ? <LoadingIndicator message={t.generating()} /> : null;
 
         return (
             <Authenticator
-                description="The PKI Method authenticates using special key files known as certificates. The
-                             certificates are stored on a hardware device connected to your computer."
+                description={t.pkiMethodDescription()}
                 {...this.props}
             >
                 {enrollElements}
                 <button
                     className="ias-button"
-                    disabled={!!this.state.parsedCerts}
+                    disabled={gettingCertificates || !!parsedCerts || this.props.readonlyMode}
+                    id="Get_Certificates_Button"
                     onClick={this.getCertificates}
                     type="button"
                 >
-                    Get Certificates
+                    {t.pkiGetCertificates()}
                 </button>
-                <TestAuthenticatorButton {...this.props.test} />
                 {loadingElement}
             </Authenticator>
         );

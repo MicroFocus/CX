@@ -1,5 +1,6 @@
 import React from 'react';
 import Authenticator from '../Authenticator';
+import t from '../../../i18n/locale-keys';
 
 class Oauth2Method extends React.PureComponent {
     authenticationInfoChanged() {
@@ -9,7 +10,7 @@ class Oauth2Method extends React.PureComponent {
     render() {
         return (
             <Authenticator
-                description="The Oauth2 method provides authentication via an external service."
+                description={t.oauth2MethodDescription()}
                 unenrollable
                 {...this.props}
             />

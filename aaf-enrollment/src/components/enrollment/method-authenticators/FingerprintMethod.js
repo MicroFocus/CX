@@ -1,22 +1,11 @@
 import './FingerprintMethod.scss';
 import React from 'react';
 import Authenticator from '../Authenticator';
-import TestAuthenticatorButton from '../test-authenticator/TestAuthenticatorButton';
 import {Dialog, STATUS_TYPE, StatusIndicator} from '../../../ux/ux';
-import {captureFingerprint} from '../../../api/fingerprint';
-
-const LEFT_FINGERTIP_POSITIONS = [
-    { id: 2, x: -3, y: 96 },
-    { id: 4, x: 49, y: 14 },
-    { id: 6, x: 90, y: -3 },
-    { id: 8, x: 129, y: 7 },
-    { id: 10, x: 162, y: 52 }
-];
-const RIGHT_FINGERTIP_POSITIONS = LEFT_FINGERTIP_POSITIONS.map((fingerPosition) => {
-    return {...fingerPosition, id: fingerPosition.id - 1};
-}).reverse();
-const FINGERTIP_POSITIONS = LEFT_FINGERTIP_POSITIONS.concat(RIGHT_FINGERTIP_POSITIONS);
-const FINGERS_ON_HAND = 5;
+import {captureFingerprint} from '../../../api/devices/fingerprint-device.api';
+import {generateFormChangeHandler} from '../../../utils/form-handler';
+import {FingerprintHandmap, MULTIFINGER_IDS, MULTIFINGER_MAP_ORDER} from './FingerprintHandmap';
+import t from '../../../i18n/locale-keys';
 
 const CAPTURE_ANIMATION_DELAY = 1500;
 
@@ -26,24 +15,34 @@ class FingerprintMethod extends React.PureComponent {
     constructor(props) {
         super(props);
 
-        const fingersScanned = {};
-
-        const {isEnrolled, data} = props.template;
-        if (isEnrolled && data && data.fingerPositions) {
-            data.fingerPositions.forEach((id) => {
-                fingersScanned[id] = true;
-            });
+        const {data, isEnrolled} = this.props.template;
+        const policy = this.getPolicyData();
+        let duressFingerIndex = null;
+        if (policy.enableDuressFinger && isEnrolled) {
+            duressFingerIndex = data.duressFingerIndex;
+        }
+        let multiFingerReaderMode = false;
+        if (policy.forceMultiFingerScan) {
+            multiFingerReaderMode = true;
+        }
+        else if (policy.isMultiFingerScanEnabled && isEnrolled) {
+            multiFingerReaderMode = data.multiFingerReaderMode;
         }
 
-        this.state = {                  // UI state, does not include fingerprint images
+        const initialFormState = { multiFingerReaderMode };
+        const initialOtherState = {              // UI state, does not include fingerprint images
             confirmationDialog: null,
-
+            duressFingerIndex,
+            duressFingerMode: false,
             scanCapturesComplete: null,
             scanFingerId: null,
             showCaptureAnimation: false,
-            fingersScanned
+            fingersScanned: this.getInitialFingersScanned()
         };
 
+        generateFormChangeHandler(this, initialFormState, initialOtherState);
+
+        this.captureAnimationTimeoutID = null;
         this.capturePromise = null;
         this.enrolling = false;         // True if user is enrolling rather than viewing authenticator
         this.scans = {};                // Fingerprint images to send to server
@@ -51,7 +50,7 @@ class FingerprintMethod extends React.PureComponent {
 
     abortCapturePromise() {
         if (this.capturePromise) {
-            this.capturePromise.abort();
+            this.capturePromise.trash();
             this.capturePromise = null;
         }
     }
@@ -69,51 +68,80 @@ class FingerprintMethod extends React.PureComponent {
         this.setState({confirmationDialog: null}, callback);
     };
 
+    componentWillUnmount() {
+        if (this.captureAnimationTimeoutID) {
+            clearTimeout(this.captureAnimationTimeoutID);
+            this.captureAnimationTimeoutID = null;
+        }
+    }
+
+    exitDuressFingerMode = () => {
+        this.setState({duressFingerMode: false});
+    };
+
     exitFingerprintScanDialog = () => {
         this.abortCapturePromise();
         this.resetFingerScan();
     };
 
-    componentWillUnmount() {
-        this.abortCapturePromise();
-    }
+    doEnrollCallback = (response) => {
+        if (response.status === 'FAILED') {
+            this.props.showStatus(response.msg, STATUS_TYPE.ERROR);
+            this.setState({
+                fingersScanned: this.getInitialFingersScanned()
+            });
+        }
+    };
 
-    fingerIsEnrollable(id) {
+    enterDuressFingerMode = () => {
+        this.setState({ duressFingerMode: true });
+    };
+
+    fingerIsEnrollable = (id) => {
         if (this.getPolicyData().isFingersSpecified) {
             return (this.getPolicyData().fingers.indexOf('' + id) !== -1);
         }
 
         return true;
-    }
+    };
 
     finishEnroll() {
-        const scanIds = Object.keys(this.scans);
         const minFingers = this.getPolicyData().fingersNumber;
-        if (scanIds.length < minFingers) {
-            return Promise.reject(`A minimum of ${minFingers} different fingerprints are required.
-               You must scan more fingers`);
+        if (this.getNumFingersEnrolled() < minFingers) {
+            return Promise.reject(t.fingersMoreRequiredError());
         }
 
-        // Loop through all collected image data and convert to proper format
-        const captures = [];
-        Object.keys(this.scans).forEach((id) => {
-            this.scans[id].forEach((image) => {
-                captures.push({
-                    Finger: id,
-                    Image: image
-                });
-            });
-        });
+        const { duressFingerIndex, form: { multiFingerReaderMode} } = this.state;
+        const enrollData = {
+            duressFingerIndex,
+            multiFingerReaderMode,
+            operation: 'end'
+        };
 
-        return this.props.doEnrollWithBeginProcess({captures}, true)
-            .then((response) => {
-                if (response.status !== 'FAILED') {
-                    return Promise.resolve(response);
-                }
-                else {
-                    throw response.msg;
-                }
+        return this.props.doEnrollWithBeginProcess(enrollData, false, true).then((response) => {
+            if (response.status !== 'FAILED') {
+                return Promise.resolve(response);
+            }
+            else {
+                return new Promise((resolve, reject) => {
+                    this.setState({
+                        fingersScanned: this.getInitialFingersScanned()
+                    }, () => reject(response.msg));
+                });
+            }
+        });
+    }
+
+    getInitialFingersScanned() {
+        const fingersScanned = {};
+        const {isEnrolled, data} = this.props.template;
+        if (isEnrolled && data && data.fingerPositions) {
+            data.fingerPositions.forEach((id) => {
+                fingersScanned[id] = true;
             });
+        }
+
+        return fingersScanned;
     }
 
     getNumFingersEnrolled() {
@@ -121,59 +149,80 @@ class FingerprintMethod extends React.PureComponent {
     }
 
     // Returns fingerprint policy data. Expected format:
-    // { capturesNumberPerFinger: 3
-    //   fingers: (4) ["1", "5", "9", "10"]
-    //   fingersNumber: 2
-    //   isFingersSpecified: true }
+    // { capturesNumberPerFinger: 3,
+    //   enableDuressFinger: true,
+    //   fingers: (4) ["1", "5", "9", "10"],
+    //   fingersNumber: 2,
+    //   isFingersSpecified: true,
+    //   isMultiFingerScanEnabled: true,
+    //   forceMultiFingerScan: true }
     getPolicyData() {
         return this.props.policies.fingerMethod.data;
     }
 
-    handleFingerprintClick(id, fingerScanned) {
-        if (this.props.template.isEnrolled && !this.enrolling) {
+    handleFingerprintClick = (id, fingerScanned, scanIndex) => {
+        this.enrolling = true;
+
+        if (this.state.duressFingerMode) {
+            this.setDuressFinger(id);
+        }
+        else if (fingerScanned) {
+            const description = scanIndex ? t.fingersRemoveConfirmation() : t.fingerRemoveConfirmation();
             this.setState({
                 confirmationDialog: {
-                    callback: () => {
-                        this.enrolling = true;
-                        this.setState({fingersScanned: {}}, () => {
-                            if (!fingerScanned) {
-                                this.scanFinger(id);
-                            }
-                        });
-                    },
-                    description: 'This will remove all previously enrolled fingerprints. Are you sure?',
-                    label: 'Re-scan fingerprints'
+                    callback: () => this.removeFingers(id, scanIndex),
+                    description,
+                    label: t.fingerRemoveTitle()
                 }
             });
         }
         else {
-            this.enrolling = true;
-
-            if (fingerScanned) {
-                this.showRemoveFingerConfirmation(id);
-            }
-            else {
-                this.scanFinger(id);
-            }
+            this.scanFingers(id, scanIndex);
         }
-    }
-
-    removeFinger = (id) => {  // Delete finger from both scan data and UI state
-        delete this.scans[id];
-
-        const newFingersScanned = {...this.state.fingersScanned};
-        delete newFingersScanned[id];
-        this.setState({
-            fingersScanned: newFingersScanned
-        });
     };
 
-    // Reset finger scan. If scan completed, note this in UI state.
+    multifingerGroupEnrollable = (id) => {
+        return MULTIFINGER_MAP_ORDER[id].some((fingerId) => this.fingerIsEnrollable(fingerId));
+    };
+
+    multifingerGroupEnrolled = (id) => {
+        const fingerIds = MULTIFINGER_MAP_ORDER[id].filter((fingerId) => this.fingerIsEnrollable(fingerId));
+        return fingerIds.every((fingerId) => !!this.state.fingersScanned[fingerId]);
+    };
+
+    removeFingers = (id, scanIndex) => {
+        const {duressFingerIndex} = this.state;
+        const fingersToRemove = scanIndex ? MULTIFINGER_MAP_ORDER[id] : [id];
+        let newDuressFingerIndex = duressFingerIndex;
+        const newFingersScanned = {...this.state.fingersScanned};
+
+        fingersToRemove.forEach((fingerId) => {
+            delete newFingersScanned[fingerId];
+            if (duressFingerIndex === fingerId) {
+                newDuressFingerIndex = '';
+            }
+        });
+
+        this.setState({
+            fingersScanned: newFingersScanned,
+            duressFingerIndex: newDuressFingerIndex
+        });
+
+        const data = {fingers: fingersToRemove, operation: 'remove'};
+        this.props.doEnrollWithBeginProcess(data, true, true)
+            .then(this.doEnrollCallback);
+    };
+
+    // Reset finger scan. If scan completed, note this in UI state & submit scanned fingers
     resetFingerScan() {
-        const scanFingerId = this.state.scanFingerId;
         let newFingersScanned = null;
-        if (scanFingerId && !!this.scans[scanFingerId]) {
-            newFingersScanned = {...this.state.fingersScanned, [scanFingerId]: true};
+        const scanFingerIds = Object.keys(this.scans);
+        if (scanFingerIds.length) {
+            newFingersScanned = {...this.state.fingersScanned};
+            scanFingerIds.forEach((scanFingerId) => {
+                newFingersScanned[scanFingerId] = true;
+            });
+            this.submitScannedFingers();
         }
         else {
             newFingersScanned = this.state.fingersScanned;
@@ -187,7 +236,7 @@ class FingerprintMethod extends React.PureComponent {
         });
     }
 
-    scanFinger = (id) => {
+    scanFingers = (id, scanIndex) => {
         this.setState({
             scanCapturesComplete: 0,
             scanFingerId: id
@@ -197,7 +246,9 @@ class FingerprintMethod extends React.PureComponent {
 
         const captureFinger = () => {
             let captureInProgress = true;
-            this.capturePromise = captureFingerprint();
+            this.capturePromise = this.props.registerPromise(
+                captureFingerprint(scanIndex)
+            );
             this.capturePromise
                 .finally(() => {
                     captureInProgress = false;
@@ -214,20 +265,32 @@ class FingerprintMethod extends React.PureComponent {
                             captureFinger();
                         }
                         else {
-                            this.scans[id] = scanData;
+                            if (scanIndex) {
+                                const mapOrder = MULTIFINGER_MAP_ORDER[id];
+                                for (let mapIndex = 0; mapIndex < mapOrder.length; mapIndex++) {
+                                    const fingerId = mapOrder[mapIndex];
+                                    if (this.fingerIsEnrollable(fingerId)) {
+                                        const fingerScanData = [];
+                                        scanData.forEach((captureArray) => {
+                                            const fingerCapture = JSON.parse(captureArray[mapIndex]);
+                                            fingerScanData.push(fingerCapture);
+                                        });
+                                        this.scans[fingerId] = fingerScanData;
+                                    }
+                                }
+                            }
+                            else {
+                                this.scans[id] = scanData;
+                            }
                         }
                     });
                 })
                 .catch((error) => {
-                    if (error.status === 'abort') {     // Ignore aborted promises
-                        return;
-                    }
-
                     this.props.showStatus(error, STATUS_TYPE.ERROR);
                     this.resetFingerScan();
                 });
 
-            window.setTimeout(() => {
+            this.captureAnimationTimeoutID = setTimeout(() => {
                 if (captureInProgress) {
                     this.setState({showCaptureAnimation: true});
                 }
@@ -237,16 +300,28 @@ class FingerprintMethod extends React.PureComponent {
         captureFinger();
     };
 
-    showRemoveFingerConfirmation = (id) => {
+    setDuressFinger(id) {
         this.setState({
-            confirmationDialog: {
-                callback: () => this.removeFinger(id),
-                description: 'Are you sure you wish to remove this fingerprint?',
-                label: 'Remove fingerprint'
-            }
+            duressFingerIndex: id
         });
-    };
+    }
 
+    submitScannedFingers() {
+        // Loop through all collected image data and convert to proper format
+        const captures = [];
+        Object.keys(this.scans).forEach((id) => {
+            this.scans[id].forEach((image) => {
+                captures.push({
+                    Finger: id,
+                    Image: image
+                });
+            });
+        });
+        this.scans = {};
+
+        this.props.doEnrollWithBeginProcess({captures, operation: 'add'}, true, true)
+            .then(this.doEnrollCallback);
+    }
 
     renderConfirmationDialog() {
         const {confirmationDialog} = this.state;
@@ -265,54 +340,57 @@ class FingerprintMethod extends React.PureComponent {
         );
     }
 
-    renderFingerprintElement(fingertipPosition, arrayIndex) {
-        const {x, y, id} = fingertipPosition;
-        const style = {top: `${y}px`};
-        const horizontalStyleRule = (arrayIndex < FINGERS_ON_HAND) ? 'left' : 'right';
-        style[horizontalStyleRule] = `${x}px`;
-        const key = `fingerprint-${id}`;
-
-        const fingerScanned = this.state.fingersScanned[id];
-        const fingerScanInProgress = (this.state.scanFingerId === id);
-        let fingerprintClass = 'fingerprint';
-        let secondaryIcon = null;
-        let fingerprintTitle = null;
-
-        if (fingerScanned) {
-            fingerprintTitle = 'Select to remove fingerprint';
-            fingerprintClass += ' enrolled';
-            secondaryIcon = <i className="ias-icon ias-icon-check_thick" />;
-        }
-        else {
-            fingerprintTitle = 'Select to scan finger';
-            if (fingerScanInProgress) {
-                fingerprintClass += ' scan';
-                secondaryIcon = <i className="ias-icon ias-icon-time_thick" />;
-            }
-        }
-
-        const handleClick = () => this.handleFingerprintClick(id, fingerScanned);
-
-        const handleKeyPress = (event) => {
-            if (event.key === 'Enter') {
-                handleClick();
-            }
-        };
+    renderDuressFingerDialog() {
+        const handmap = this.renderHandmap(true);
 
         return (
-            <div
-                className={fingerprintClass}
-                key={key}
-                onClick={handleClick}
-                onKeyPress={handleKeyPress}
-                style={style}
-                title={fingerprintTitle}
-                tabIndex="0"
+            <Dialog
+                addContainerClass="duress-finger-dialog"
+                onClose={this.exitDuressFingerMode}
+                open
+                title={<div className="ias-dialog-label">{t.fingerChooseDuressTitle()}</div>}
             >
-                <i className="fingerprint-icon ias-icon ias-icon-fingerprint_thin" />
-                <div className="fingerprint-secondary-icons">{secondaryIcon}</div>
+                <p>{t.fingerChooseDuressInfo()}</p>
+                {handmap}
+            </Dialog>
+        );
+    }
+
+    renderDuressFingerElements() {
+        const disableButton = (Object.keys(this.state.fingersScanned).length === 0 || this.props.readonlyMode);
+
+        return (
+            <div>
+                <button
+                    className="ias-button"
+                    disabled={disableButton}
+                    id="chooseDuressFinger"
+                    onClick={this.enterDuressFingerMode}
+                    type="button"
+                >
+                    {t.fingerDuressButton()}
+                </button>
             </div>
         );
+    }
+
+    renderFingerprintImage(index) {
+        let key;
+        if (this.state.showCaptureAnimation) {
+            key = index + '-progress';
+            return (
+                <img
+                    alt={t.fingerScanning()}
+                    className="capture-animation"
+                    key={key}
+                    src={process.env.PUBLIC_URL + '/fingerprint_scan.gif'}
+                />
+            );
+        }
+        else {
+            key = index;
+            return <i className="fingerprint-icon ias-icon ias-icon-fingerprint_thin" key={key} />;
+        }
     }
 
     renderFingerprintScanDialog() {
@@ -330,97 +408,128 @@ class FingerprintMethod extends React.PureComponent {
             scanMarks.push(markElement);
         }
 
-        let fingerprintImage = null;
-        if (this.state.showCaptureAnimation) {
-            fingerprintImage = <img alt="Scan in progress" className="capture-animation" src="/fingerprint_scan.gif" />;
+        const fingerprintImages = [];
+        const numFingerprintImages = this.state.form.multiFingerReaderMode ? 2 : 1;
+        for (let index = 0; index < numFingerprintImages; index++) {
+            fingerprintImages.push(this.renderFingerprintImage(index));
         }
-        else {
-            fingerprintImage = <i className="fingerprint-icon ias-icon ias-icon-fingerprint_thin" />;
+
+        const pluralFingers = this.state.form.multiFingerReaderMode ? t.fingers() : t.finger();
+        let chosenFingers = null;
+        switch (this.state.scanFingerId) {
+            case MULTIFINGER_IDS.LEFT_FINGERS:
+                chosenFingers = t.fingersLeft();
+                break;
+            case MULTIFINGER_IDS.RIGHT_FINGERS:
+                chosenFingers = t.fingersRight();
+                break;
+            case MULTIFINGER_IDS.THUMBS:
+                chosenFingers = t.fingersThumbs();
+                break;
+            default:
+                chosenFingers = t.fingerSelected();
+                break;
         }
+
         return (
             <Dialog
                 addContainerClass="fingerprint-scan-dialog"
                 omitActionButtons
                 onClose={this.exitFingerprintScanDialog}
                 open
-                title={<div className="ias-dialog-label">Scan Fingerprint</div>}
+                title={<div className="ias-dialog-label">{t.fingerScanningTitle()}</div>}
             >
-                {fingerprintImage}
-                <div className="description">Place selected finger on the scanning device to capture fingerprint.</div>
+                {fingerprintImages}
+                <div className="description">{t.fingerPlaceOnScanner(chosenFingers)}</div>
                 <div className="scan-marks">{scanMarks}</div>
-                <div className="required-scans-message">{numCapturesRequired} scans required</div>
-                <div className="description">Lift finger off scanning device after each successful scan.</div>
+                <div className="required-scans-message">{t.fingerScansRequired(numCapturesRequired)}</div>
+                <div className="description">{t.fingerRemoveAfterScan(pluralFingers)}</div>
 
                 <div className="ias-actions">
                     <button
                         className="ias-button"
+                        id="Close_Fingerprint_Scan_Button"
                         disabled={scanIncomplete}
                         onClick={this.exitFingerprintScanDialog}
                     >
-                        Done
+                        {t.buttonDone()}
                     </button>
                 </div>
             </Dialog>
         );
     }
 
+    renderHandmap(showDuressFingerMode) {
+        const {duressFingerIndex, fingersScanned, form: {multiFingerReaderMode}, scanFingerId} = this.state;
+        const {fingerIsEnrollable, handleFingerprintClick, multifingerGroupEnrollable, multifingerGroupEnrolled}
+            = this;
+        const handmapProps = {
+            duressFingerIndex,
+            enableEnrollment: !this.props.readonlyMode,
+            fingerIsEnrollable,
+            fingersScanned,
+            multifingerGroupEnrollable,
+            multifingerGroupEnrolled,
+            multiFingerReaderMode,
+            onFingerprintClick: handleFingerprintClick,
+            scanFingerId,
+            showDuressFingerMode
+        };
+        return <FingerprintHandmap {...handmapProps} />;
+    }
+
     render() {
-        const {scanFingerId} = this.state;
+        const {form: {multiFingerReaderMode}, duressFingerMode, scanFingerId} = this.state;
+        const {isMultiFingerScanEnabled, enableDuressFinger, forceMultiFingerScan} = this.getPolicyData();
+        const capturesNumberPerFinger = this.getPolicyData().capturesNumberPerFinger;
 
-        const fingerprintElements = FINGERTIP_POSITIONS.map((fingertipPosition, index) => {
-            if (this.fingerIsEnrollable(fingertipPosition.id)) {
-                return this.renderFingerprintElement(fingertipPosition, index);
-            }
-
-            return null;
-        });
-
-        const fingerprintScanDialog = scanFingerId ? this.renderFingerprintScanDialog() : null;
+        let multiFingerSelection = null;
+        if (isMultiFingerScanEnabled && !forceMultiFingerScan) {
+            multiFingerSelection = (
+                <div className="ias-input-container ias-inline">
+                    <div>
+                        <input
+                            checked={multiFingerReaderMode}
+                            disabled={this.props.template.isEnrolled || this.props.readonlyMode}
+                            id="Multi_Finger_Reader_Mode"
+                            name="multiFingerReaderMode"
+                            onChange={this.handleChange}
+                            type="checkbox"
+                        />
+                        <label htmlFor="Multi_Finger_Reader_Mode">{t.fingerUseMultiReader()}</label>
+                    </div>
+                </div>
+            );
+        }
 
         const numFingersRemaining = this.getPolicyData().fingersNumber - this.getNumFingersEnrolled();
         let requiredFingersMessage = null;
         if (numFingersRemaining > 0) {
             requiredFingersMessage = (
                 <StatusIndicator type={STATUS_TYPE.INFO}>
-                    {numFingersRemaining} more fingers are required to enroll
+                    {t.fingersMoreRequired(numFingersRemaining)}
                 </StatusIndicator>
             );
         }
 
-        let description = 'The Fingerprint method allows multiple fingerprints to be defined for authentication. '
-            + 'Select a finger to enroll and place that finger on the reader. ';
-
-        const capturesNumberPerFinger = this.getPolicyData().capturesNumberPerFinger;
-        if (capturesNumberPerFinger > 1) {
-            description += 'Each selected finger will be scanned ' + capturesNumberPerFinger
-                + ' times to confirm a usable fingerprint. ';
-        }
-        else {
-            description += 'A good fingerprint image is important. ';
-        }
-
-        description += 'Please test once fingerprints are defined to validate method.';
-
+        const handmap = this.renderHandmap(false);
+        const duressFingerDialog = duressFingerMode ? this.renderDuressFingerDialog() : null;
+        const duressFingerElements = enableDuressFinger ? this.renderDuressFingerElements() : null;
+        const fingerprintScanDialog = scanFingerId ? this.renderFingerprintScanDialog() : null;
         const confirmationDialogElement = this.state.confirmationDialog ? this.renderConfirmationDialog() : null;
 
         return (
             <Authenticator
-                description={description}
+                description={t.fingerMethodDescription(capturesNumberPerFinger)}
                 {...this.props}
             >
+                {multiFingerSelection}
                 {requiredFingersMessage}
-                <div className="hand-map">
-                    <img alt="Hands" src="/hands.png" />
-                    <span className="left-hand-text">Left Hand</span>
-                    <span className="right-hand-text">Right Hand</span>
-                    {fingerprintElements}
-                    <div className="fingerprint-test-button">
-                        <TestAuthenticatorButton {...this.props.test} />
-                    </div>
-                </div>
-
+                {handmap}
+                {duressFingerElements}
                 {fingerprintScanDialog}
                 {confirmationDialogElement}
+                {duressFingerDialog}
             </Authenticator>
         );
     }

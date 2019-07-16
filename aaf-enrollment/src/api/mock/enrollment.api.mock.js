@@ -69,6 +69,14 @@ export function getDefaultRecipient(userId, loginSessionId, methodId) {
     return simulateResponse('default_recipient');
 }
 
+export function getTotpQrCode(isBase32Secret) {
+    return simulateResponse(null);
+}
+
+export function getWinHelloInfo() {
+    return simulateResponse(mockData.enrollment.getWinHelloInfo);
+}
+
 export function modifyUserTemplate(userId, loginSessionId, enrollProcessId, templateId, comment) {
     if (!loginSessionMatchesStorage(loginSessionId)) {
         return simulateResponse(mockData.enrollment.loginSessionExpired, true);

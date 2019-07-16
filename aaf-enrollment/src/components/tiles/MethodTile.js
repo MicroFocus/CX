@@ -3,6 +3,7 @@ import React from 'react';
 import Tile from './Tile';
 import {methods} from '../../data/MethodData';
 import {templateType} from '../../types/types';
+import t from '../../i18n/locale-keys';
 
 export default function MethodTile({categoryName, id, onClick, template, templateChoice}) {
     const methodId = template.methodId;
@@ -12,7 +13,7 @@ export default function MethodTile({categoryName, id, onClick, template, templat
     let description = null;
     // When choosing among methods of the same methodId, display the available one using the "New" keyword
     if (templateChoice && !template.isEnrolled) {
-        title = 'New ' + template.methodTitle;
+        title = t.authenticatorNew(template.methodTitle);
         description = template.methodTitle;
     }
     // Otherwise, display the method, with comment and categoryName taking precedence
@@ -31,8 +32,10 @@ export default function MethodTile({categoryName, id, onClick, template, templat
         <Tile
             description={description}
             icon={icon}
+            iconTitle={template.methodTitle}
             id={id}
             isEnrolled={template.isEnrolled}
+            isFullyEnrolled={template.isFullyEnrolled}
             onClick={onClick}
             title={title}
         />

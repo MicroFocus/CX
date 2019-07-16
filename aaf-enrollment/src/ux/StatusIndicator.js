@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import t from '../i18n/locale-keys';
 
 export const STATUS_TYPE = { ERROR: 'error', INFO: 'info', OK: 'ok', WARN: 'warn' };
 const STATUS_ICONS = {
@@ -21,7 +22,7 @@ export default function StatusIndicator(props) {
             <button
                 className="ias-button ias-icon-button close-button"
                 onClick={onClose}
-                title="Close Message"
+                title={t.messageClose()}
                 type="button"
             >
                 <i className="ias-icon ias-icon-close_thick" />

@@ -2,13 +2,14 @@ import React from 'react';
 import ChainTile from './ChainTile';
 import PropTypes from 'prop-types';
 import {categoriesType, indexedChainsType} from '../../types/types';
-import {getChainKey, getTemplateKey} from '../../utils/key-generator';
+import {getChainKey, getChainTemplateKey} from '../../utils/key-generator';
 import MethodTile from './MethodTile';
 import getCategoryName from '../../utils/category-name';
 
 class ChainTileList extends React.PureComponent {
     renderChain(chain) {
-        const { categories, enrolled, nonDefaultCategoriesEnrolled, viewChainAuthenticator } = this.props;
+        const { alwaysHideCategories, categories, enrolled, nonDefaultCategoriesEnrolled, viewChainAuthenticator }
+            = this.props;
 
         const {templates} = chain;
 
@@ -27,7 +28,7 @@ class ChainTileList extends React.PureComponent {
         const chainMethodElements = templates.map((template) => {
             const categoryName = (nonDefaultCategoriesEnrolled && template.isEnrolled)
                 ? getCategoryName(categories, template.categoryId) : null;
-            const key = getTemplateKey(template);
+            const key = getChainTemplateKey(chain, template);
             let handleMethodClick = null;
             if (enrolled) {
                 handleMethodClick = (event) => {
@@ -49,7 +50,11 @@ class ChainTileList extends React.PureComponent {
 
         const handleClick = () => viewChainAuthenticator(chain, defaultTemplate);
         const key = getChainKey(chain);
-        const name = `${chain.name} (${chain.categoryName})`;
+        let name = chain.name;
+        if (!alwaysHideCategories) {
+            name += ` (${chain.categoryName})`;
+        }
+
         return (
             <ChainTile id={key} key={key} isEnrolled={enrolled} name={name} onClick={handleClick}>
                 {chainMethodElements}
@@ -85,6 +90,7 @@ class ChainTileList extends React.PureComponent {
 }
 
 ChainTileList.propTypes = {
+    alwaysHideCategories: PropTypes.bool.isRequired,
     categories: categoriesType.isRequired,
     enrolled: PropTypes.bool.isRequired,
     indexedChains: indexedChainsType.isRequired,

@@ -1,36 +1,38 @@
 import React from 'react';
 import Authenticator from '../Authenticator';
-import CommonCardHandler from '../../../api/commonCardHandler';
+import CommonCardHandler from '../../../api/devices/common-card-devices.api';
 import {STATUS_TYPE} from '../../../ux/ux';
-import TestAuthenticatorButton from '../test-authenticator/TestAuthenticatorButton';
+import t from '../../../i18n/locale-keys';
 
 class CardMethod extends React.PureComponent {
     constructor(props) {
         super(props);
 
-        this.commonCardHandler = new CommonCardHandler(CommonCardHandler.CARD_SERVICE_URL, this.props.showStatus);
+        this.commonCardHandler = new CommonCardHandler(CommonCardHandler.CARD_SERVICE_URL, props.showStatus,
+            props.registerPromise);
 
-        this.state = {
-            data: {
-                cardUid: '',
-                cardCert: ''
-            },
-            disableActions: false,
-            status: '',
-            dataDirty: false
-        };
+        this.state = {dataDirty: false};
     }
 
-    doEnroll() {
+    authenticationInfoChanged() {
+        return this.state.dataDirty;
+    }
+
+    authenticationInfoSavable() {
+        return false;
+    }
+
+    componentWillUnmount() {
+        this.commonCardHandler.abortCardPromise();
+    }
+
+    scanCard = () => {
         this.setState({dataDirty: true});
-        this.commonCardHandler.getStatus(
-            {
-                enroll: true,
-                onCard: (data) => {
-                    console.log('doEnrollWithBeginProcess', data);
-                    this.setState(data);
-                    this.props.doEnrollWithBeginProcess(data)
-                        .then((response) => {
+        this.commonCardHandler.getStatus({
+            enroll: true,
+            onCard: (data) => {
+                this.props.doEnrollWithBeginProcess(data)
+                    .then((response) => {
                         if (response.status === 'OK') {
                             this.props.showStatus(response.msg, STATUS_TYPE.OK);
                         }
@@ -41,41 +43,25 @@ class CardMethod extends React.PureComponent {
                             this.props.showStatus(response.msg, STATUS_TYPE.INFO);
                         }
                     });
-                }
-            });
+            }
+        });
     };
-
-    finishEnroll() {
-        if (this.props.enrollProcessComplete()) {
-            return Promise.resolve();
-        }
-        else {
-             return Promise.reject('Enrollment process not complete.');
-        }
-    };
-
-    authenticationInfoChanged() {
-        return this.state.dataDirty;
-    }
-
-    handleScanClick = () => {
-        this.doEnroll();
-    };
-
-    componentWillUnmount() {
-        this.commonCardHandler.abort();
-    }
 
     render() {
         return (
             <Authenticator
-                description="The Card method uses a digital card with an entered PIN or
-                password. The card info and PIN are stored in NetIQ Advanced Authentication not connected
-                to your corporate directory."
+                description={t.cardMethodDescription()}
                 {...this.props}
             >
-                <button className="ias-button" onClick={this.handleScanClick} type="button">Scan Card</button>
-                <TestAuthenticatorButton {...this.props.test} />
+                <button
+                    className="ias-button"
+                    disabled={this.props.readonlyMode || this.state.dataDirty}
+                    id="Scan_Card_Button"
+                    onClick={this.scanCard}
+                    type="button"
+                >
+                    {t.cardScan()}
+                </button>
             </Authenticator>
         );
     }

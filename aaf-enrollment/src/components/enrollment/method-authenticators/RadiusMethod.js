@@ -1,7 +1,8 @@
 import React from 'react';
 import Authenticator from '../Authenticator';
 import {generateFormChangeHandler} from '../../../utils/form-handler';
-import TestAuthenticatorButton from '../test-authenticator/TestAuthenticatorButton';
+import TextField from '../../TextField';
+import t from '../../../i18n/locale-keys';
 
 class RadiusMethod extends React.PureComponent {
     constructor(props) {
@@ -20,7 +21,7 @@ class RadiusMethod extends React.PureComponent {
     }
 
     authenticationInfoSavable() {
-        return true;
+        return !this.props.template.isEnrolled || this.authenticationInfoChanged();
     }
 
     finishEnroll() {
@@ -43,32 +44,29 @@ class RadiusMethod extends React.PureComponent {
 
         return (
             <Authenticator
-                description="The Radius Client method forwards your authentication request to a Radius server."
+                description={t.radiusMethodDescription()}
                 {...this.props}
             >
                 <div className="override">
                     <div>
-                        <label>Your user name</label>
+                        <label>{t.userNamePossessive()}</label>
                         <span className="directory-data">{username}</span>
                     </div>
                     <div>
-                        <label>(from corporate directory)</label>
+                        <label>{t.directoryFrom()}</label>
                     </div>
                     <div>
-                        <label>To override for this method, enter Override User Name</label>
+                        <label>{t.userNameOverride()}</label>
                     </div>
                 </div>
-                <div className="ias-input-container">
-                    <label htmlFor="Radius_Input_Field">Override User Name</label>
-                    <input id="Radius_Input_Field"
-                           name="userName"
-                           placeholder="User name"
-                           onChange={this.handleChange}
-                           value={this.state.form.userName}
-                           type="text"
-                    />
-                    <TestAuthenticatorButton {...this.props.test} />
-                </div>
+                <TextField
+                    disabled={this.props.readonlyMode}
+                    id="Radius_Input_Field"
+                    label={t.userNameOverrideLabel()}
+                    name="userName"
+                    onChange={this.handleChange}
+                    value={this.state.form.userName}
+                />
             </Authenticator>
         );
     }

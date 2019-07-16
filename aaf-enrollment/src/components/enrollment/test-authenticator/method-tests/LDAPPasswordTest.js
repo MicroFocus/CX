@@ -1,8 +1,9 @@
 import React from 'react';
 import ShowHidePassword from '../../../ShowHidePassword';
 import {generateFormChangeHandler} from '../../../../utils/form-handler';
+import t from '../../../../i18n/locale-keys';
 
-// TODO: add special error HTML and link URL to form (see auth.js:1334).
+// TODO: add special error HTML and link URL to form (see auth.js:1334 in previous UI).
 class LDAPPasswordTest extends React.PureComponent {
     constructor(props) {
         super(props);
@@ -19,7 +20,7 @@ class LDAPPasswordTest extends React.PureComponent {
                     autoFocus
                     name="answer"
                     onChange={this.handleChange}
-                    placeholder="Password"
+                    placeholder={t.passwordLabel()}
                     value={this.state.form.answer}
                 />
             </React.Fragment>

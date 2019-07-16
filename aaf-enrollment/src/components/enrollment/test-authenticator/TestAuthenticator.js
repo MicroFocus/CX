@@ -9,6 +9,12 @@ import AuthenticatorStatus from '../AuthenticatorStatus';
 import TestMethodAuthenticator from './TestMethodAuthenticator';
 import {removeUnloadFormListener} from '../../../actions/navigation.actions';
 import {methodIds} from '../../../data/MethodData';
+// Use trashable-react to get rid of pending promises when component unmounts.
+// To use this feature, we wrap API calls that return Promises inside this.props.registerPromise.
+// Note that children of this component (such as WindowsHelloMethod) do not need to call makeComponentTrashable to
+// take advantage of this functionality; registerPromise is automatically passed to them via props.
+import makeComponentTrashable from 'trashable-react';
+import t from '../../../i18n/locale-keys';
 
 const ASYNC_LOGON_INTERVAL = 3000;
 
@@ -64,11 +70,12 @@ class TestAuthenticator extends React.PureComponent {
         // Perform a sanity check to make sure we never have a logon process that has already finished at this point
         if (this.logonProcessExpired()) {
             console.error('Cannot test a method once logon process has expired!');
-            return;
+            return Promise.reject(t.logonProcessExpiredError());
         }
 
-        return this.props.doTestLogon(this.props.template.id, this.logonProcessId, data, keepCamelCase)
-            .catch(this.catchUnhandledLogonError)
+        return this.props.registerPromise(
+                this.props.doTestLogon(this.props.template.id, this.logonProcessId, data, keepCamelCase)
+            ).catch(this.catchUnhandledLogonError)
             .then((response) => {
                 const {result, logonProcessId} = response;
                 this.logonProcessStatus = result.status;
@@ -94,14 +101,21 @@ class TestAuthenticator extends React.PureComponent {
                 <React.Fragment>
                     <AuthenticatorStatus statusMessage={this.state.statusMessage} />
                     <div className="test-authenticator-buttons">
-                        <button className="ias-button" onClick={this.props.onClose} type="button">OK</button>
+                        <button
+                            className="ias-button"
+                            id="Test_Authenticator_OK_Button"
+                            onClick={this.props.onClose}
+                            type="button"
+                        >
+                            {t.buttonOk()}
+                        </button>
                     </div>
                 </React.Fragment>
             );
         }
         else {
             const {statusMessage, testButtonDisabled} = this.state;
-            const {authentication, policies, query, template} = this.props;
+            const {authentication, policies, query, registerPromise, resetQuery, template} = this.props;
 
             return (
                 <form onSubmit={this.handleSubmit}>
@@ -114,7 +128,9 @@ class TestAuthenticator extends React.PureComponent {
                         policies={policies}
                         query={query}
                         ref={this.methodComponentRef}
+                        registerPromise={registerPromise}
                         removeUnloadFormListener={removeUnloadFormListener}
+                        resetQuery={resetQuery}
                         setAsyncLogon={this.setAsyncLogon}
                         setLogonState={this.setLogonState}
                         setTestButtonAvailability={this.setTestButtonAvailability}
@@ -123,7 +139,9 @@ class TestAuthenticator extends React.PureComponent {
                         username={authentication.username}
                     />
                     <div className="test-authenticator-buttons">
-                        <button className="ias-button" disabled={testButtonDisabled}>Test</button>
+                        <button className="ias-button" disabled={testButtonDisabled} id="Test_Authenticator_Button">
+                            {t.buttonTest()}
+                        </button>
                     </div>
                 </form>
             );
@@ -149,9 +167,10 @@ class TestAuthenticator extends React.PureComponent {
     }
 
     markTestComplete = (passed, reason) => {
+        this.clearAsyncLogon();     // Clear async logon tasks for scenarios like TOTP offline authentication
         let statusMessage;
         if (passed) {
-            statusMessage = { type: STATUS_TYPE.OK, description: 'Test successful' };
+            statusMessage = { type: STATUS_TYPE.OK, description: t.testSuccessful() };
         }
         else {
             statusMessage = { type: STATUS_TYPE.ERROR, description: reason };
@@ -175,7 +194,7 @@ class TestAuthenticator extends React.PureComponent {
                     this.clearAsyncLogon();
                     callback(response);
                 }
-            }).catch(this.clearAsyncLogon); // TODO: error callback?
+            }).catch(this.clearAsyncLogon);
         };
 
         if (executeImmediately) {
@@ -217,7 +236,7 @@ class TestAuthenticator extends React.PureComponent {
                 open
                 title={
                     <div className="ias-dialog-label">
-                        Test {template.methodTitle} Method
+                        {t.testMethodLabel(template.methodTitle)}
                     </div>
                 }
             >
@@ -235,9 +254,10 @@ TestAuthenticator.propTypes = {
 
 // Wrapper for the component to hide it when test is done.
 // This is what causes the component to be recreated when a new test window is opened
+const TrashableTestAuthenticator = makeComponentTrashable(TestAuthenticator);
 function TestAuthenticatorWrapper(props) {
     if (props.show) {
-        return <TestAuthenticator {...props} />;
+        return <TrashableTestAuthenticator {...props} />;
     }
     else {
         return null;

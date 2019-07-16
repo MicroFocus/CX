@@ -48,7 +48,6 @@ export const deleteUser = (userId, loginSessionId) => {
     });
 };
 
-// TODO: handle special HTTP error 444 (logon process not found or expired) -> new logon process required
 export const doLogon = ensureEndpointSession((endpointSessionId) => (logonProcessId, formData, keepCamelCase) => {
     const data = decamelizeKeys({
         endpointSessionId
@@ -62,7 +61,6 @@ export const doLogon = ensureEndpointSession((endpointSessionId) => (logonProces
     });
 });
 
-// TODO: handle special HTTP error 444 (logon process not found or expired) -> new logon process required
 export const doTestLogon = (userId, loginSessionId, templateId, logonProcessId, formData, keepCamelCase) => {
     const camelizedData = { loginSessionId };
     if (logonProcessId) {
@@ -135,16 +133,5 @@ export const getUserTemplates = (userId, loginSessionId) => {
 export const readLoginSessionInfo = ensureEndpointSession((endpointSessionId) => (loginSessionId) => {
     return apiFetch('GET', `logon/sessions/${loginSessionId}`, {
         params: { endpointSessionId }
-    });
-});
-
-
-export const getTotpQrCode = ensureEndpointSession((endpointSessionId) => (isBase32Secret) => {
-    return apiFetch('POST', 'logon_method/TOTP:1', {
-        data: {
-            generateAuthenticator: true,
-            isBase32Secret,
-            endpointSessionId
-        }
     });
 });

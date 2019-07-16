@@ -1,5 +1,5 @@
 import React from 'react';
-import CommonCardHandler from '../../../../api/commonCardHandler';
+import CommonCardHandler from '../../../../api/devices/common-card-devices.api';
 
 class CardTest extends React.PureComponent {
     constructor(props) {
@@ -7,20 +7,16 @@ class CardTest extends React.PureComponent {
 
         this.props.setTestButtonAvailability(false);
 
-        this.commonCardHandler = new CommonCardHandler(CommonCardHandler.CARD_SERVICE_URL, this.props.showStatus);
-        this.readCardAndSubmitAuth();
-    }
+        this.commonCardHandler = new CommonCardHandler(CommonCardHandler.CARD_SERVICE_URL, props.showStatus,
+            props.registerPromise);
 
-    readCardAndSubmitAuth() {
-        this.commonCardHandler.getStatus(
-            {
-                onCard: (data) => {
-                    this.props.doTestLogon(data); }
-            });
+        this.commonCardHandler.getStatus({
+            onCard: (data) => this.props.doTestLogon(data)
+        });
     }
 
     componentWillUnmount() {
-        this.commonCardHandler.abort();
+        this.commonCardHandler.abortCardPromise();
     }
 
     render() {

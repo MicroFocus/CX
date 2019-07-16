@@ -10,7 +10,7 @@ class LoadingIndicator extends React.PureComponent {
                 <div className="loading-indicator-content">
                     <div className="ias-status-message">
                         <div className="ias-status-message-title">
-                            <img alt="" src="/loading_anim_50.gif" />
+                            <img alt={this.props.message} src={process.env.PUBLIC_URL + '/loading_anim_50.gif'} />
                             <span>{this.props.message}</span>
                         </div>
                     </div>
@@ -22,12 +22,8 @@ class LoadingIndicator extends React.PureComponent {
     }
 }
 
-LoadingIndicator.defaultProps = {
-    message: 'Loading'
-};
-
 LoadingIndicator.propTypes = {
-    message: PropTypes.string
+    message: PropTypes.string.isRequired
 };
 
 export default LoadingIndicator;

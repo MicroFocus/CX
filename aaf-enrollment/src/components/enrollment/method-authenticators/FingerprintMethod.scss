@@ -37,68 +37,143 @@
 }
 
 .hand-map {
-  margin-bottom: 15px;
-  margin-top: 20px;
+  margin: 15px 0;
   min-height: 220px;
   position: relative;
-  width: 400px;
+  width: $handmap-width-px * 1px;
+
+  &.enable-enrollment {
+    &.duress-finger-mode {
+      .fingerprint {
+        &.enrolled {
+          &:focus,
+          &:hover {
+            color: $color-primary-2;
+
+            .fingerprint-secondary-icon {
+              .ias-icon-check_thick {
+                color: $check-enrolled;
+              }
+            }
+          }
+        }
+      }
+    }
+
+    &.multifinger-mode {
+      .multifinger {
+        &.enrolled {
+          &:focus,
+          &:hover {
+            border-color: $color-accent-4;
+
+            .fingerprint {
+              color: $color-accent-4;
+            }
+
+            .remove-multifinger {
+              color: $color-accent-4;
+            }
+          }
+
+          .remove-multifinger {
+            color: transparent;
+            position: absolute;
+            text-align: center;
+          }
+        }
+
+        &:focus,
+        &:hover {
+          border-color: #01a9e7;
+          cursor: pointer;
+
+          .fingerprint {
+            color: $color-primary-2;
+
+            &.enrolled {
+              .fingerprint-secondary-icon {
+                .ias-icon-check_thick {
+                  color: $check-enrolled;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+
+    &.standard-mode {
+      .fingerprint {
+        &.enrolled {
+          &:focus,
+          &:hover {
+            color: $color-accent-4;
+
+            .fingerprint-secondary-icon {
+              .ias-icon-favorite_fill {
+                color: $color-accent-4;
+              }
+
+              .ias-icon {
+                &:before {
+                  content: '\E907';
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+
+    .fingerprint {
+      &:focus,
+      &:hover {
+        color: $color-primary-2;
+        cursor: pointer
+      }
+    }
+  }
+
+  &.multifinger-mode {
+    .multifinger {
+      background-color: rgba(128, 128, 128, .1);
+      border-color: #b0b0b0;
+    }
+  }
 
   img {
     opacity: .35;
     width: 100%;
   }
 
-  .fingerprint-test-button {
-    position: absolute;
-    top: 190px;
-    width: 100%;
+  .legend {
+    color: $color-primary-2;
     text-align: center;
-  }
 
-  .left-hand-text,
-  .right-hand-text {
-    color: #808080;
-    font-size: 13px;
-    position: absolute;
-    text-align: center;
-    top: 155px;
-    width: 100px;
-  }
+    i,
+    span {
+      vertical-align: middle;
+    }
 
-  .left-hand-text {
-    left: 63px;
-  }
+    i {
+      font-size: 22px;
+    }
 
-  .right-hand-text {
-    right: 63px;
+    span {
+      margin-left: 5px;
+    }
   }
 
   .fingerprint {
     color: #808080;
     position: absolute;
 
-    &:focus,
-    &:hover {
-      color: $color-primary-2;
-      cursor: pointer
-    }
-
     &.enrolled {
       color: $check-enrolled;
 
-      &:focus,
-      &:hover {
-        color: $color-accent-4;
-
-        .fingerprint-secondary-icons {
-          .ias-icon-check_thick {
-            color: $color-accent-4;
-
-            &:before {
-              content: '\E907';
-            }
-          }
-        }
+      .ias-icon-favorite_fill {
+        color: $color-primary-2;
       }
     }
 
@@ -110,7 +185,7 @@
       font-size: 33px;
     }
 
-    .fingerprint-secondary-icons {
+    .fingerprint-secondary-icon {
       left: 6px;
       position: absolute;
       top: -19px;
@@ -118,11 +193,30 @@
       i {
         font-size: 22px;
       }
-
-      .ias-icon-check_thick {
-        color: $check-enrolled;
-      }
     }
+  }
+
+  .left-hand-text,
+  .right-hand-text {
+    color: #808080;
+    font-size: 13px;
+    position: absolute;
+    text-align: center;
+    top: 220px;
+    width: 120px;
+  }
+
+  .left-hand-text {
+    left: 53px;
+  }
+
+  .multifinger {
+    position: absolute;
+    border: 2px dashed transparent;
+  }
+
+  .right-hand-text {
+    right: 53px;
   }
 }
 
@@ -130,9 +224,12 @@
   .ias-dialog {
     .ias-dialog-container {
       &.fingerprint-scan-dialog {
-        max-width: 325px;
+        width: 325px;
+      }
+
+      &.duress-finger-dialog {
+        width: ($handmap-width-px + 40) * 1px;
       }
     }
   }
 }
-

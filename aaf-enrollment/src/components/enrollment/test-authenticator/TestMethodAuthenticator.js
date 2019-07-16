@@ -1,7 +1,9 @@
 import AsyncOnlyTest from './method-tests/AsyncOnlyTest';
 import BluetoothTest from './method-tests/BluetoothTest';
 import CardTest from './method-tests/CardTest';
+import DeviceAuthTest from './method-tests/DeviceAuthTest';
 import FacialTest from './method-tests/FacialTest';
+import FIDO2Test from './method-tests/FIDO2Test';
 import FingerprintTest from './method-tests/FingerprintTest';
 import {HOMEPAGE_URL} from '../../../actions/navigation.actions';
 import {methodIds} from '../../../data/MethodData';
@@ -15,7 +17,6 @@ import SmartphoneTest from './method-tests/SmartphoneTest';
 import U2FTest from './method-tests/U2FTest';
 import WebAuthenticationTest from './method-tests/WebAuthenticationTest';
 import WindowsHelloTest from './method-tests/WindowsHelloTest';
-import FIDO2Test from './method-tests/FIDO2Test';
 
 const TestMethodAuthenticator = React.forwardRef(({methodId, ...rest}, ref) => {
     switch (methodId) {
@@ -25,6 +26,8 @@ const TestMethodAuthenticator = React.forwardRef(({methodId, ...rest}, ref) => {
             return <BluetoothTest ref={ref} {...rest} />;
         case methodIds.CARD:
             return <CardTest ref={ref} {...rest} />;
+        case methodIds.DEVICE_AUTH:
+            return <DeviceAuthTest ref={ref} {...rest} />;
         case methodIds.EMAIL_OTP:
             return <PasswordOnlyTest ref={ref} {...rest} />;
         case methodIds.FACE:

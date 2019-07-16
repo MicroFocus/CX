@@ -1,8 +1,74 @@
+@import '../../../themes/themes';
+
+.facial-video {
+  border: 1px dotted black;
+  display: inline-block;
+  height: 300px;
+  margin-bottom: 10px;
+  width: 400px;
+
+  #canvasEnroll,
+  #canvasTest {
+    position: relative;
+    z-index: 0;
+  }
+
+  #canvasSnapEnroll,
+  #canvasSnapTest {
+    position: absolute;
+    margin-top: 50px;
+    display: none;
+  }
+
+  #faceImgContainer {
+    margin-bottom: 30px;
+  }
+
+  #videoEnroll,
+  #videoTest {
+    position: absolute;
+  }
+
+  canvas,
+  img,
+  video {
+    height: 300px;
+    width: 400px;
+  }
+
+  .done-icon {
+    color: $color-gray-4;
+    margin-top: 60px;
+    text-align: center;
+
+    i {
+      font-size: 125px;
+    }
+
+    p {
+      font-size: 18px;
+      margin: .5em 0;
+    }
+  }
+}
+
+.ias-dialog {
+  .ias-dialog-container {
+    .ias-dialog-content {
+      .facial-video {
+        p {
+          color: inherit;
+        }
+      }
+    }
+  }
+}
+
 @media (min-width: 768px) {
   .ias-dialog {
     .ias-dialog-container {
       &.facial-test-dialog {
-        max-width: 400px;
+        width: 440px;
       }
     }
   }

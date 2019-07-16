@@ -1,36 +1,22 @@
 @import '../../themes/themes';
 
-.ias-header {
-  .primary-icon {
-    color: $color-primary-2;
-    font-size: 40px;
-    margin-right: 5px;
-  }
-
-  .primary-icon-button {
-    color: $color-gray-4;
-
-    i {
-      font-size: 28px;
-    }
-
-    &:focus,
-    &:hover {
-      color: #007cd0;
-    }
-  }
-
-  .secondary-icon {
-    color: $check-enrolled;
-    margin-right: 15px;
-  }
-}
-
 .authenticator-form {
   margin-top: 15px;
 
   .directory-data {
+    color: black;
     font-size: 16px;
+    vertical-align: middle;
+  }
+
+  .status-indicator {
+    button,
+    i {
+      flex-shrink: 0;
+    }
+
+    font-size: 16px;
+    max-width: $max-readable-width;
   }
 }
 
@@ -56,4 +42,30 @@
 
 .ias-button {
   min-width: 62px;
+}
+
+.ias-header {
+  .primary-icon {
+    color: $color-primary-2;
+    font-size: 40px;
+    margin-right: 5px;
+  }
+
+  .primary-icon-button {
+    color: $color-gray-4;
+
+    i {
+      font-size: 28px;
+    }
+
+    &:focus,
+    &:hover {
+      color: #007cd0;
+    }
+  }
+
+  .secondary-icon {
+    color: $check-enrolled;
+    margin-right: 15px;
+  }
 }

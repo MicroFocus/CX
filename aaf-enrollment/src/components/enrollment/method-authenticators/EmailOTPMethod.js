@@ -1,7 +1,8 @@
 import React from 'react';
 import Authenticator from '../Authenticator';
 import {generateFormChangeHandler} from '../../../utils/form-handler';
-import TestAuthenticatorButton from '../test-authenticator/TestAuthenticatorButton';
+import TextField from '../../TextField';
+import t from '../../../i18n/locale-keys';
 
 class EmailOTPMethod extends React.PureComponent {
     constructor(props) {
@@ -12,8 +13,8 @@ class EmailOTPMethod extends React.PureComponent {
         if (isEnrolled && data) {
             email = data.email || '';
         }
-        const initialOtherState = { defaultRecipient: null };
-        generateFormChangeHandler(this, { email }, initialOtherState);
+        const initialOtherState = {defaultRecipient: null};
+        generateFormChangeHandler(this, {email}, initialOtherState);
 
         this.props.getDefaultRecipient(this.props.template.methodId).then(({defaultRecipient}) => {
             this.setState({defaultRecipient});
@@ -25,7 +26,7 @@ class EmailOTPMethod extends React.PureComponent {
     }
 
     authenticationInfoSavable() {
-        return true;
+        return !this.props.template.isEnrolled || this.authenticationInfoChanged();
     }
 
     finishEnroll() {
@@ -35,7 +36,7 @@ class EmailOTPMethod extends React.PureComponent {
             return Promise.reject(this.props.policies.emailOTPMethod.data.enrollNoRecipientMsg);
         }
 
-        const formData = email.length ? { email } : null;
+        const formData = email.length ? {email} : null;
         return this.props.doEnrollWithBeginProcess(formData)
             .then((response) => {
                 if (response.status !== 'FAILED') {
@@ -47,39 +48,42 @@ class EmailOTPMethod extends React.PureComponent {
             });
     };
 
+    renderOverrideElements() {
+        return (
+            <React.Fragment>
+                <div>
+                    <label>{t.emailOverride()}</label>
+                </div>
+                <TextField
+                    disabled={this.props.readonlyMode}
+                    id="Email_Input_Field"
+                    label={t.emailOverrideLabel()}
+                    name="email"
+                    value={this.state.form.email}
+                    onChange={this.handleChange}
+                />
+            </React.Fragment>
+        );
+    }
+
     render() {
-        const userEmail = this.state.defaultRecipient || 'unknown';
+        const userEmail = this.state.defaultRecipient || t.recipientUnknown();
+        const overrideElements = this.props.policies.emailOTPMethod.data.allowOverrideRecipient
+            ? this.renderOverrideElements() : null;
 
         return (
             <Authenticator
-                description="The Email OTP method sends an email with a One-time Password (OTP).
-                Use the OTP to authenticate within a specified timeframe."
+                description={t.emailOTPMethodDescription()}
                 {...this.props}
             >
-                <div className="override">
-                    <div>
-                        <label>Your email</label>
-                        <span className="directory-data">{userEmail}</span>
-                    </div>
-                    <div>
-                        <label>(from corporate directory)</label>
-                    </div>
-                    <div>
-                        <label>To override for this method, enter Override Email</label>
-                    </div>
+                <div>
+                    <label>{t.emailPossessive()}</label>
+                    <span className="directory-data">{userEmail}</span>
                 </div>
-                <div className="ias-input-container">
-                    <label htmlFor="Email_Input_Field">Override Email</label>
-                    <input id="Email_Input_Field"
-                           name="email"
-                           value={this.state.form.email}
-                           type="text"
-                           onChange={this.handleChange}
-                    />
-                    <TestAuthenticatorButton {...this.props.test} />
+                <div>
+                    <label>{t.directoryFrom()}</label>
                 </div>
-
-                {/* TODO: Remove (optional) when !default_recipient, omit email when !allow_override_recipient*/}
+                {overrideElements}
             </Authenticator>
         );
     }

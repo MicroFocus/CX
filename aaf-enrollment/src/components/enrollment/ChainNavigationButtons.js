@@ -4,66 +4,44 @@ import {indexedChainType, templateType} from '../../types/types';
 import {connect} from 'react-redux';
 import {gotoEnrollmentDashboard, viewChainAuthenticator} from '../../actions/navigation.actions';
 import {fetchIndexedData} from '../../actions/methods-display.actions';
-
-const DIRECTIONS = {
-    BACK: -1,
-    NEXT: 1
-};
+import t from '../../i18n/locale-keys';
 
 class ChainNavigationButtons extends React.PureComponent {
-    getChainSequenceIndex() {
-        const {chain: {templates}, template: {methodId}} = this.props;
-
-        for (let index = 0; index < templates.length; index++) {
-            if (templates[index].methodId === methodId) {
-                return index;
-            }
-        }
-
-        return -1;
-    }
-
     handleBackClick = () => {
-        this.props.onNavigation(this.navigate.bind(this, DIRECTIONS.BACK));
+        this.props.onNavigation(this.navigateBack);
     };
 
-    handleNextClick = () => {
-        this.props.onNavigation(this.navigate.bind(this, DIRECTIONS.NEXT));
-    };
-
-    handleFinishClick = () => {
-        this.props.onNavigation(this.props.gotoEnrollmentDashboard);
-    };
-
-    navigate(direction) {
+    // Only back button click is handled by this component. Next and Finish are handled by AuthenticatorContainer.js
+    // via onSubmit action.
+    navigateBack = () => {
         const {chain} = this.props;
-        const newChainSequenceIndex = this.getChainSequenceIndex() + direction;
+        const newChainSequenceIndex = this.props.chainSequenceIndex - 1;
         const newTemplate = chain.templates[newChainSequenceIndex];
         this.props.fetchIndexedData();
         this.props.viewChainAuthenticator(chain, newTemplate);
-    }
+    };
 
     render() {
         const {chain: {templates}} = this.props;
 
         const chainSequenceLength = templates.length;
-        const chainSequenceIndex = this.getChainSequenceIndex();
+        const chainSequenceIndex = this.props.chainSequenceIndex;
 
         const backButton = (chainSequenceIndex !== 0) ? (
             <button className="ias-button" id="prevAuthenticatorButton" type="button" onClick={this.handleBackClick}>
-                Back
+                {t.buttonBack()}
             </button>
         ) : null;
 
         const nextButton = (chainSequenceIndex !== chainSequenceLength - 1) ? (
-            <button className="ias-button" id="nextAuthenticatorButton" type="button" onClick={this.handleNextClick}>
-                Next
+            <button className="ias-button" id="nextAuthenticatorButton">
+                {t.buttonNext()}
             </button>
         ) : null;
 
         const finishButton = (chainSequenceIndex === chainSequenceLength - 1) ? (
-            <button className="ias-button" id="finishChainButton" type="button" onClick={this.handleFinishClick}>
-                Finish
+            <button className="ias-button" id="finishChainButton">
+                {t.buttonFinish()}
             </button>
         ) : null;
 
@@ -79,6 +57,7 @@ class ChainNavigationButtons extends React.PureComponent {
 
 ChainNavigationButtons.propTypes = {
     chain: indexedChainType.isRequired,
+    chainSequenceIndex: PropTypes.number.isRequired,
     onNavigation: PropTypes.func.isRequired,
     template: templateType.isRequired
 };

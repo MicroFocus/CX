@@ -1,6 +1,7 @@
 import {createToast, STATUS_TYPE} from '../ux/ux';
 import {API_STATUS} from '../api/json-fetch';
 import {handleExpiredLoginSession} from './authentication.actions';
+import t from '../i18n/locale-keys';
 
 /* Handles common REST API errors
  * Mark errors already handled by setting errorHandled on the error object, then rethrowing the error. This allows
@@ -18,7 +19,7 @@ export function isNetworkError(failedResponseData) {
 function handleLostServerConnection() {
     createToast({
         type: STATUS_TYPE.ERROR,
-        description: 'Could not communicate with server. Refresh page if necessary.'
+        description: t.networkCommunicationLost()
     });
 }
 

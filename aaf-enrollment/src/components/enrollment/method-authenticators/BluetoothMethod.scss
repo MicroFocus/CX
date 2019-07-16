@@ -1,21 +1,50 @@
-.bluetooth-method {
-    .device {
+@import '../../../themes/themes';
+
+.bluetooth-device-list {
+  margin: 10px 0 15px;
+
+  .ias-tag {
+    color: $color-primary-2;
+    font-size: 14px;
+    font-weight: bold;
+    margin-right: 5px;
+    min-width: 140px;
+
+    // ux-ias does not have support for .ias-disabled in tags, so add it
+    &.ias-disabled {
+      &:focus,
+      &:hover {
+        border: 1px solid transparent;
+        color: $color-primary-2;
+        cursor: auto;
+      }
+    }
+
+    &:focus,
+    &:hover {
+      color: $color-primary-4;
+    }
+
+    > .ias-tag-content {
+      .ias-icon {
+        font-size: 25px;
+        margin-right: 5px;
         vertical-align: middle;
-    }
+      }
 
-    .ias-tag {
-        margin-right: 5px;
+      span {
+        &:not(last-of-type) {
+          margin-right: 5px;
+        }
+      }
     }
-    .ias-tags {
-        margin-bottom: 20px;
-    }
+  }
+}
 
-    .ias-icon {
-        margin-right: 5px;
-    }
+.bluetooth-loading-img {
+  margin-bottom: 15px;
 
-    .loading-img {
-        height: 30px;
-        width: 30px;
-    }
+  img {
+    height: 30px;
+  }
 }

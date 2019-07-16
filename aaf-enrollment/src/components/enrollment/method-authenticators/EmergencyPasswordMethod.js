@@ -1,5 +1,6 @@
 import React from 'react';
 import Authenticator from '../Authenticator';
+import t from '../../../i18n/locale-keys';
 
 class EmergencyPasswordMethod extends React.PureComponent {
     authenticationInfoChanged() {
@@ -9,9 +10,7 @@ class EmergencyPasswordMethod extends React.PureComponent {
     render() {
         return (
             <Authenticator
-                description="The Emergency Password method allows for a specific
-                    number of sign-ins. It is a password stored in NetIQ Advanced Authentication
-                    not connected to your corporate directory. This can be a PIN or a simple password."
+                description={t.emergencyPwMethodDescription()}
                 unenrollable
                 {...this.props}
             />

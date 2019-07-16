@@ -1,9 +1,5 @@
-.header-content {
-  min-height: 40px;
-  height: 50px;
-  background: #0073e7;
-  display: flex;
-  justify-content: flex-start;
+label:not(:first-of-type) {
+  margin-left: 0;
 }
 
 .ias-app-bar {
@@ -18,46 +14,51 @@
 }
 
 #brand {
-  display: flex;
   align-items: stretch;
   background: #fff;
+  display: flex;
 
-  .brand-family-box {
-    position: relative;
-    width: 20%;
-    height: 257px;
-  }
   .brand-color-box {
-    position: relative;
     background: #0073e7;
     height: 200px;
+    position: relative;
     width: 100%;
   }
 
-  .microfocus-logo {
-    position: absolute;
-    right: 25px;
-    top: 25px;
-    height: 12%;
+  .brand-family-box {
+    height: 257px;
+    position: relative;
+    width: 20%;
   }
+
   .ias-logo {
     position: absolute;
     left: 0;
     bottom: 0;
     height: 50%;
   }
-  .security-logo-box {
+
+  .microfocus-logo {
+    height: 12%;
     position: absolute;
-    bottom: 0px;
-    right: 15px;
+    right: 25px;
+    top: 25px;
+  }
+
+  .security-logo-box {
+    bottom: 0;
     height: 60px;
+    position: absolute;
+    right: 15px;
+    width: 100%;
 
     .security-logo {
-      max-width: 100%;
-      max-height: 100%;
       margin-left: 10px;
+      max-height: 100%;
+      max-width: 100%;
     }
   }
+
   #detail-column {
     display: flex;
     flex-direction: column;
@@ -67,23 +68,19 @@
 
 #ias-about {
   .ias-about-details {
-    margin-top: 20px;
     line-height: 1.2em;
+    margin-top: 20px;
   }
 
   .ias-about-product-title {
     color: black;
     font-size: 28px;
     font-weight: bold;
-    text-transform: uppercase;
     line-height: 1.1em;
+    text-transform: uppercase;
   }
 
   .product-description {
     margin-top: 10px;
   }
-}
-
-label:not(:first-of-type) {
-  margin-left: 0;
 }

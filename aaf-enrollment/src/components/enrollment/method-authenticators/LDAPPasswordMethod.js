@@ -1,14 +1,14 @@
 import React from 'react';
 import Authenticator from '../Authenticator';
-import TestAuthenticatorButton from '../test-authenticator/TestAuthenticatorButton';
+import t from '../../../i18n/locale-keys';
 
 class LDAPPasswordMethod extends React.PureComponent {
-    authenticationInfoSavable() {
-        return !this.props.template.isEnrolled;
-    }
-
     authenticationInfoChanged() {
         return false;
+    }
+
+    authenticationInfoSavable() {
+        return !this.props.template.isEnrolled;
     }
 
     finishEnroll() {
@@ -26,12 +26,9 @@ class LDAPPasswordMethod extends React.PureComponent {
     render() {
         return (
             <Authenticator
-                description="The LDAP password is your corporate password. NetIQ Advanced Authentication automatically
-                            enrolls your LDAP password."
+                description={t.ldapMethodDescription()}
                 {...this.props}
-            >
-                <TestAuthenticatorButton {...this.props.test} />
-            </Authenticator>
+            />
         );
     }
 }

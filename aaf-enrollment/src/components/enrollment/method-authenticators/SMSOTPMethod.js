@@ -1,7 +1,8 @@
 import React from 'react';
 import Authenticator from '../Authenticator';
 import {generateFormChangeHandler} from '../../../utils/form-handler';
-import TestAuthenticatorButton from '../test-authenticator/TestAuthenticatorButton';
+import TextField from '../../TextField';
+import t from '../../../i18n/locale-keys';
 
 class SMSOTPMethod extends React.PureComponent {
     constructor(props) {
@@ -25,7 +26,7 @@ class SMSOTPMethod extends React.PureComponent {
     }
 
     authenticationInfoSavable() {
-        return true;
+        return !this.props.template.isEnrolled || this.authenticationInfoChanged();
     }
 
     finishEnroll() {
@@ -47,38 +48,42 @@ class SMSOTPMethod extends React.PureComponent {
             });
     }
 
+    renderOverrideElements() {
+        return (
+            <React.Fragment>
+                <div>
+                    <label>{t.mobilePhoneOverride()}</label>
+                </div>
+                <TextField
+                    disabled={this.props.readonlyMode}
+                    id="Mobile_Input_Field"
+                    label={t.mobilePhoneOverrideLabel()}
+                    name="mobilePhone"
+                    onChange={this.handleChange}
+                    value={this.state.form.mobilePhone}
+                />
+            </React.Fragment>
+        );
+    }
+
     render() {
-        const userMobilePhone = this.state.defaultRecipient || 'unknown';
+        const userMobilePhone = this.state.defaultRecipient || t.recipientUnknown();
+        const overrideElements = this.props.policies.SMSOTPMethod.data.allowOverrideRecipient
+            ? this.renderOverrideElements() : null;
 
         return (
             <Authenticator
-                description="The SMS One-time Password (OTP) method sends a text message to your mobile phone including
-                             a OTP. The OTP has to be used within a specified timeframe."
+                description={t.smsOtpMethodDescription()}
                 {...this.props}
             >
-                <div className="override">
-                    <div>
-                        <label>Your mobile phone</label>
-                        <span className="directory-data">{userMobilePhone}</span>
-                    </div>
-                    <div>
-                        <label>(from corporate directory)</label>
-                    </div>
-                    <div>
-                        <label>To override for this method, enter Override Mobile Phone</label>
-                    </div>
+                <div>
+                    <label>{t.mobilePhonePosessive()}</label>
+                    <span className="directory-data">{userMobilePhone}</span>
                 </div>
-                <div className="ias-input-container">
-                    <label htmlFor="Mobile_Phone_Field">Override Mobile Phone</label>
-                    <input id="Mobile_Input_Field"
-                           name="mobilePhone"
-                           value={this.state.form.mobilePhone}
-                           type="text"
-                           onChange={this.handleChange}
-                    />
-                    <TestAuthenticatorButton {...this.props.test} />
+                <div>
+                    <label>{t.directoryFrom()}</label>
                 </div>
-                {/* TODO: Remove (optional) when !default_recipient, omit phone number when !allow_override_recipient*/}
+                {overrideElements}
             </Authenticator>
         );
     }

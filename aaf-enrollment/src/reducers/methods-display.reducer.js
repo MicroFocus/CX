@@ -38,6 +38,11 @@ const methodsDisplayReducer = (state = initialState, action) => produce(state, d
             draft.policies = action.policies;
             return;
         case types.FETCH_TEMPLATES_SUCCESS:
+            // Use isFullyEnrolled in place of isEnrolled to reduce confusion in this application
+            action.templates.forEach((template) => {
+                template.isFullyEnrolled = template.isEnrolled;
+                template.isEnrolled = true;
+            });
             // Sort enrolled templates so they will appear in alphabetical order on the dashboard
             draft.enrolledTemplates = action.templates.sort((templateA, templateB) => {
                 const firstComparison = templateA.methodTitle.localeCompare(templateB.methodTitle);
@@ -62,6 +67,7 @@ export default methodsDisplayReducer;
 // Index most of the data into a form much more usable by our app.
 function indexData(state) {
     let nonDefaultCategoriesEnrolled = false;
+    let alwaysHideCategories = true;
 
     // Organize templates by methodId. Set nonDefaultCategoriesEnrolled to true if any categories besides "Default"
     // are enrolled
@@ -70,6 +76,7 @@ function indexData(state) {
         const { categoryId, methodId } = template;
         if (categoryId.length) {
             nonDefaultCategoriesEnrolled = true;
+            alwaysHideCategories = false;
         }
 
         if (enrolledIndexedTemplates[methodId]) {
@@ -88,6 +95,7 @@ function indexData(state) {
             availableCategoryIds: [categoryId],
             comment: '',
             isEnrolled: false,
+            isFullyEnrolled: false,
             methodId,
             methodTitle: state.methodTitles[methodId]
         };
@@ -105,19 +113,23 @@ function indexData(state) {
         }
     };
 
-    // Convert the chains data to index by categoryId instead of category name. Won't be necessary forever
-    // We will need to keep the part that only shows chains with methods available to this user
+    // Convert the chains data to index by categoryId instead of category name.
     const indexedChains = {};
     Object.keys(state.chains).forEach((key) => {
         const chainsOfCategory = state.chains[key];
         for (let index = 0; index < state.categories.length; index++) {
             const category = state.categories[index];
             if (category.id === key || category.name === key.toUpperCase()) {
-                // Only show chains with methods available to this user
+                // Only show chains with methods available to this user. (If a chain's methods are not available to
+                // the user the server may return an empty array of methods. In this case we should skip the chain.)
                 const availableChainsOfCategory = chainsOfCategory.filter(chain => (chain.methods.length));
 
                 // Category match found, index it
                 indexedChains[category.id] = availableChainsOfCategory;
+
+                if (category.id.length) {
+                    alwaysHideCategories = false;
+                }
                 break;
             }
         }
@@ -169,5 +181,6 @@ function indexData(state) {
         });
     });
 
-    return { availableIndexedTemplates, enrolledIndexedTemplates, indexedChains, nonDefaultCategoriesEnrolled };
+    return { alwaysHideCategories, availableIndexedTemplates, enrolledIndexedTemplates, indexedChains,
+        nonDefaultCategoriesEnrolled };
 }

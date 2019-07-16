@@ -1,14 +1,14 @@
 import React from 'react';
 import Authenticator from '../Authenticator';
-import TestAuthenticatorButton from '../test-authenticator/TestAuthenticatorButton';
+import t from '../../../i18n/locale-keys';
 
 class SwisscomMethod extends React.PureComponent {
-    authenticationInfoSavable() {
-        return !this.props.template.isEnrolled;
-    }
-
     authenticationInfoChanged() {
         return false;
+    }
+
+    authenticationInfoSavable() {
+        return !this.props.template.isEnrolled;
     }
 
     finishEnroll() {
@@ -24,18 +24,13 @@ class SwisscomMethod extends React.PureComponent {
     };
 
     render() {
-        const userMobilePhone = this.props.authentication.userMobilePhone || 'unknown';
-
-        const description = 'The Swisscom Mobile ID method generates a request to your mobile phone. The mobile ' +
-            'number where a request is sent is: ' + userMobilePhone;
+        const userMobilePhone = this.props.authentication.userMobilePhone || t.recipientUnknown();
 
         return (
             <Authenticator
-                description={description}
+                description={t.swisscomMethodDescription(userMobilePhone)}
                 {...this.props}
-            >
-                <TestAuthenticatorButton {...this.props.test} />
-            </Authenticator>
+            />
         );
     }
 }

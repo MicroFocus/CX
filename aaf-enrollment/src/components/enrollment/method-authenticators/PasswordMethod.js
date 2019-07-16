@@ -2,7 +2,7 @@ import React from 'react';
 import ShowHidePassword from '../../ShowHidePassword';
 import Authenticator from '../Authenticator';
 import {generateFormChangeHandler} from '../../../utils/form-handler';
-import TestAuthenticatorButton from '../test-authenticator/TestAuthenticatorButton';
+import t from '../../../i18n/locale-keys';
 
 class PasswordMethod extends React.PureComponent {
     constructor(props) {
@@ -28,7 +28,7 @@ class PasswordMethod extends React.PureComponent {
             });
         }
         else {
-            return Promise.reject('Passwords do not match');
+            return Promise.reject(t.passwordsNotMatching());
         }
     };
 
@@ -37,29 +37,30 @@ class PasswordMethod extends React.PureComponent {
     }
 
     render() {
+        const label = (this.props.template.isEnrolled && !this.props.readonlyMode) ? t.passwordChange() : null;
+
         return (
             <Authenticator
-                description="The Password method is a password stored in
-          NetIQ Advanced Authentication not connected to your corporate directory.
-          This can be a PIN or a simple password."
+                description={t.passwordMethodDescription()}
                 {...this.props}
             >
                 <ShowHidePassword
+                    disabled={this.props.readonlyMode}
                     id="Password_Input_Field"
+                    label={label}
                     name="password"
                     onChange={this.handleChange}
-                    placeholder="Password"
+                    placeholder={t.passwordLabel()}
                     value={this.state.form.password}
                 />
                 <ShowHidePassword
+                    disabled={this.props.readonlyMode}
                     id="Confirmation_Input_Field"
                     name="confirmation"
                     onChange={this.handleChange}
-                    placeholder="Confirmation"
+                    placeholder={t.passwordConfirmationLabel()}
                     value={this.state.form.confirmation}
-                >
-                    <TestAuthenticatorButton {...this.props.test} />
-                </ShowHidePassword>
+                />
             </Authenticator>
         );
     }

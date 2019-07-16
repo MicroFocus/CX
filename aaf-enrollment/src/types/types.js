@@ -11,6 +11,7 @@ export const categoriesType = PropTypes.arrayOf(categoryType);
 const templateShape = {
     comment: PropTypes.string,
     isEnrolled: PropTypes.bool.isRequired,
+    isFullyEnrolled: PropTypes.bool.isRequired,
     methodId: PropTypes.string.isRequired,
     methodTitle: PropTypes.string.isRequired
 };

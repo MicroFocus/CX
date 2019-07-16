@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import t from '../i18n/locale-keys';
 
 export default class Accordion extends React.PureComponent {
     state = {
@@ -24,7 +25,7 @@ export default class Accordion extends React.PureComponent {
         return (
             <div className="ias-accordion-group">
                 <div className={accordionClass}>
-                    <div className="ias-accordion-header" onClick={this.toggleState}>
+                    <div className="ias-accordion-header" onClick={this.toggleState} title={t.openClose()}>
                         <div className="ias-accordion-title">{title}</div>
                         <span className="ias-fill" />
                         <i className={`ias-icon ias-icon-${iconName} ias-accordion-icon-toggle`} />

@@ -2,6 +2,7 @@ import React from 'react';
 import ShowHidePassword from '../../../ShowHidePassword';
 import {generateFormChangeHandler} from '../../../../utils/form-handler';
 import {methodIds} from '../../../../data/MethodData';
+import t from '../../../../i18n/locale-keys';
 
 // Test several methods that only include a Password field. This includes:
 // - Single-step doLogon methods: EMERG_PASSWORD, HOTP, PASSWORD, RADIUS, TOTP
@@ -28,7 +29,7 @@ class PasswordOnlyTest extends React.PureComponent {
                     autoFocus
                     name="answer"
                     onChange={this.handleChange}
-                    placeholder="Password"
+                    placeholder={t.passwordLabel()}
                     value={this.state.form.answer}
                 />
             </React.Fragment>

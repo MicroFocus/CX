@@ -1,13 +1,16 @@
+export function getChainKey(chain) {
+    return chain.chainUris[0] + '-' + chain.categoryName;
+}
+
+export function getChainTemplateKey(chain, template) {
+    return chain.chainUris[0] + '-' + getTemplateKey(template);
+}
+
 export function getTemplateKey(template) {
     if (template.isEnrolled) {
-        return template.id;
+        return template.methodId + '-' + (template.categoryId || 'default');
     }
     else {
         return template.methodId + '-add';
     }
-}
-
-export function getChainKey(chain) {
-    const categoryString = chain.categoryId || 'add';
-    return chain.idHex + '-' + categoryString;
 }
