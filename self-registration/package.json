@@ -29,7 +29,7 @@
         "@microfocus/ng-ias": "1.0.0-alpha",
         "adf-structures-base": "git+https://github.com/angular-dashboard-framework/adf-structures-base.git",
         "adf-widget-clock": "git+https://github.com/angular-dashboard-framework/adf-widget-clock.git",
-        "angular": "1.6.3",
+        "angular": "1.8.0",
         "angular-base64": "2.0.5",
         "angular-local-storage": "0.5.2",
         "angular-ui-bootstrap": "2.5.0",
