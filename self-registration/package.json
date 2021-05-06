@@ -86,7 +86,7 @@
         "karma-typescript": "2.1.7",
         "karma-webpack": "2.0.2",
         "localtunnel": "1.8.2",
-        "lodash": "4.17.4",
+        "lodash": "4.17.21",
         "mocha": "3.2.0",
         "ng-metadata": "4.0.1",
         "node-sass": "4.5.0",
